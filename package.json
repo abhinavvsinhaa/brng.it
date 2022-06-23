@@ -1,0 +1,12 @@
+{
+  "scripts": {
+    "dev": "concurrently \"cd ./server && yarn dev\" \"cd ./client && yarn dev\"",
+    "client": "cd ./client && yarn dev",
+    "server": "cd ./server && yarn dev",
+    "install --all": "cd ./server && yarn && cd ../client && yarn",
+    "start": "concurrently \"cd ./server && yarn start\" \"cd ../client && yarn start\""
+  },
+  "dependencies": {
+    "concurrently": "^7.2.2"
+  }
+}
