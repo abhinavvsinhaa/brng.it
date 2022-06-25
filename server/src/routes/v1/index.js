@@ -2,6 +2,7 @@ const express = require('express');
 const authRoute = require('./auth.route');
 const userRoute = require('./user.route');
 const urlRoute = require('./url.route');
+const urlCollectionRoute = require('./url-collection.route');
 const docsRoute = require('./docs.route');
 const config = require('../../config/config');
 
@@ -20,6 +21,10 @@ const defaultRoutes = [
   {
     path: '/url',
     route: urlRoute
+  },
+  {
+    path: '/tree',
+    route: urlCollectionRoute
   }
 ];
 

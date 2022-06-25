@@ -2,11 +2,10 @@ const mongoose = require('mongoose');
 const { toJSON } = require('./plugins');
 const validator = require('validator');
 
-const UrlSchema = new mongoose.Schema({
+const UrlCollectionSchema = new mongoose.Schema({
   original: {
-    type: String,
+    type: Array,
     required: [true, 'Please provide original url'],
-    validate: [validator.isURL, 'Not a valid url'],
   },
   short: {
     type: String,
@@ -21,6 +20,6 @@ const UrlSchema = new mongoose.Schema({
   },
 });
 
-UrlSchema.plugin(toJSON);
+UrlCollectionSchema.plugin(toJSON);
 
-module.exports = mongoose.model('Url', UrlSchema);
+module.exports = mongoose.model('UrlCollection', UrlCollectionSchema);

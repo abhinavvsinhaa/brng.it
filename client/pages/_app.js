@@ -1,4 +1,6 @@
 import "../css/index.css";
+import "../css/footer.css";
+
 import Head from "next/head";
 import Layout from "@components/layout";
 
