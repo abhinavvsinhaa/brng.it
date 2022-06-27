@@ -15,7 +15,7 @@ function savedEventsReducer(state, { type, payload }) {
   }
 }
 function initEvents() {
-  const storageEvents = localStorage.getItem("savedEvents");
+  const storageEvents = null; // localStorage.getItem("savedEvents");
   const parsedEvents = storageEvents ? JSON.parse(storageEvents) : [];
   return parsedEvents;
 }

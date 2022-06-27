@@ -8,10 +8,10 @@ export default function CreateEventButton() {
   return (
     <button
       onClick={() => setShowEventModal(true)}
-      className="border p-2 rounded-full flex items-center shadow-md hover:shadow-2xl"
+      type="button"
+      className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 flex items-center"
     >
-      <Image src={plusImg} alt="create_event" />
-      <span className="pl-3 pr-7"> Create</span>
+      Create Post
     </button>
   );
 }
