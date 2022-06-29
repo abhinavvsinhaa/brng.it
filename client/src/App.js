@@ -1,12 +1,13 @@
-import './App.css';
-import 'antd/dist/antd.css';
-
-import Navigation from './components/Layout/Navigation';
+// import './App.css';
+import CreatePost from './components/CreatePost/CreatePost';
+import Navigation from './components/Navigation/Navigation';
+import 'antd/dist/antd.css'
 
 function App() {
   return (
     <div className="App">
-      <Navigation/>
+      {/* <Navigation/> */}
+      <CreatePost/>
     </div>
   );
 }

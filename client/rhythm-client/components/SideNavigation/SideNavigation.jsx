@@ -1,50 +1,42 @@
-import React from 'react';
-import { CalendarOutlined, UnorderedListOutlined } from '@ant-design/icons';
+import { LaptopOutlined, NotificationOutlined, UserOutlined } from '@ant-design/icons';
 import { Breadcrumb, Layout, Menu } from 'antd';
-import CalendarPanel from '../CalendarPanel/CalendarPanel';
+import React from 'react';
 
 const { Header, Content, Sider } = Layout;
+const items1 = ['1', '2', '3'].map((key) => ({
+  key,
+  label: `nav ${key}`,
+}));
 
-function getItem(label, key, icon, children) {
+
+const items2 = [UserOutlined, LaptopOutlined, NotificationOutlined].map((icon, index) => {
+  const key = String(index + 1);
   return {
-    key,
-    icon,
-    children,
-    label,
+    key: `sub${key}`,
+    icon: React.createElement(icon),
+    label: `subnav ${key}`,
+    children: new Array(4).fill(null).map((_, j) => {
+      const subKey = index * 4 + j + 1;
+      return {
+        key: subKey,
+        label: `option${subKey}`,
+      };
+    }),
   };
-}
+});
 
-const items1 = [
-  {
-    key: '1',
-    label: 'Dashboard'
-  },
-  {
-    key: '2',
-    label: 'Analytics'
-  },
-  {
-    key: '3',
-    label: 'Engagement'
-  }
-];
-
-const items2 = [
-  getItem('Calendar', '1', <CalendarOutlined />),
-  getItem('Manage Channels', '2', <UnorderedListOutlined />),  
-]
-
-const Navigation = () => (
+const SideNavigation = () => (
   <Layout>
     <Header className="header">
       <div className="logo" />
-      <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['1']} items={items1} />
+      <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']} items={items1} />
     </Header>
     <Layout>
       <Sider width={200} className="site-layout-background">
         <Menu
           mode="inline"
           defaultSelectedKeys={['1']}
+          defaultOpenKeys={['sub1']}
           style={{
             height: '100%',
             borderRight: 0,
@@ -74,11 +66,11 @@ const Navigation = () => (
             minHeight: 280,
           }}
         >
-          <CalendarPanel />
+          Content
         </Content>
       </Layout>
     </Layout>
   </Layout>
 );
 
-export default Navigation;
+export default SideNavigation;
