@@ -166,7 +166,7 @@ export default function EventModal() {
                   File Image
                 </label>
                 <div class="flex">
-                  <label class="flex flex-col w-full h-32 m-5 border-4 border-blue-200 border-dashed hover:bg-gray-100 hover:border-gray-300">
+                  <label class="flex flex-col w-full m-5 border-4 border-blue-200 border-dashed hover:bg-gray-100 hover:border-gray-300">
                     <div class="flex flex-col items-center justify-center pt-7">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -188,11 +188,6 @@ export default function EventModal() {
                     </div>
                     <input type="file" class="opacity-0" />
                   </label>
-                  <img
-                    src="https://static.parade.com/wp-content/uploads/2021/11/new-year-wishes.jpg"
-                    alt="none"
-                    width="40%"
-                  ></img>
                 </div>
               </div>
             </div>
