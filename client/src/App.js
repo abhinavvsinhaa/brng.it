@@ -1,14 +1,16 @@
 // import './App.css';
-import CreatePost from './components/CreatePost/CreatePost';
-import Navigation from './components/Navigation/Navigation';
-import 'antd/dist/antd.css'
+// import CreatePost from "./components/CreatePost/CreatePost";
+// import Navigation from "./components/Navigation/Navigation";
+import Calender from "./components/CalenderV1/Calender";
+import ContextWrapper from "./hooks/ContextWrapper";
 
 function App() {
   return (
-    <div className="App">
-      {/* <Navigation/> */}
-      <CreatePost/>
-    </div>
+    <ContextWrapper>
+      <div className="App">
+        <Calender />
+      </div>
+    </ContextWrapper>
   );
 }
 

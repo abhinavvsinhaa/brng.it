@@ -1,18 +1,18 @@
-import { Button, Modal } from 'antd';
-import { useState } from 'react';
-import PostForm from './PostForm';
+import { Button, Modal } from "antd";
+import { useState } from "react";
+import PostForm from "./PostForm";
 
 const CreatePost = () => {
   const [visible, setVisible] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
-  const [modalText, setModalText] = useState(<PostForm/>);
+  const [modalText, setModalText] = useState(<PostForm />);
 
   const showModal = () => {
     setVisible(true);
   };
 
   const handleOk = () => {
-    setModalText('The modal will be closed after two seconds');
+    setModalText("The modal will be closed after two seconds");
     setConfirmLoading(true);
     setTimeout(() => {
       setVisible(false);
@@ -21,7 +21,7 @@ const CreatePost = () => {
   };
 
   const handleCancel = () => {
-    console.log('Clicked cancel button');
+    console.log("Clicked cancel button");
     setVisible(false);
   };
 

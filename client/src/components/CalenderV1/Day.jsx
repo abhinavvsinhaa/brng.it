@@ -24,7 +24,7 @@ export default function Day({ day, rowIdx }) {
       : "";
   }
   return (
-    <div className="border border-gray-200 flex flex-col">
+    <div className="border border-gray-200 flex flex-col hover:border-blue-500 hover:text-blue-500">
       <header className="flex flex-col items-center">
         {rowIdx === 0 && (
           <p className="text-sm mt-1">{day.format("ddd").toUpperCase()}</p>
@@ -44,7 +44,7 @@ export default function Day({ day, rowIdx }) {
           <div
             key={idx}
             onClick={() => setSelectedEvent(evt)}
-            className={`bg-${evt.label}-200 p-1 mr-3 text-gray-600 text-sm rounded mb-1 truncate`}
+            className={`bg-${evt.label}-500 p-1 m-2 text-white text-sm rounded mb-1 truncate`}
           >
             {evt.title}
           </div>
