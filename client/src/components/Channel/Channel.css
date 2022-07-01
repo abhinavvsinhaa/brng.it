@@ -1,0 +1,23 @@
+.social-media-name {
+    font-weight: 700;
+    font-size: 18px;
+    margin-top: 10px;
+}
+
+.social-media-subgroup {
+    font-weight: 400;
+    font-size: 14px;
+    color: #77797a;
+    margin-top: 5px;
+}
+
+.social-media-connect {
+    font-weight: 500;
+    font-size: 14px;
+    color: #3d3d3d;
+    margin-top: 10px;
+}
+
+.connect-new-channel-container {
+    height: 100vh;
+}

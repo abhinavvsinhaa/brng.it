@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import GlobalContext from "../../hooks/GlobalContext";
+import GlobalContext from "../../context/CalanderContext";
 
 const labelsClasses = ["indigo", "gray", "green", "blue", "red", "purple"];
 
@@ -37,7 +37,7 @@ export default function EventModal() {
   return (
     <div className="h-screen w-full fixed left-0 top-0 flex justify-center items-center">
       <form className="bg-white rounded-lg shadow-2xl w-1/2">
-        {/* Modal Navigation */}
+        {/* Modal Navigation*/}
         <header className="bg-gray-100 px-4 py-2 flex justify-between items-center">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -71,6 +71,7 @@ export default function EventModal() {
                 />
               </svg>
             )}
+            {/* Close Button */}
             <button onClick={() => setShowEventModal(false)}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -166,7 +167,7 @@ export default function EventModal() {
                   File Image
                 </label>
                 <div class="flex">
-                  <label class="flex flex-col w-full m-5 border-4 border-blue-200 border-dashed hover:bg-gray-100 hover:border-gray-300">
+                  <label class="flex flex-col w-full h-32 m-5 border-4 border-blue-200 border-dashed hover:bg-gray-100 hover:border-gray-300">
                     <div class="flex flex-col items-center justify-center pt-7">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -188,6 +189,11 @@ export default function EventModal() {
                     </div>
                     <input type="file" class="opacity-0" />
                   </label>
+                  <img
+                    src="https://static.parade.com/wp-content/uploads/2021/11/new-year-wishes.jpg"
+                    alt="none"
+                    width="40%"
+                  ></img>
                 </div>
               </div>
             </div>

@@ -1,0 +1,32 @@
+.signup-form > .row {
+    height: 100vh;
+}
+
+.signup-col {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form {
+    width: 40%;
+}
+
+.img-col-signup {
+    background: url('../../assets/images/signup-img.png') center center no-repeat;
+    background-size: cover;
+}
+
+.password-requirements {
+    font-size: 18px;
+    opacity: 0.8;
+    margin-bottom: 5px;
+    color: red;
+    text-align: center;
+}
+
+@media screen and (max-width: 1199px) {
+    .form {
+        width: 75%;
+    }
+}

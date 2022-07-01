@@ -1,16 +1,16 @@
-// import './App.css';
-// import CreatePost from "./components/CreatePost/CreatePost";
-// import Navigation from "./components/Navigation/Navigation";
-import Calender from "./components/CalenderV1/Calender";
-import ContextWrapper from "./hooks/ContextWrapper";
+import Navigation from "./components/Navigation/Navigation";
+import CalenderProvider from "./context/CalanderProvider";
+import { AuthProvider } from "./context/AuthContext";
 
 function App() {
   return (
-    <ContextWrapper>
-      <div className="App">
-        <Calender />
-      </div>
-    </ContextWrapper>
+    <AuthProvider>
+      <CalenderProvider>
+        <div className="App">
+          <Navigation />
+        </div>
+      </CalenderProvider>
+    </AuthProvider>
   );
 }
 
