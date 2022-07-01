@@ -119,7 +119,7 @@ export default function EventModal() {
                 d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
               />
             </svg>
-            <span class="text-xs w-fit font-semibold inline-block py-1 px-2 uppercase rounded text-pink-600 bg-pink-200 uppercase last:mr-0 mr-1">
+            <span className="text-xs w-fit font-semibold inline-block py-1 px-2 uppercase rounded text-pink-600 bg-pink-200 uppercase last:mr-0 mr-1">
               <p>{daySelected.format("dddd, MMMM DD")}</p>
             </span>
 
@@ -141,7 +141,7 @@ export default function EventModal() {
             <textarea
               id="message"
               rows="4"
-              class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="Campaign Content"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
@@ -161,17 +161,17 @@ export default function EventModal() {
                 d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
               />
             </svg>
-            <div class="max-w-2xl rounded-lg shadow-xl bg-gray-50">
-              <div class="m-4">
-                <label class="inline-block mb-2 text-gray-500">
+            <div className="max-w-2xl rounded-lg shadow-xl bg-gray-50">
+              <div className="m-4">
+                <label className="inline-block mb-2 text-gray-500">
                   File Image
                 </label>
-                <div class="flex">
-                  <label class="flex flex-col w-full h-32 m-5 border-4 border-blue-200 border-dashed hover:bg-gray-100 hover:border-gray-300">
-                    <div class="flex flex-col items-center justify-center pt-7">
+                <div className="flex">
+                  <label className="flex flex-col w-full h-32 m-5 border-4 border-blue-200 border-dashed hover:bg-gray-100 hover:border-gray-300">
+                    <div className="flex flex-col items-center justify-center pt-7">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        class="w-8 h-8 text-gray-400 group-hover:text-gray-600"
+                        className="w-8 h-8 text-gray-400 group-hover:text-gray-600"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -183,11 +183,11 @@ export default function EventModal() {
                           d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
                         />
                       </svg>
-                      <p class="pt-1 text-sm tracking-wider text-gray-400 group-hover:text-gray-600">
+                      <p className="pt-1 text-sm tracking-wider text-gray-400 group-hover:text-gray-600">
                         Attach Image
                       </p>
                     </div>
-                    <input type="file" class="opacity-0" />
+                    <input type="file" className="opacity-0" />
                   </label>
                   <img
                     src="https://static.parade.com/wp-content/uploads/2021/11/new-year-wishes.jpg"
@@ -214,57 +214,57 @@ export default function EventModal() {
               />
             </svg>
             <div className="flex justify-between">
-              <div class="form-check">
+              <div className="form-check">
                 <input
-                  class="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                  className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                   type="checkbox"
                   value=""
                   id="flexCheckDefault"
                 />
                 <label
-                  class="form-check-label inline-block text-gray-800"
+                  className="form-check-label inline-block text-gray-800"
                   for="flexCheckDefault"
                 >
                   Instagram
                 </label>
               </div>
-              <div class="form-check">
+              <div className="form-check">
                 <input
-                  class="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                  className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                   type="checkbox"
                   value=""
                   id="flexCheckDefault"
                 />
                 <label
-                  class="form-check-label inline-block text-gray-800"
+                  className="form-check-label inline-block text-gray-800"
                   for="flexCheckDefault"
                 >
                   Facebook
                 </label>
               </div>
-              <div class="form-check">
+              <div className="form-check">
                 <input
-                  class="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                  className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                   type="checkbox"
                   value=""
                   id="flexCheckDefault"
                 />
                 <label
-                  class="form-check-label inline-block text-gray-800"
+                  className="form-check-label inline-block text-gray-800"
                   for="flexCheckDefault"
                 >
                   Twitter
                 </label>
               </div>
-              <div class="form-check">
+              <div className="form-check">
                 <input
-                  class="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                  className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                   type="checkbox"
                   value=""
                   id="flexCheckDefault"
                 />
                 <label
-                  class="form-check-label inline-block text-gray-800"
+                  className="form-check-label inline-block text-gray-800"
                   for="flexCheckDefault"
                 >
                   Linkedin

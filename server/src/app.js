@@ -27,11 +27,12 @@ app.use(express.urlencoded({ extended: true }));
 app.use(xss());
 app.use(mongoSanitize());
 app.use(compression());
-app.use(cors());
+app.use(cors({ origin: '*' }));
 app.options('*', cors());
 
 app.use(passport.initialize());
 passport.use('jwt', jwtStrategy);
+
 if (config.env === 'production') {
   app.use('/v1/auth', authLimiter);
 }

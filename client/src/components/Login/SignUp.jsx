@@ -2,33 +2,36 @@ import React, { useState } from "react";
 import "./SignUp.css";
 import useAuth from "../../hooks/useAuth";
 import { axiosPrivate } from "../../api/axios";
+import Loading from "../Loading/Loading";
 
 const SignUp = () => {
   const { setAuth } = useAuth();
-  const [error, setError] = useState("choose a strong password!");
+  const [error, setError] = useState("");
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  const [name, setName] = useState();
+  const [loading, setLoading] = useState(false);
 
   const handleClick = async (e) => {
     e.preventDefault();
     try {
-      const response = await axiosPrivate.post("/register", {
+      setLoading(true);
+      const res = await axiosPrivate.post("/auth/register", {
+        name,
         email,
         password,
       });
-      console.log(response?.data);
-      setAuth(response?.data);
+      setError("");
+      console.log(res?.data);
+      setAuth(res?.data);
+      setLoading(false);
+      localStorage.setItem("refresh", res?.data?.tokens?.refresh?.token);
+      axiosPrivate.defaults.headers.common[
+        "Authorization"
+      ] = `Bearer ${res?.data?.tokens?.access?.token}`;
     } catch (err) {
-      console.log(err);
-      if (!err?.response) {
-        setError("No Server Response");
-      } else if (err.response?.status === 400) {
-        setError("Missing Username or Password");
-      } else if (err.response?.status === 401) {
-        setError("Unauthorized");
-      } else {
-        setError("Login Failed");
-      }
+      console.log(err?.response);
+      setError(err?.response?.data?.message);
     }
   };
 
@@ -41,6 +44,16 @@ const SignUp = () => {
               <p className="form-heading">Let's get your account set up</p>
               <br />
               <form action="">
+                <label htmlFor="email">Name</label>
+                <br />
+                <input
+                  type="text"
+                  name="name"
+                  id="name"
+                  required
+                  onChange={(e) => setName(e.target.value)}
+                />
+                <br />
                 <label htmlFor="email">Email</label>
                 <br />
                 <input
@@ -67,9 +80,9 @@ const SignUp = () => {
                 <br />
                 <button
                   onClick={handleClick}
-                  className="btn btn-primary form-submit-btn"
+                  className="flex content-center justify-center btn btn-primary form-submit-btn"
                 >
-                  Sign Up
+                  <span>Sign Up</span> <Loading display={loading} />
                 </button>
               </form>
 

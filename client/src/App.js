@@ -1,16 +1,14 @@
 import Navigation from "./components/Navigation/Navigation";
 import CalenderProvider from "./context/CalanderProvider";
-import { AuthProvider } from "./context/AuthContext";
+import "./api/Interceptor/index";
 
 function App() {
   return (
-    <AuthProvider>
-      <CalenderProvider>
-        <div className="App">
-          <Navigation />
-        </div>
-      </CalenderProvider>
-    </AuthProvider>
+    <CalenderProvider>
+      <div className="App">
+        <Navigation />
+      </div>
+    </CalenderProvider>
   );
 }
 

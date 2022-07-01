@@ -22,10 +22,13 @@ import Calender from "../CalenderV1/Calender";
 import Login from "../Login/Login";
 import SignUp from "../Login/SignUp";
 import ConnectNewChannel from "../Channel/ConnectNewChannel";
+import useAuth from "../../hooks/useAuth";
+import Profile from "../Profile/Profile";
 
 const drawerWidth = 240;
 
 function Navigation(props) {
+  const { auth } = useAuth();
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
@@ -95,7 +98,7 @@ function Navigation(props) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            Dashboard
+            {auth?.user?.name || "Dashboard"}
           </Typography>
         </Toolbar>
       </AppBar>
@@ -150,6 +153,7 @@ function Navigation(props) {
         <Toolbar />
         <Routes>
           <Route path="/" element={<Calender />} />
+          <Route path="/me" element={<Profile />} />
           <Route path="/channels" element={<Channel />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/login" element={<Login />} />
