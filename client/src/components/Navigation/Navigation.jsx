@@ -152,12 +152,7 @@ function Navigation(props) {
       >
         <Toolbar />
         <Routes>
-          <Route path="/" element={<Calender />} />
-          <Route path="/me" element={<Profile />} />
-          <Route path="/channels" element={<Channel />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/channels/connect" element={<ConnectNewChannel />} />
+          <Route path="/" element={<Profile />} />
         </Routes>
       </Box>
     </Box>

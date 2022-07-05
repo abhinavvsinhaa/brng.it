@@ -3,6 +3,8 @@ import "./Login.css";
 import useAuth from "../../hooks/useAuth";
 import { axiosPrivate } from "../../api/axios";
 import Loading from "../Loading/Loading";
+import { useNavigate } from "react-router-dom";
+
 import useRefreshToken from "../../hooks/useRefreshToken";
 
 // Assets
@@ -14,6 +16,7 @@ const Login = () => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleClick = async (e) => {
     e.preventDefault();
@@ -24,13 +27,13 @@ const Login = () => {
         password,
       });
       setError("");
-      console.log(res?.data);
-      setAuth(res?.data);
+      setAuth({ ...res?.data, isAuthenticated: true });
       setLoading(false);
       localStorage.setItem("refresh", res?.data?.tokens?.refresh?.token);
       axiosPrivate.defaults.headers.common[
         "Authorization"
       ] = `Bearer ${res?.data?.tokens?.access?.token}`;
+      navigate("/");
     } catch (err) {
       console.log(err?.response);
       setError(err?.response?.data?.message);

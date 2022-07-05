@@ -1,9 +1,11 @@
 import { createContext, useState } from "react";
+import useFetch from "../hooks/useFetch";
 
 const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }) => {
-  const [auth, setAuth] = useState({});
+  const { data } = useFetch("/auth/me");
+  const [auth, setAuth] = useState(data);
 
   return (
     <AuthContext.Provider value={{ auth, setAuth }}>
