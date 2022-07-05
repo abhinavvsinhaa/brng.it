@@ -1,11 +1,12 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Channel = () => {
     return (
         <div className="container">
-            <div className="row justify-content-center">
+            <div className="row justify-content-center" style={{height: '100vh'}}>
                 <div className="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12" style={{
-                        // backgroundColor: 'red'
+                        // backgroundColor: 'red',
                     }}>
                     <p style={{
                         fontWeight: 700,
@@ -25,15 +26,17 @@ const Channel = () => {
                         }}>
                             Add or Remove Channels
                         </button> */}
-                        <button style={{
-                            backgroundColor: '#3A62FE',
-                            padding: '10px',
-                            borderRadius: '5px',
-                            fontSize: '14px',
-                            color: 'white'
-                        }}>
-                            Connect Channel
-                        </button>
+                        <Link to='/dashboard/channels/connect'>
+                            <button style={{
+                                backgroundColor: '#213CA3',
+                                padding: '10px 20px',
+                                borderRadius: '5px',
+                                fontSize: '14px',
+                                color: 'white'
+                            }}>
+                                Connect Channel
+                            </button>
+                        </Link>
                     </div>
                 </div>
             </div>

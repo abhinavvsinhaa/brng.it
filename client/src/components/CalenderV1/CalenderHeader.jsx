@@ -51,8 +51,8 @@ export default function CalendarHeader() {
           &nbsp;
           <button
             onClick={handleReset}
-            className="border rounded py-2 px-4 mr-5"
-            style={{ fontSize: "14px" }}
+            className=" border rounded px-5 py-2.5 mr-5"
+            style={{ fontSize: "14px", backgroundColor: 'white' }}
           >
             Today
           </button>

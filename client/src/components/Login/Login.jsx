@@ -117,7 +117,7 @@ const Login = () => {
             <p className="banner heading">Skeduler</p>
             <br />
             <p>
-              Skeduler lets you schedule your social media posts, shorten URLs,
+              Tomaque lets you schedule your social media posts, shorten URLs,
               and generate some cool email signatures.
             </p>
           </div>
