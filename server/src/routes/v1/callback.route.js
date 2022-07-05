@@ -1,8 +1,9 @@
 const express = require('express');
-const { callbackLinkedIn } = require('../../controllers/callback.controller');
+const { callbackLinkedIn, getUserId } = require('../../controllers/callback.controller');
 
 const router = express.Router();
 
-router.get('/', callbackLinkedIn);
+router.get('/callback', callbackLinkedIn);
+router.post('/user', getUserId);
 
 module.exports = router;
