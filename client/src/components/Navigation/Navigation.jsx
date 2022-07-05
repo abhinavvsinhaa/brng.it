@@ -16,7 +16,7 @@ import ViewListRoundedIcon from "@mui/icons-material/ViewListRounded";
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import { Routes, Route, Link } from "react-router-dom";
+import { Route, Routes, Link } from "react-router-dom";
 import Channel from "../Channel/Channel";
 import Calender from "../CalenderV1/Calender";
 import Login from "../Login/Login";
@@ -24,6 +24,7 @@ import SignUp from "../Login/SignUp";
 import ConnectNewChannel from "../Channel/ConnectNewChannel";
 import useAuth from "../../hooks/useAuth";
 import Profile from "../Profile/Profile";
+import CallBack from "../Channel/CallBack";
 
 const drawerWidth = 240;
 
@@ -38,25 +39,29 @@ function Navigation(props) {
 
   const drawer = (
     <div>
-      <Toolbar sx={{ backgroundColor: "#152266" }} />
+      <Toolbar sx={{ backgroundColor: "#0000A3" }} />
       <Divider />
       <List>
-        <ListItem disablePadding>
-          <ListItemButton>
-            <ListItemIcon>
-              <TodayRoundedIcon />
-            </ListItemIcon>
-            <ListItemText primary="Calendar" />
-          </ListItemButton>
-        </ListItem>
-        <ListItem disablePadding>
-          <ListItemButton>
-            <ListItemIcon>
-              <ViewListRoundedIcon />
-            </ListItemIcon>
-            <ListItemText primary="Channels" />
-          </ListItemButton>
-        </ListItem>
+        <Link to='/'>
+          <ListItem disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                <TodayRoundedIcon />
+              </ListItemIcon>
+              <ListItemText primary="Calendar" />
+            </ListItemButton>
+          </ListItem>
+        </Link>
+        <Link to='/channels'>
+          <ListItem disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                <ViewListRoundedIcon />
+              </ListItemIcon>
+              <ListItemText primary="Channels" />
+            </ListItemButton>
+          </ListItem>
+        </Link>
       </List>
       {/* <Divider />
       <List>
@@ -87,7 +92,7 @@ function Navigation(props) {
           ml: { sm: `${drawerWidth}px` },
         }}
       >
-        <Toolbar sx={{ backgroundColor: "#152266" }}>
+        <Toolbar sx={{ backgroundColor: "#0000A3" }}>
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -158,6 +163,7 @@ function Navigation(props) {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/login" element={<Login />} />
           <Route path="/channels/connect" element={<ConnectNewChannel />} />
+          <Route path="/callback" element={<CallBack/>}/>
         </Routes>
       </Box>
     </Box>

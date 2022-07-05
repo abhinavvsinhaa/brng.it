@@ -100,7 +100,7 @@ const SignUp = () => {
                     I agree to
                     <span style={{ color: "blue", fontWeight: "500" }}>
                       {" "}
-                      Skeduler's Terms of Service
+                      Tomaque's Terms of Service
                     </span>
                   </a>
                 </div>
