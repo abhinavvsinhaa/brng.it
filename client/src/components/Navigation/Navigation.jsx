@@ -42,7 +42,7 @@ function Navigation(props) {
       <Toolbar sx={{ backgroundColor: "#0000A3" }} />
       <Divider />
       <List>
-        <Link to='/'>
+        <Link to="/">
           <ListItem disablePadding>
             <ListItemButton>
               <ListItemIcon>
@@ -52,7 +52,7 @@ function Navigation(props) {
             </ListItemButton>
           </ListItem>
         </Link>
-        <Link to='/channels'>
+        <Link to="/channels">
           <ListItem disablePadding>
             <ListItemButton>
               <ListItemIcon>
@@ -157,13 +157,7 @@ function Navigation(props) {
       >
         <Toolbar />
         <Routes>
-          <Route path="/" element={<Calender />} />
-          <Route path="/me" element={<Profile />} />
-          <Route path="/channels" element={<Channel />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/channels/connect" element={<ConnectNewChannel />} />
-          <Route path="/callback" element={<CallBack/>}/>
+          <Route path="/" element={<Profile />} />
         </Routes>
       </Box>
     </Box>

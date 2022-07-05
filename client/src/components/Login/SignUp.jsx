@@ -3,6 +3,7 @@ import "./SignUp.css";
 import useAuth from "../../hooks/useAuth";
 import { axiosPrivate } from "../../api/axios";
 import Loading from "../Loading/Loading";
+import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
   const { setAuth } = useAuth();
@@ -11,6 +12,7 @@ const SignUp = () => {
   const [password, setPassword] = useState();
   const [name, setName] = useState();
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleClick = async (e) => {
     e.preventDefault();
@@ -23,12 +25,13 @@ const SignUp = () => {
       });
       setError("");
       console.log(res?.data);
-      setAuth(res?.data);
+      setAuth({ ...res?.data, isAuthenticated: true });
       setLoading(false);
       localStorage.setItem("refresh", res?.data?.tokens?.refresh?.token);
       axiosPrivate.defaults.headers.common[
         "Authorization"
       ] = `Bearer ${res?.data?.tokens?.access?.token}`;
+      navigate("/");
     } catch (err) {
       console.log(err?.response);
       setError(err?.response?.data?.message);
