@@ -1,11 +1,9 @@
 import React, { useState } from "react";
 import "./Login.css";
 import useAuth from "../../hooks/useAuth";
-import { axiosPrivate } from "../../api/axios";
+import { axiosPrivate, axiosIgnoreInterceptor } from "../../api/axios";
 import Loading from "../Loading/Loading";
 import { useNavigate } from "react-router-dom";
-
-import useRefreshToken from "../../hooks/useRefreshToken";
 
 // Assets
 import bannerBg from "../../assets/images/sp-login-image.png";
@@ -22,7 +20,7 @@ const Login = () => {
     e.preventDefault();
     try {
       setLoading(true);
-      const res = await axiosPrivate.post("/auth/login", {
+      const res = await axiosIgnoreInterceptor.post("/auth/login", {
         email,
         password,
       });

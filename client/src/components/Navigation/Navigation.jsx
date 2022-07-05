@@ -158,6 +158,7 @@ function Navigation(props) {
         <Toolbar />
         <Routes>
           <Route path="/" element={<Profile />} />
+          <Route path="/channels" element={<Channel />} />
         </Routes>
       </Box>
     </Box>

@@ -14,3 +14,13 @@ export const axiosPrivate = axios.create({
   },
   withCredentials: false,
 });
+
+export const axiosIgnoreInterceptor = axios.create({
+  baseURL: BASE_URL,
+  headers: {
+    "Content-Type": "application/json",
+    "Access-Control-Allow-Origin": "*",
+    Accept: "application/json, text/plain, /",
+  },
+  withCredentials: false,
+});
