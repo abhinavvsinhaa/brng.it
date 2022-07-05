@@ -11,7 +11,9 @@ const PersistLogin = () => {
   useEffect(() => {
     const verifyRefreshToken = async () => {
       const response = await refresh();
+      console.log(response);
       if (!response) setAuth({ isAuthenticated: false });
+      else setAuth({ ...response, isAuthenticated: true });
       setIsLoading(false);
     };
 

@@ -13,6 +13,10 @@ const useRefreshToken = () => {
         refreshToken: localStorage.getItem("refresh"),
       });
       localStorage.setItem("refresh", response?.data?.tokens?.refresh?.token);
+      axiosPrivate.defaults.headers.common[
+        "Authorization"
+      ] = `Bearer ${response?.data?.tokens?.access?.token}`;
+
       return response?.data;
     } catch (err) {
       return null;
