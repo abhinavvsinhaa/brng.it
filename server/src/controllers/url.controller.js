@@ -4,7 +4,7 @@ const ApiError = require('../utils/ApiError');
 const Url = require('../models/url.model');
 const httpStatus = require('http-status');
 const catchAsync = require('../utils/catchAsync');
-const shortenSingleUrl = catchAsync(async (req, res, next) => {
+const shortenSingleUrl = async (req, res, next) => {
   //Initialize uid
   const uid = new ShortUniqueId({ length: req.body.length });
 
@@ -28,9 +28,9 @@ const shortenSingleUrl = catchAsync(async (req, res, next) => {
     uid: uuid,
   });
   return newUrl;
-});
+};
 
-const shortenMultipleUrlAsync = catchAsync(async (req, _res, next) => {
+const shortenMultipleUrlAsync = async (req, _res, next) => {
   //Initialize uid
   const uid = new ShortUniqueId({ length: req.body.length });
   const multipleShortUrl = new Array();
@@ -61,7 +61,7 @@ const shortenMultipleUrlAsync = catchAsync(async (req, _res, next) => {
   });
 
   return multipleShortUrl;
-});
+};
 
 const shortenUrl = catchAsync(async (req, res, next) => {
   const newUrl = await shortenSingleUrl(req, res, next);
