@@ -15,16 +15,36 @@ const callbackLinkedIn = catchAsync(async (req, res) => {
         'code': code,
         'redirect_uri': 'http://localhost:3000/channels/connect',
         'client_id': '77wv1vw4mpixlq',
-        'client_secret': 'oeUtKB4fRr6hU7hK'
+        'client_secret': 'oeUtKB4fRr6hU7hK' 
       }
     };
 
     request(options, function (error, response) {
       if (error) throw new Error(error);
-      res.json(response.body);
+      
+      console.log(response.body)
+      res.json(response.body)
     });
 })
 
+const getUserId = catchAsync(async (req, res) => {
+  console.log(req.body)
+  var options = {
+    'method': 'GET',
+    'url': 'https://api.linkedin.com/v2/me',
+    'headers': {
+      'Authorization': `Bearer ${req.body.access_token}`
+    }
+  };
+
+  request(options, function (error, response) {
+    if (error) throw new Error(error);
+    res.json(response.body);
+  });
+  
+})
+
 module.exports = {
-    callbackLinkedIn
+  getUserId,
+  callbackLinkedIn
 }

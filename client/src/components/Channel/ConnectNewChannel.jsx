@@ -2,6 +2,8 @@ import React from "react";
 import { Card } from "antd";
 import "./Channel.css";
 
+import axios from '../../api/axios';
+
 // importing logos
 import IG from "../../assets/images/ig-logo.png";
 import FB from "../../assets/images/fb-icon.png";
@@ -12,21 +14,23 @@ import { useState } from "react";
 const ConnectNewChannel = () => {
   const [code, setCode] = useState("");
 
-  React.useEffect(() => {
+  async function loadData() {
     const location = window.location.href;
     const arr = location.split("=");
+
     if (arr.length == 2) {
       setCode(arr[1]);
-      console.log("code" + arr[1]);
-
-      // generate access token from code
-      fetch(`http://localhost:8000/v1/callback?code=${arr[1]}`, {
-        method: "GET",
-      })
-        .then((res) => res.json())
-        .then(console.log)
-        .catch(console.log);
+      console.log("code: " + arr[1]);
+      
+      const res = await axios.get(`/authorization/callback?code=${arr[1]}`);
+      const response = await JSON.parse(res.data);
+      const user = await axios.post('/authorization/user', response);
+      console.log(JSON.parse(user.data));
     }
+  }
+
+  React.useEffect(() => {
+    loadData();
   }, []);
 
   return (

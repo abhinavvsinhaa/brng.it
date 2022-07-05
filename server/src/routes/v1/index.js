@@ -28,7 +28,7 @@ const defaultRoutes = [
     route: urlCollectionRoute
   },
   {
-    path: '/callback',
+    path: '/authorization',
     route: callbackRoute
   }
 ];
