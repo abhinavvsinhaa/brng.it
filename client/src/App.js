@@ -8,6 +8,7 @@ import Private from "./components/protectedRoute";
 import Error from "./components/Error";
 import { useEffect } from "react";
 import PersistLogin from "./components/persistLogin";
+import Channel from "./components/Channel/Channel";
 
 function App() {
   useEffect(() => {}, []);
@@ -20,8 +21,9 @@ function App() {
           <Route path="/signup" element={<SignUp />} />
           <Route element={<PersistLogin />}>
             <Route path="/" element={<Private Component={Navigation} />} />
-            <Route path="*" element={<Error />} />
+            <Route path="/channels" element={<Channel />} />
           </Route>
+          <Route path="*" element={<Error />} />
         </Routes>
       </div>
     </CalenderProvider>
