@@ -155,10 +155,7 @@ function Navigation(props) {
           width: { sm: `calc(100% - ${drawerWidth}px)` },
         }}
       >
-        <Toolbar />
-        <Routes>
-          <Route path="/" element={<Profile />} />
-        </Routes>
+        {/* <Toolbar /> */}
       </Box>
     </Box>
   );

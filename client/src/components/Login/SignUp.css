@@ -1,3 +1,7 @@
+.signup-form {
+    overflow-x: hidden;
+}
+
 .signup-form > .row {
     height: 100vh;
 }
@@ -9,7 +13,7 @@
 }
 
 .form {
-    width: 40%;
+    width: 60%;
 }
 
 .img-col-signup {
@@ -27,6 +31,6 @@
 
 @media screen and (max-width: 1199px) {
     .form {
-        width: 75%;
+        width: 80%;
     }
 }

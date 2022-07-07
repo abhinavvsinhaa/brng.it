@@ -24,9 +24,10 @@
 
 .form-submit-btn {
     width: 100%;
-    background-color: #3A62FE;
+    background-color: #1D3461;
     padding: 10px 20px;
     font-size: 14px;
+    color: white;
 }
 
 .form > form > label {
@@ -36,8 +37,8 @@
 }
 
 .image-col {
-    background-color: #FADE2A;
     position: relative;
+    background-color: #EDBFC6;
 }
 
 .banner-container {
@@ -50,6 +51,8 @@
 .banner {
     font-weight: 700;
     font-size: 35px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .banner-bg-image {

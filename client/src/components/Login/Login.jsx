@@ -31,7 +31,7 @@ const Login = () => {
       axiosPrivate.defaults.headers.common[
         "Authorization"
       ] = `Bearer ${res?.data?.tokens?.access?.token}`;
-      navigate("/");
+      navigate("/dashboard");
     } catch (err) {
       console.log(err?.response);
       setError(err?.response?.data?.message);
@@ -71,7 +71,7 @@ const Login = () => {
               <p className="password-requirements">{error}</p>
               <br />
               <button
-                className="flex content-center justify-center btn btn-primary form-submit-btn"
+                className="flex content-center justify-center btn form-submit-btn"
                 onClick={handleClick}
               >
                 <span>Login</span>
@@ -89,7 +89,7 @@ const Login = () => {
               }}
             >
               <div>
-                <a href="">Create account</a>
+                <a href="/signup">Create account</a>
               </div>
               <div>
                 <a href="">Forgot password?</a>
@@ -111,9 +111,9 @@ const Login = () => {
         </div>
         <div className="col-xl-7 col-lg-7 image-col">
           <div className="banner-container">
-            <span className="badge text-bg-light">Social Media Tool</span>
-            <p className="banner heading">Skeduler</p>
-            <br />
+            <span className="badge text-light" style={{backgroundColor: '#1D3461'}}>Social Media Tool</span>
+            <p className="banner heading">
+            Tomaque</p>
             <p>
               Tomaque lets you schedule your social media posts, shorten URLs,
               and generate some cool email signatures.

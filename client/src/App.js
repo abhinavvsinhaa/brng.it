@@ -9,19 +9,25 @@ import Error from "./components/Error";
 import { useEffect } from "react";
 import PersistLogin from "./components/persistLogin";
 import Channel from "./components/Channel/Channel";
+import ResponsiveNavbar from '../src/components/Layout/Navbar'
+import Navbar from "../src/components/Layout/Navbar";
+import Calender from "./components/CalenderV1/Calender";
+import ConnectNewChannel from "./components/Channel/ConnectNewChannel";
 
 function App() {
   useEffect(() => {}, []);
 
   return (
     <CalenderProvider>
+      <Navbar/>
       <div className="app">
         <Routes>
-          <Route path="/login" element={<Login />} />
+          <Route path="/" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
           <Route element={<PersistLogin />}>
-            <Route path="/" element={<Private Component={Navigation} />} />
-            <Route path="/channels" element={<Channel />} />
+            <Route path="/dashboard" element={<Private Component={Calender} />} />
+            <Route path="/dashboard/channels" element={<Channel />} />
+            <Route path="/channels/connect" element={<ConnectNewChannel/>} />
           </Route>
           <Route path="*" element={<Error />} />
         </Routes>

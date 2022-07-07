@@ -10,9 +10,11 @@ import FB from "../../assets/images/fb-icon.png";
 import LinkedIn from "../../assets/images/linkedin-logo.png";
 import IGConnectModal from "./IGConnectModal";
 import { useState } from "react";
+import useAuth from "../../hooks/useAuth";
 
 const ConnectNewChannel = () => {
   const [code, setCode] = useState("");
+  const { auth, setAuth } = useAuth();
 
   async function loadData() {
     const location = window.location.href;
@@ -26,6 +28,10 @@ const ConnectNewChannel = () => {
       const response = await JSON.parse(res.data);
       const user = await axios.post('/authorization/user', response);
       console.log(JSON.parse(user.data));
+
+      // update auth.user.id -> add authorized user in customers[]
+      const getRootUser = await axios.get(`/users/${auth.user.id}`);
+      console.log(JSON.parse(getRootUser));
     }
   }
 
