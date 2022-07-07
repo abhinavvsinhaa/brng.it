@@ -11,6 +11,8 @@ export default function Day({ day, rowIdx }) {
     setSelectedEvent,
   } = useContext(GlobalContext);
 
+  console.log(dayjs().isBefore(day));
+
   useEffect(() => {
     const events = filteredEvents.filter(
       (evt) => dayjs(evt.day).format("DD-MM-YY") === day.format("DD-MM-YY")
@@ -23,8 +25,13 @@ export default function Day({ day, rowIdx }) {
       ? "bg-blue-600 text-white rounded-full w-7"
       : "";
   }
+  function getHoverClass() {
+    return dayjs().isBefore(day, "day") || dayjs().isSame(day, "day")
+      ? "hover:bg-blue-100"
+      : "hover:bg-red-500";
+  }
   return (
-    <div className="border border-gray-200 flex flex-col hover:border-blue-500 hover:text-blue-500">
+    <div className={`border-1 border-gray-50 flex flex-col ${getHoverClass()}`}>
       <header className="flex flex-col items-center">
         {rowIdx === 0 && (
           <p className="text-sm mt-1">{day.format("ddd").toUpperCase()}</p>
@@ -35,15 +42,21 @@ export default function Day({ day, rowIdx }) {
       </header>
       <div
         className="flex-1 cursor-pointer"
-        onClick={() => {
-          setDaySelected(day);
-          setShowEventModal(true);
+        onClick={(e) => {
+          if (dayjs().isBefore(day, "day") || dayjs().isSame(day, "day")) {
+            setDaySelected(day);
+            setShowEventModal(true);
+          } else {
+            alert("Day has passed!");
+          }
         }}
       >
         {dayEvents.map((evt, idx) => (
           <div
             key={idx}
-            onClick={() => setSelectedEvent(evt)}
+            onClick={() => {
+              setSelectedEvent(evt);
+            }}
             className={`bg-${evt.label}-500 p-1 m-2 text-white text-sm rounded mb-1 truncate`}
           >
             {evt.title}
