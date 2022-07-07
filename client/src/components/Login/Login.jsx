@@ -31,7 +31,7 @@ const Login = () => {
       axiosPrivate.defaults.headers.common[
         "Authorization"
       ] = `Bearer ${res?.data?.tokens?.access?.token}`;
-      navigate("/dashboard");
+      navigate("/");
     } catch (err) {
       console.log(err?.response);
       setError(err?.response?.data?.message);
@@ -111,9 +111,13 @@ const Login = () => {
         </div>
         <div className="col-xl-7 col-lg-7 image-col">
           <div className="banner-container">
-            <span className="badge text-light" style={{backgroundColor: '#1D3461'}}>Social Media Tool</span>
-            <p className="banner heading">
-            Tomaque</p>
+            <span
+              className="badge text-light"
+              style={{ backgroundColor: "#1D3461" }}
+            >
+              Social Media Tool
+            </span>
+            <p className="banner heading">Tomaque</p>
             <p>
               Tomaque lets you schedule your social media posts, shorten URLs,
               and generate some cool email signatures.
