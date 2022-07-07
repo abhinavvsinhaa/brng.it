@@ -20,10 +20,10 @@ export default function Navbar() {
     const { auth, setAuth } = useAuth();
 
     React.useEffect(() => {
-        // user is logged in
-        if (auth.hasOwnProperty('user')) {
-            setUserMenuDisplay('block');
-        }
+      // user is logged in
+      if (auth.hasOwnProperty('user')) {
+        setUserMenuDisplay('block');
+      }
     }, [auth])
 
   return (
@@ -34,7 +34,7 @@ export default function Navbar() {
     >
       {({ open }) => (
         <>
-          <div className="max-w-full mx-auto px-2 sm:px-6 lg:px-8">
+          <div className="max-w-full mx-auto px-2 sm:px-6 lg:px-8" id="navbar">
             <div className="relative flex items-center justify-between h-16">
               <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
                 {/* Mobile menu button*/}

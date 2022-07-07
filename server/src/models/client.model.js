@@ -6,12 +6,12 @@ const clientSchema = mongoose.Schema(
   {
     name: {
       type: String,
-      required: true,
+      // required: true,
       trim: true,
     },
     description: {
       type: String,
-      required: true,
+      // required: true,
     },
     user: {
       type: mongoose.Schema.Types.ObjectId,
@@ -19,15 +19,15 @@ const clientSchema = mongoose.Schema(
     },
     email: {
       type: String,
-      required: true,
+      // required: true,
       unique: true,
       trim: true,
       lowercase: true,
-      validate(value) {
-        if (!validator.isEmail(value)) {
-          throw new Error('Invalid email');
-        }
-      },
+      // validate(value) {
+      //   if (!validator.isEmail(value)) {
+      //     throw new Error('Invalid email');
+      //   }
+      // },
     },
     instagram: {
       type: Object,

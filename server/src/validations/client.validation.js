@@ -6,6 +6,8 @@ const createClient = {
     email: Joi.string().required().email(),
     name: Joi.string().required(),
     description: Joi.string().required(),
+    linkedin: Joi.object(),
+    user: Joi.string()
   }),
 };
 

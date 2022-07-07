@@ -30,8 +30,13 @@ const ConnectNewChannel = () => {
       console.log(JSON.parse(user.data));
 
       // update auth.user.id -> add authorized user in customers[]
-      const getRootUser = await axios.get(`/users/${auth.user.id}`);
-      console.log(JSON.parse(getRootUser));
+      // const getRootUser = await axios.get(`/users/${auth.user.id}`);
+      // update or add customer
+      const client = await axios.post('/client', {
+        user: auth.user.id,
+        linkedin: JSON.parse(user.data)
+      })
+      console.log(client);
     }
   }
 
@@ -41,8 +46,10 @@ const ConnectNewChannel = () => {
 
   return (
     <div className="container connect-new-channel-container">
-      <div className="row justify-content-center gy-5">
+      <div className="row justify-content-center">
         <div className="col-xl-6 col-lg-12 col-md-12 col-sm-12 col-12">
+          <br />
+          <br />
           <p
             style={{
               fontWeight: 700,

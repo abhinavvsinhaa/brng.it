@@ -12,6 +12,7 @@ const Calender = () => {
 
   useEffect(() => {
     setCurrentMonth(getMonth(monthIndex));
+    console.log(currentMonth)
   }, [monthIndex]);
 
   return (

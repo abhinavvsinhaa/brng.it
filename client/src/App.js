@@ -13,6 +13,7 @@ import ResponsiveNavbar from "../src/components/Layout/Navbar";
 import Navbar from "../src/components/Layout/Navbar";
 import Calender from "./components/CalenderV1/Calender";
 import ConnectNewChannel from "./components/Channel/ConnectNewChannel";
+import './App.css'
 import Profile from "./components/Profile/Profile";
 
 function App() {
@@ -20,8 +21,8 @@ function App() {
 
   return (
     <CalenderProvider>
-      <Navbar />
       <div className="app">
+        <Navbar/>
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
