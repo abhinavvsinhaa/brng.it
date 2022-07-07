@@ -4,7 +4,7 @@ import useAuth from "../../hooks/useAuth";
 import { axiosPrivate, axiosIgnoreInterceptor } from "../../api/axios";
 import Loading from "../Loading/Loading";
 import { useNavigate } from "react-router-dom";
-import { Button, message, Space } from 'antd';
+import { Button, message, Space } from "antd";
 
 // Assets
 import bannerBg from "../../assets/images/sp-login-image.png";
@@ -38,7 +38,7 @@ const SignUp = () => {
         ] = `Bearer ${res?.data?.tokens?.access?.token}`;
         navigate("/");
       } else {
-        return alert("Please accept Tomaque's terms and service.")
+        return alert("Please accept Tomaque's terms and service.");
       }
     } catch (err) {
       setLoading(false);
@@ -65,7 +65,8 @@ const SignUp = () => {
                   required
                   onChange={(e) => setName(e.target.value)}
                 />
-                <br /><br />
+                <br />
+                <br />
                 <label htmlFor="email">Email</label>
                 <br />
                 <input
@@ -89,18 +90,30 @@ const SignUp = () => {
                 <br />
                 <p className="password-requirements">{error}</p>
                 <br />
-                <div style={{
-                  display: 'flex',
-                  alignItems: 'center'
-                }}>
-                  <input type="checkbox" name="termsandservice" id="termsandservice" style={{width: '20px', padding: 0}} onChange={() => setTermsAndService(!termsAndService)}/>
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                >
+                  <input
+                    type="checkbox"
+                    name="termsandservice"
+                    id="termsandservice"
+                    style={{ width: "20px", padding: 0 }}
+                    onChange={() => setTermsAndService(!termsAndService)}
+                  />
                   &nbsp;&nbsp;
                   <p>
-                      I agree to
-                      <a style={{ color: "blue", fontWeight: "500" }} href="https://www.tomaque.com/privacy-policy/" target='__blank'>
-                        {" "}
-                        Tomaque's Terms of Service
-                      </a>
+                    I agree to
+                    <a
+                      style={{ color: "blue", fontWeight: "500" }}
+                      href="https://www.tomaque.com/privacy-policy/"
+                      target="__blank"
+                    >
+                      {" "}
+                      Tomaque's Terms of Service
+                    </a>
                   </p>
                 </div>
                 <br />
@@ -129,9 +142,13 @@ const SignUp = () => {
           </div>
           <div className="col-xl-7 col-lg-7 image-col">
             <div className="banner-container">
-              <span className="badge text-light" style={{backgroundColor: '#1D3461'}}>Social Media Tool</span>
-              <p className="banner heading">
-              Tomaque</p>
+              <span
+                className="badge text-light"
+                style={{ backgroundColor: "#1D3461" }}
+              >
+                Social Media Tool
+              </span>
+              <p className="banner heading">Tomaque</p>
               <p>
                 Tomaque lets you schedule your social media posts, shorten URLs,
                 and generate some cool email signatures.

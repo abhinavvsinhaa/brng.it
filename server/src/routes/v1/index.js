@@ -2,6 +2,7 @@ const express = require('express');
 const authRoute = require('./auth.route');
 const userRoute = require('./user.route');
 const urlRoute = require('./url.route');
+const clientRoute = require('./client.route');
 const urlCollectionRoute = require('./url-collection.route');
 const callbackRoute = require('./callback.route');
 const docsRoute = require('./docs.route');
@@ -21,16 +22,20 @@ const defaultRoutes = [
   },
   {
     path: '/url',
-    route: urlRoute
+    route: urlRoute,
   },
   {
     path: '/tree',
-    route: urlCollectionRoute
+    route: urlCollectionRoute,
   },
   {
     path: '/authorization',
-    route: callbackRoute
-  }
+    route: callbackRoute,
+  },
+  {
+    path: '/client',
+    route: clientRoute,
+  },
 ];
 
 // Routes available only in development mode
