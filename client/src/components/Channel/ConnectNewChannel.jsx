@@ -41,8 +41,10 @@ const ConnectNewChannel = () => {
 
   return (
     <div className="container connect-new-channel-container">
-      <div className="row justify-content-center gy-5">
+      <div className="row justify-content-center">
         <div className="col-xl-6 col-lg-12 col-md-12 col-sm-12 col-12">
+          <br />
+          <br />
           <p
             style={{
               fontWeight: 700,

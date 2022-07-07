@@ -13,14 +13,15 @@ import ResponsiveNavbar from '../src/components/Layout/Navbar'
 import Navbar from "../src/components/Layout/Navbar";
 import Calender from "./components/CalenderV1/Calender";
 import ConnectNewChannel from "./components/Channel/ConnectNewChannel";
+import './App.css'
 
 function App() {
   useEffect(() => {}, []);
 
   return (
     <CalenderProvider>
-      <Navbar/>
       <div className="app">
+        <Navbar/>
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
