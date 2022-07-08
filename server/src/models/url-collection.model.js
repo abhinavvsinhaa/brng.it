@@ -3,6 +3,18 @@ const { toJSON } = require('./plugins');
 const validator = require('validator');
 
 const UrlCollectionSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    default: '',
+  },
+  description: {
+    type: String,
+    default: '',
+  },
+  image: {
+    type: String,
+    default: 'https://i.ibb.co/qkkx4HX/avatardefault-92824.png',
+  },
   original: {
     type: Array,
     required: [true, 'Please provide original url'],

@@ -4,6 +4,7 @@ const ApiError = require('../utils/ApiError');
 const Url = require('../models/url.model');
 const httpStatus = require('http-status');
 const catchAsync = require('../utils/catchAsync');
+
 const shortenSingleUrl = async (req, res, next) => {
   //Initialize uid
   const uid = new ShortUniqueId({ length: req.body.length });
@@ -86,6 +87,8 @@ const shortenMultipleUrl = catchAsync(async (req, res, next) => {
 const getShortUrl = catchAsync(async (req, res, next) => {
   const url = await Url.findOne({ uid: req.params.uid });
   if (!url) return next(new ApiError('URL not found on the server!', 503, true));
+  url.visits++;
+  await url.save();
   res.status(201).json({
     status: 'success',
     data: url,
