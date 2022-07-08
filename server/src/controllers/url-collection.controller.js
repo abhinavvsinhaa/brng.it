@@ -13,6 +13,9 @@ const combine = catchAsync(async (req, res, _next) => {
     link = uid();
   }
   const combinedLink = await UrlCollection.create({
+    name: req.body?.name,
+    description: req.body?.description,
+    image: req.body?.image,
     original: req.body.original,
     short: process.env.SHORT_BASE + link,
     uid: link,
