@@ -7,11 +7,17 @@ import SingleTreeUrl from "../SingleTreeUrl/SingleTreeUrl";
 
 export default function UrlFront() {
   const [mainUrl, setMainUrl] = useState("");
-  const [colMainUrl, setColMainUrl] = useState("");
+  const [link, setLink] = useState("");
+  const [linkName, setLinkName] = useState("");
+
+  
+  const [ColMainUserName, setColMainUserName] = useState('')
   const [colMainUrlArr, setColMainUrlArr] = useState([]);
   const varJson = {};
 
   const [urlArr, setUrlArr] = useState([]);
+  const [colMainUrl, setColMainUrl] = useState([]);
+
   const [colUrlArr, setColUrlArr] = useState([]);
   const [treeUrlArr, setTreeUrlArr] = useState([]);
 
@@ -26,7 +32,7 @@ export default function UrlFront() {
       varJson.shortUrl = res.data.data.short;
       varJson.uid = res.data.data.uid;
       setUrlArr((urlArr) => [...urlArr, varJson]);
-      console.log(urlArr);
+      setMainUrl('')
     } catch (err) {
       console.log(err);
     }
@@ -41,9 +47,12 @@ export default function UrlFront() {
   }
 
   const addMainUrl = () => {
-    setColMainUrlArr((colMainUrlArr) => [...colMainUrlArr, colMainUrl]);
+    setColMainUrlArr((colMainUrlArr) => [...colMainUrlArr, {link,title:linkName}]);
     setAlert(true);
     stopAlertFunc();
+    setLink('');
+    setLinkName('')
+    setColMainUrl('')
   };
   const convertColUrl = async () => {
     const res = await axios.post(
@@ -57,6 +66,7 @@ export default function UrlFront() {
   const convertLinkUrl = async () => {
     const res = await axios.post("http://localhost:8000/v1/tree/combine", {
       original: colMainUrlArr,
+      name: ColMainUserName
     });
     setTreeUrlArr((treeUrlArr) => [...treeUrlArr, res.data.data]);
     setColMainUrlArr([]);
@@ -99,7 +109,7 @@ export default function UrlFront() {
       /> */}
 
       <label for="urlCol" class="form-label">Collection Url</label>
-
+      
 
       <div >
           <input type="email" name="colMainUrl" class="form-control textBox" placeholder="Add Collection" onChange={(e) => {setColMainUrl(e.target.value);}} id="urlCol" aria-describedby="emailHelp"/>
@@ -124,9 +134,12 @@ export default function UrlFront() {
         }}
       /> */}
 
-        <label for="colMainUrl" class="form-label">LinkTree Url Url</label>
+        <div class="form-label">LinkTree Url</div>
+        <input type="email" name="colMainUrl" placeholder="Enter Name " onChange={(e) => { setColMainUserName(e.target.value);}}  class="form-control uerNameInput mb-2" id="urlCol" aria-describedby="emailHelp" /> 
+
         <div >
-          <input type="email" name="colMainUrl" placeholder="Make a Tree" onChange={(e) => { setColMainUrl(e.target.value);}}  class="form-control textBox" id="urlCol" aria-describedby="emailHelp"/>
+        <input type="email" name="colMainUrl" placeholder="Enter Title " onChange={(e) => { setLinkName(e.target.value);}}  class="form-control textBoxName mb-2 mx-1" id="urlCol" aria-describedby="emailHelp" /> 
+          <input type="email" name="colMainUrl" placeholder="Make a Tree" onChange={(e) => { setLink(e.target.value);}}  class="form-control textBox" id="urlCol" aria-describedby="emailHelp"/>
           <button onClick={addMainUrl} class="btn btn-warning  mx-3">Add</button>
           <button onClick={convertLinkUrl} class="btn btn-primary mx-3 ">Create</button>
         </div>

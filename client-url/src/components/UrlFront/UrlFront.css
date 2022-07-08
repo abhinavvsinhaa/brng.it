@@ -18,9 +18,19 @@
 }
 .form-label{
     margin-bottom: 10px;
+    display: block;
 }
 .textBox{
     width: 50%;
     margin: auto;
     display: inline-block
+}
+.textBoxName{
+    width: 30%;
+    margin: auto;
+    display: inline-block
+}
+.uerNameInput{
+    width: 50%;
+    margin: auto;
 }
