@@ -26,17 +26,21 @@ const ConnectNewChannel = () => {
       
       const res = await axios.get(`/authorization/callback?code=${arr[1]}`);
       const response = await JSON.parse(res.data);
+      console.log(response);
       const user = await axios.post('/authorization/user', response);
       console.log(JSON.parse(user.data));
 
       // update auth.user.id -> add authorized user in customers[]
       // const getRootUser = await axios.get(`/users/${auth.user.id}`);
       // update or add customer
-      const client = await axios.post('/client', {
+      const client = await axios.post(`/client/`, {
         user: auth.user.id,
-        linkedin: JSON.parse(user.data)
+        linkedin: {
+          access_token: response.access_token,
+          ...JSON.parse(user.data)
+        }
       })
-      console.log(client);
+      console.log("Client: " + JSON.parse(client));
     }
   }
 

@@ -29,8 +29,8 @@ export default function Navbar() {
   return (
     <Disclosure
       as="nav"
-      className="shadow-lg"
-      style={{ backgroundColor: "#1D3461" }}
+      className="shadow-xl"
+      style={{ backgroundColor: `var(--index)` }}
     >
       {({ open }) => (
         <>

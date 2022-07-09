@@ -8,6 +8,24 @@ const ApiError = require('../utils/ApiError');
  * @returns {Promise<Client>}
  */
 const createClient = async (clientBody) => {
+  // console.log(clientBody.linkedin.userDetails.id);
+  const client = await Client.findOne({ 
+    linkedin: {
+      id: clientBody.linkedin.id
+    }
+  });
+
+  console.log(client);
+
+  if (client) {
+    const update = await Client.findOneAndUpdate({ 
+      linkedin: {
+        id: clientBody.linkedin.id
+      }
+    }, { new: true });
+    return update;
+  }
+  
   return Client.create(clientBody);
 };
 

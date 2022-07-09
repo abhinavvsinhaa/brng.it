@@ -16,16 +16,16 @@ const Calender = () => {
   }, [monthIndex]);
 
   return (
-    <>
+    <div className="container">
       {showEventModal && <EventModal />}
       <div className="h-screen flex flex-col p-6">
         <CalendarHeader />
-        <div className="flex flex-1">
+        <div className="flex flex-1 shadow-sm">
           {/* <Sidebar /> */}
           <Month month={currentMonth} />
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

@@ -27,16 +27,20 @@ export default function Day({ day, rowIdx }) {
   }
   function getHoverClass() {
     return dayjs().isBefore(day, "day") || dayjs().isSame(day, "day")
-      ? "hover:bg-blue-100"
-      : "hover:bg-red-500";
+      ? "#fff"
+      : "#f5f5f5";
   }
   return (
-    <div className={`border-1 border-gray-50 flex flex-col ${getHoverClass()}`}>
+    <div className={`flex flex-col ${getHoverClass()}`} style={{
+      // border: '1px solid #1D3461',
+      borderTop: '1px solid #f5f5f5',
+      backgroundColor: getHoverClass(),
+    }}>
       <header className="flex flex-col items-center">
         {rowIdx === 0 && (
-          <p className="text-sm mt-1">{day.format("ddd").toUpperCase()}</p>
+          <p className="text-sm pt-2 pb-2" style={{backgroundColor: 'var(--index)', width: '100%', textAlign: 'center', fontWeight: '500', color: 'whitesmoke'}}>{day.format("ddd").toUpperCase()}</p>
         )}
-        <p className={`text-sm p-1 my-1 text-center  ${getCurrentDayClass()}`}>
+        <p className={`text-md p-1 my-1 text-center  ${getCurrentDayClass()}`}>
           {day.format("DD")}
         </p>
       </header>

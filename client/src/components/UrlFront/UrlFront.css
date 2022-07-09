@@ -1,0 +1,53 @@
+.url-container {
+    height: calc(100vh - 64px);
+}
+
+.alertAdded{
+    position: absolute;
+    top: 5%;
+    left: 25%;
+    width: 50%;
+}
+.urlContainer{
+    /* text-align: center; */
+    padding: 20px;
+}
+.urlHead{
+    font-size: 32px;
+    font-weight: 700;
+}
+.form-label{
+    margin-bottom: 10px;
+    display: block;
+}
+.textBox{
+    width: 50%;
+    padding: 10px 20px;
+    font-size: 14px;
+    border-radius: 3px;
+}
+.textBoxName{
+    width: 30%;
+    margin: auto;
+    display: inline-block
+}
+.uerNameInput{
+    width: 50%;
+    margin: auto;
+}
+
+.url-submit-btn, .url-success-btn {
+    background-color: var(--index);
+    color: white;
+    font-size: 14px;
+    padding: 10px 20px;
+}
+
+.url-submit-btn:hover, .url-success-btn:hover {
+    color: white;
+    transform: scale(1.02);
+}
+
+.url-success-btn {
+    background-color: #4C8854;
+}

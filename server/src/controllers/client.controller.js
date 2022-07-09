@@ -24,6 +24,13 @@ const getClient = catchAsync(async (req, res) => {
   res.send(client);
 });
 
+// const findClientLinkedIn = catchAsync(async (req, res) => {
+//   const { id } = req.body;
+//   console.log(id);
+//   const client = await clientService.getClientByLinkedInId(id);
+//   res.send(client);
+// })
+
 const updateClientById = catchAsync(async (req, res) => {
   const client = await clientService.updateClientById(req.params.clientId, req.body);
   res.status(httpStatus.OK).send(client);

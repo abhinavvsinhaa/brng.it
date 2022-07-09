@@ -17,6 +17,7 @@ router
   .patch(validate(clientValidation.updateClient), clientController.updateClientById)
   .delete(validate(clientValidation.deleteClient), clientController.deleteClient);
 
+
 module.exports = router;
 
 /**

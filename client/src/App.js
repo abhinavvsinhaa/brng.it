@@ -1,4 +1,4 @@
-import Navigation from "./components/Navigation/Navigation";
+import { useEffect } from "react";
 import CalenderProvider from "./context/CalanderProvider";
 import "./api/Interceptor/index";
 import { Route, Routes } from "react-router-dom";
@@ -6,15 +6,19 @@ import Login from "./components/Login/Login";
 import SignUp from "./components/Login/SignUp";
 import Private from "./components/protectedRoute";
 import Error from "./components/Error";
-import { useEffect } from "react";
 import PersistLogin from "./components/persistLogin";
 import Channel from "./components/Channel/Channel";
-import ResponsiveNavbar from "../src/components/Layout/Navbar";
 import Navbar from "../src/components/Layout/Navbar";
 import Calender from "./components/CalenderV1/Calender";
 import ConnectNewChannel from "./components/Channel/ConnectNewChannel";
-import './App.css'
 import Profile from "./components/Profile/Profile";
+import UrlFront from './components/UrlFront/UrlFront';
+import UrlRedirect from './components/UrlRedirectPage/UrlRedirect';
+import TreeUrlRedirect from './components/TreeUrlRedirect/TreeUrlRedirect';
+
+import './App.css'
+import Share from "./components/Share/Share";
+
 
 function App() {
   useEffect(() => {}, []);
@@ -34,6 +38,10 @@ function App() {
               path="/channels/connect"
               element={<Private Component={ConnectNewChannel} />}
             />
+            <Route path='/share' element={<Share/>}/>
+            <Route path='/url' element={<UrlFront/>}/>
+            <Route path='/url/:uid' element={<UrlRedirect/>} />
+            <Route path='/tree/:uid' element={<TreeUrlRedirect/>} />
           </Route>
           <Route path="*" element={<Error />} />
         </Routes>
