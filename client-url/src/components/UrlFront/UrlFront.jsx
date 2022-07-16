@@ -140,7 +140,7 @@ export default function UrlFront() {
         <div >
         <input type="email" name="colMainUrl" placeholder="Enter Title " onChange={(e) => { setLinkName(e.target.value);}}  class="form-control textBoxName mb-2 mx-1" id="urlCol" aria-describedby="emailHelp" /> 
           <input type="email" name="colMainUrl" placeholder="Make a Tree" onChange={(e) => { setLink(e.target.value);}}  class="form-control textBox" id="urlCol" aria-describedby="emailHelp"/>
-          <button onClick={addMainUrl} class="btn btn-warning  mx-3">Add</button>
+          <button onClick={addMainUrl} class="btn btn-warning mx-3">Add</button>
           <button onClick={convertLinkUrl} class="btn btn-primary mx-3 ">Create</button>
         </div>
 {/* 

@@ -16,15 +16,15 @@ function classNames(...classes) {
 }
 
 export default function Navbar() {
-    const [userMenuDisplay, setUserMenuDisplay] = useState('none');
-    const { auth, setAuth } = useAuth();
+  const [userMenuDisplay, setUserMenuDisplay] = useState("none");
+  const { auth, setAuth } = useAuth();
 
-    React.useEffect(() => {
-      // user is logged in
-      if (auth.hasOwnProperty('user')) {
-        setUserMenuDisplay('block');
-      }
-    }, [auth])
+  React.useEffect(() => {
+    // user is logged in
+    if (auth.hasOwnProperty("user")) {
+      setUserMenuDisplay("block");
+    }
+  }, [auth]);
 
   return (
     <Disclosure
@@ -90,7 +90,11 @@ export default function Navbar() {
                 </button>
 
                 {/* Profile dropdown */}
-                <Menu as="div" className="ml-3 relative" style={{ display: userMenuDisplay}}>
+                <Menu
+                  as="div"
+                  className="ml-3 relative"
+                  style={{ display: userMenuDisplay }}
+                >
                   <div>
                     <Menu.Button className="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
                       <span className="sr-only">Open user menu</span>
