@@ -15,9 +15,11 @@ import Profile from "./components/Profile/Profile";
 import UrlFront from './components/UrlFront/UrlFront';
 import UrlRedirect from './components/UrlRedirectPage/UrlRedirect';
 import TreeUrlRedirect from './components/TreeUrlRedirect/TreeUrlRedirect';
+import ResponsiveDrawer from './components/Navigation/ResponsiveDrawer'
 
 import './App.css'
 import Share from "./components/Share/Share";
+import LinkTree from "./components/UrlFront/LinkTree";
 
 
 function App() {
@@ -41,9 +43,10 @@ function App() {
             <Route path='/share' element={<Share/>}/>
             <Route path='/url' element={<UrlFront/>}/>
             <Route path='/url/:uid' element={<UrlRedirect/>} />
+            <Route path="*" element={<Error />} />
             <Route path='/tree/:uid' element={<TreeUrlRedirect/>} />
+            <Route path='/linktree' element={<LinkTree />} />
           </Route>
-          <Route path="*" element={<Error />} />
         </Routes>
       </div>
     </CalenderProvider>

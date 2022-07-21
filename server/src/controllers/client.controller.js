@@ -6,7 +6,10 @@ const { clientService } = require('../services');
 
 const createClient = catchAsync(async (req, res) => {
   const client = await clientService.createClient(req.body);
-  res.status(httpStatus.CREATED).send(client);
+  if (client.status === false) 
+    return res.status(httpStatus.CONFLICT).send(client.client)
+
+  return res.status(httpStatus.CREATED).send(client.newClient);
 });
 
 const getClients = catchAsync(async (req, res) => {
@@ -24,12 +27,19 @@ const getClient = catchAsync(async (req, res) => {
   res.send(client);
 });
 
-// const findClientLinkedIn = catchAsync(async (req, res) => {
-//   const { id } = req.body;
-//   console.log(id);
-//   const client = await clientService.getClientByLinkedInId(id);
-//   res.send(client);
-// })
+const findClientByName = catchAsync(async (req, res) => {
+  const { name } = req.query;
+  console.log(req.query.name);
+  const client = await clientService.getClientByName(name);
+  res.send(client);
+})
+
+const findClientByEmailAndUpdate = catchAsync(async (req, res) => {
+  console.log(req.body.email);
+  const client = await clientService.updateClientByEmail(req.body.email, req.body.updateBody);
+  res.send(client);
+})
+
 
 const updateClientById = catchAsync(async (req, res) => {
   const client = await clientService.updateClientById(req.params.clientId, req.body);
@@ -47,4 +57,6 @@ module.exports = {
   getClient,
   updateClientById,
   deleteClient,
+  findClientByName,
+  findClientByEmailAndUpdate
 };

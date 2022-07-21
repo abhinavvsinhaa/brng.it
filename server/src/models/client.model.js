@@ -6,7 +6,7 @@ const clientSchema = mongoose.Schema(
   {
     name: {
       type: String,
-      // required: true,
+      required: true,
       trim: true,
     },
     description: {
@@ -19,8 +19,8 @@ const clientSchema = mongoose.Schema(
     },
     email: {
       type: String,
-      // required: true,
-      // unique: true,
+      required: true,
+      unique: true,
       trim: true,
       lowercase: true,
       validate(value) {

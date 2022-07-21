@@ -8,10 +8,12 @@ import LinkedIn from "../../assets/images/linkedin-logo.png";
 import IGConnectModal from "./IGConnectModal";
 import useAuth from "../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
-
-import SearchCustomers from "./SearchCustomers";
+import useSearchCustomers from "./useSearchCustomers";
 
 const ConnectNewChannel = () => {
+
+  const { selectedProfile, render } = useSearchCustomers();
+
   const [code, setCode] = useState("");
   const [customer, setCustomer] = useState(null);
 
@@ -20,10 +22,12 @@ const ConnectNewChannel = () => {
 
   async function linkedinCardClickValidate() {
     // if customer is not selected or not created
-    if (customer == null) {
+    if (selectedProfile == '') {
       alert("Please select customer first.");
       return;
     }
+
+    window.sessionStorage.setItem('selectedProfileEmail', selectedProfile);
 
     // else redirect to linkedin login page
     window.location.replace(
@@ -48,14 +52,19 @@ const ConnectNewChannel = () => {
       // update auth.user.id -> add authorized user in customers[]
       // const getRootUser = await axios.get(`/users/${auth.user.id}`);
       // update or add customer
-      const client = await axios.post(`/client/`, {
-        user: auth.user.id,
-        linkedin: {
-          access_token: response.access_token,
-          ...JSON.parse(user.data),
-        },
+
+      const client = await axios.put(`/client/`, {
+        email: window.sessionStorage.getItem('selectedProfileEmail'),
+        updateBody: {
+          linkedin: {
+            access_token: response.access_token,
+            user: JSON.parse(user.data)
+          }
+        }
       });
-      console.log("Client: " + JSON.parse(client));
+
+      console.log(client);
+      window.sessionStorage.removeItem('selectedProfileEmail')
     }
   }
 
@@ -94,7 +103,9 @@ const ConnectNewChannel = () => {
           <br />
 
           {/* Search Customer */}
-          <SearchCustomers/>
+          {
+            render
+          }
 
         </div>
       </div>

@@ -13,7 +13,7 @@ const Share = () => {
     setShowPicker(false);
   };
 
-  // fetch all customers
+// fetch all customers
 
   const fetchCustomers = async () => {};
 

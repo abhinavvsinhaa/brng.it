@@ -9,7 +9,12 @@ const router = express.Router();
 router
   .route('/')
   .post(clientController.createClient)
-  .get(validate(clientValidation.getClients), clientController.getClients);
+  .get(validate(clientValidation.getClients), clientController.getClients)
+  .put(clientController.findClientByEmailAndUpdate);
+
+router
+  .route('/find')
+  .get(clientController.findClientByName)
 
 router
   .route('/:clientId')
