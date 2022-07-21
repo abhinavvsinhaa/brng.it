@@ -7,6 +7,17 @@ const catchAsync = require('../utils/catchAsync');
 
 const shortenSingleUrl = async (req, res, next) => {
   //Initialize uid
+  if (req.body.name) {
+    const nameInDb = await Url.findOne({ uid: req.body.name });
+    if (nameInDb) return next(new ApiError('Already Taken', 204, true));
+    const newUrl = await Url.create({
+      original: req.body.original,
+      short: process.env.SHORT_BASE + req.body.name,
+      uid: req.body.name,
+    });
+    return newUrl;
+  }
+
   const uid = new ShortUniqueId({ length: req.body.length });
 
   //Check if already exists!
@@ -66,6 +77,11 @@ const shortenMultipleUrlAsync = async (req, _res, next) => {
 
 const shortenUrl = catchAsync(async (req, res, next) => {
   const newUrl = await shortenSingleUrl(req, res, next);
+  if (!newUrl)
+    return res.status(400).json({
+      status: 'failure',
+      message: 'something went wrong, most likely url name already in use!',
+    });
 
   res.status(201).json({
     status: 'success',

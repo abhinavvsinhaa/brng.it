@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const { toJSON } = require('./plugins');
-const validator = require('validator');
 
 const UrlCollectionSchema = new mongoose.Schema({
   name: {
@@ -17,7 +16,7 @@ const UrlCollectionSchema = new mongoose.Schema({
   },
   original: {
     type: Array,
-    required: [true, 'Please provide original url'],
+    required: [true, 'Please provide original urls'],
   },
   short: {
     type: String,

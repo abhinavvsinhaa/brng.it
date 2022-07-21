@@ -12,11 +12,17 @@ const combine = catchAsync(async (req, res, _next) => {
   while (await UrlCollection.findOne({ uid: link })) {
     link = uid();
   }
+
+  let originalLinks = req.body.original.map((link) => {
+    link.visits = 0;
+    return link;
+  });
+
   const combinedLink = await UrlCollection.create({
     name: req.body?.name,
     description: req.body?.description,
     image: req.body?.image,
-    original: req.body.original,
+    original: originalLinks,
     short: process.env.SHORT_BASE + link,
     uid: link,
   });
@@ -42,4 +48,17 @@ const deleteLink = catchAsync(async (req, res, next) => {
   });
 });
 
-module.exports = { combine, getAllLinks, deleteLink };
+const updateLinkInCollection = catchAsync(async (req, res, next) => {
+  const links = await UrlCollection.findOne({ uid: req.params.uid });
+
+  links.original[req.params.index].visits++;
+  links.markModified('original');
+  await links.save();
+
+  res.status(httpStatus.OK).json({
+    status: 'success',
+    data: links,
+  });
+});
+
+module.exports = { combine, getAllLinks, deleteLink, updateLinkInCollection };
