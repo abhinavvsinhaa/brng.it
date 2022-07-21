@@ -1,0 +1,36 @@
+.alertAdded{
+    position: absolute;
+    top: 5%;
+    left: 25%;
+    width: 50%;
+}
+.urlContainer{
+    text-align: center;
+    padding: 20px;
+}
+.urlHead{
+    width: 100%;
+    text-align: center;
+    font-size: 30px;
+    margin-bottom: 10px;
+    color: rgb(103, 103, 236);
+    font-weight: 600;
+}
+.form-label{
+    margin-bottom: 10px;
+    display: block;
+}
+.textBox{
+    width: 50%;
+    margin: auto;
+    display: inline-block
+}
+.textBoxName{
+    width: 30%;
+    margin: auto;
+    display: inline-block
+}
+.uerNameInput{
+    width: 50%;
+    margin: auto;
+}

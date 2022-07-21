@@ -144,7 +144,7 @@ const SignUp = () => {
             <div className="banner-container">
               <span
                 className="badge text-light"
-                style={{ backgroundColor: "#1D3461" }}
+                style={{ backgroundColor: "var(--index)" }}
               >
                 Social Media Tool
               </span>

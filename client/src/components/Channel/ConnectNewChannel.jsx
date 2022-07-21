@@ -1,20 +1,39 @@
-import React from "react";
+import React, { useState } from "react";
 import { Card } from "antd";
 import "./Channel.css";
-
-import axios from '../../api/axios';
-
-// importing logos
+import axios from "../../api/axios";
 import IG from "../../assets/images/ig-logo.png";
 import FB from "../../assets/images/fb-icon.png";
 import LinkedIn from "../../assets/images/linkedin-logo.png";
 import IGConnectModal from "./IGConnectModal";
-import { useState } from "react";
 import useAuth from "../../hooks/useAuth";
+import { useNavigate } from "react-router-dom";
+import useSearchCustomers from "./useSearchCustomers";
 
 const ConnectNewChannel = () => {
+
+  const { selectedProfile, render } = useSearchCustomers();
+
   const [code, setCode] = useState("");
+  const [customer, setCustomer] = useState(null);
+
   const { auth, setAuth } = useAuth();
+  const navigate = useNavigate();
+
+  async function linkedinCardClickValidate() {
+    // if customer is not selected or not created
+    if (selectedProfile == '') {
+      alert("Please select customer first.");
+      return;
+    }
+
+    window.sessionStorage.setItem('selectedProfileEmail', selectedProfile);
+
+    // else redirect to linkedin login page
+    window.location.replace(
+      `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${process.env.REACT_APP_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_REDIRECT_URL}&scope=${process.env.REACT_APP_SCOPES}`
+    );
+  }
 
   async function loadData() {
     const location = window.location.href;
@@ -23,20 +42,29 @@ const ConnectNewChannel = () => {
     if (arr.length == 2) {
       setCode(arr[1]);
       console.log("code: " + arr[1]);
-      
+
       const res = await axios.get(`/authorization/callback?code=${arr[1]}`);
       const response = await JSON.parse(res.data);
-      const user = await axios.post('/authorization/user', response);
+      console.log(response);
+      const user = await axios.post("/authorization/user", response);
       console.log(JSON.parse(user.data));
 
       // update auth.user.id -> add authorized user in customers[]
       // const getRootUser = await axios.get(`/users/${auth.user.id}`);
       // update or add customer
-      const client = await axios.post('/client', {
-        user: auth.user.id,
-        linkedin: JSON.parse(user.data)
-      })
+
+      const client = await axios.put(`/client/`, {
+        email: window.sessionStorage.getItem('selectedProfileEmail'),
+        updateBody: {
+          linkedin: {
+            access_token: response.access_token,
+            user: JSON.parse(user.data)
+          }
+        }
+      });
+
       console.log(client);
+      window.sessionStorage.removeItem('selectedProfileEmail')
     }
   }
 
@@ -72,9 +100,29 @@ const ConnectNewChannel = () => {
             </span>
             guides and learn about supported channel types.
           </p>
+          <br />
+
+          {/* Search Customer */}
+          {
+            render
+          }
+
         </div>
       </div>
       <br />
+
+      {/* <div className="row justify-content-center">
+        <div className="col-xl-6 col-lg-12 col-md-12 col-sm-12 col-12">
+          <form>
+            <label htmlFor="customer_name" className="form-label">Name</label>
+            <input type="text" name="customer_name" id="customer_name" required placeholder="John Doe" className="textBox"/>
+            <br /><br />
+            <label htmlFor="customer_email" className="form-label">Email</label>
+            <input type="email" name="customer_email" id="customer_email" placeholder="john@example.com" required className="textBox"/>
+          </form>
+        </div>
+      </div>
+      <br /> */}
       <div className="row justify-content-center gy-5">
         <div className="col-xl-2 col-lg-4 col-md-4 col-sm-6 col-6">
           <Card
@@ -134,36 +182,33 @@ const ConnectNewChannel = () => {
           </Card>
         </div>
         <div className="col-xl-2 col-lg-4 col-md-4 col-sm-6 col-6">
-          <a
-            href={`https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${process.env.REACT_APP_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_REDIRECT_URL}&scope=${process.env.REACT_APP_SCOPES}`}
+          <Card
+            className="shadow-md"
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              backgroundColor: "white",
+              height: 200,
+              alignItems: "center",
+              textAlign: "center",
+              borderRadius: "5px",
+              cursor: "pointer",
+            }}
+            onClick={linkedinCardClickValidate}
           >
-            <Card
-              className="shadow-md"
+            <div
               style={{
+                width: "100%",
                 display: "flex",
                 justifyContent: "center",
-                backgroundColor: "white",
-                height: 200,
-                alignItems: "center",
-                textAlign: "center",
-                borderRadius: "5px",
-                cursor: "pointer",
               }}
             >
-              <div
-                style={{
-                  width: "100%",
-                  display: "flex",
-                  justifyContent: "center",
-                }}
-              >
-                <img src={LinkedIn} alt="" width="50px" />
-              </div>
-              <p className="social-media-name">LinkedIn</p>
-              <p className="social-media-subgroup">Page or Profile</p>
-              <p className="social-media-connect">Connect</p>
-            </Card>
-          </a>
+              <img src={LinkedIn} alt="" width="50px" />
+            </div>
+            <p className="social-media-name">LinkedIn</p>
+            <p className="social-media-subgroup">Page or Profile</p>
+            <p className="social-media-connect">Connect</p>
+          </Card>
         </div>
       </div>
     </div>

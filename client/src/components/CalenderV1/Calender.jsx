@@ -5,6 +5,7 @@ import Month from "./Month";
 // import Sidebar from "./Sidebar";
 import GlobalContext from "../../context/CalanderContext";
 import EventModal from "./EventModal";
+import ResponsiveDrawer from "../Navigation/ResponsiveDrawer";
 
 const Calender = () => {
   const [currentMonth, setCurrentMonth] = useState(getMonth());
@@ -12,20 +13,24 @@ const Calender = () => {
 
   useEffect(() => {
     setCurrentMonth(getMonth(monthIndex));
-    console.log(currentMonth)
+    console.log(currentMonth);
   }, [monthIndex]);
 
   return (
-    <>
-      {showEventModal && <EventModal />}
-      <div className="h-screen flex flex-col p-6">
-        <CalendarHeader />
-        <div className="flex flex-1">
-          {/* <Sidebar /> */}
-          <Month month={currentMonth} />
+    <div className="container">
+      <div className="row justify-content-center">
+        <div className="col-xl-8">
+          {showEventModal && <EventModal />}
+          <div className="h-screen flex flex-col p-6">
+            <CalendarHeader />
+            <div className="flex flex-1 shadow-sm">
+              {/* <Sidebar /> */}
+              <Month month={currentMonth} />
+            </div>
+          </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

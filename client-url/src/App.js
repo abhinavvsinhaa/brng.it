@@ -8,7 +8,7 @@ import {
 } from "react-router-dom";
 
 
-import Navigation from './components/Layout/Navigation';
+// import Navigation from './components/Layout/Navigation';
 import UrlRedirect from './components/UrlRedirectPage/UrlRedirect';
 import TreeUrlRedirect from './components/TreeUrlRedirect/TreeUrlRedirect';
 
@@ -17,8 +17,7 @@ function App() {
     <div className="App">
       <Router>
         <Routes>
-          <Route exact path='/' element={<Navigation/>}></Route>
-          <Route exact path='/url' element={<UrlFront/>}></Route>
+          <Route exact path='/' element={<UrlFront/>}></Route>
           <Route exact path='/url/:uid' element={<UrlRedirect/>}></Route>
           <Route exact path='/tree/:uid' element={<TreeUrlRedirect/>}></Route>
         </Routes>

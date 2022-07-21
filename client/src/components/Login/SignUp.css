@@ -1,9 +1,11 @@
 .signup-form {
     overflow-x: hidden;
+    height: calc(100vh - 64px);
+    background-color: white;
 }
 
 .signup-form > .row {
-    height: 100vh;
+    height: 100%;
 }
 
 .signup-col {

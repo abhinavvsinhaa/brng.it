@@ -9,13 +9,19 @@ const router = express.Router();
 router
   .route('/')
   .post(clientController.createClient)
-  .get(validate(clientValidation.getClients), clientController.getClients);
+  .get(validate(clientValidation.getClients), clientController.getClients)
+  .put(clientController.findClientByEmailAndUpdate);
+
+router
+  .route('/find')
+  .get(clientController.findClientByName)
 
 router
   .route('/:clientId')
   .get(validate(clientValidation.getClient), clientController.getClient)
   .patch(validate(clientValidation.updateClient), clientController.updateClientById)
   .delete(validate(clientValidation.deleteClient), clientController.deleteClient);
+
 
 module.exports = router;
 

@@ -8,7 +8,20 @@ const ApiError = require('../utils/ApiError');
  * @returns {Promise<Client>}
  */
 const createClient = async (clientBody) => {
-  return Client.create(clientBody);
+  // check if the client exists
+  const client = await Client.findOne({ email: clientBody.email });
+  if (client) {
+    return ({
+      status: false,
+      client
+    })
+  }
+
+  const newClient = await Client.create(clientBody);
+  return ({
+    status: true,
+    newClient
+  })
 };
 
 /*
@@ -44,6 +57,15 @@ const getClientByEmail = async (email) => {
 };
 
 /**
+ * Get Client by name
+ * @param {string} name
+ * @returns {Promise<Client>}
+ */
+ const getClientByName = async (name) => {
+  return Client.find({ name });
+};
+
+/**
  * Update Client by id
  * @param {ObjectId} ClientId
  * @param {Object} updateBody
@@ -51,6 +73,19 @@ const getClientByEmail = async (email) => {
  */
 const updateClientById = async (clientId, updateBody) => {
   return await Client.findOneAndUpdate(clientId, updateBody, { new: true });
+};
+
+/**
+ * Update Client by email
+ * @param {ObjectId} clientEmail
+ * @param {Object} updateBody
+ * @returns {Promise<Client>}
+ */
+ const updateClientByEmail = async (clientEmail, updateBody) => {
+  console.log(clientEmail);
+  return await Client.findOneAndUpdate({
+    email: clientEmail
+  }, updateBody, { new: true });
 };
 
 /**
@@ -74,4 +109,6 @@ module.exports = {
   getClientByEmail,
   updateClientById,
   deleteClientById,
+  getClientByName,
+  updateClientByEmail
 };

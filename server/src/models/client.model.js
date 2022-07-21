@@ -6,7 +6,7 @@ const clientSchema = mongoose.Schema(
   {
     name: {
       type: String,
-      // required: true,
+      required: true,
       trim: true,
     },
     description: {
@@ -19,15 +19,15 @@ const clientSchema = mongoose.Schema(
     },
     email: {
       type: String,
-      // required: true,
+      required: true,
       unique: true,
       trim: true,
       lowercase: true,
-      // validate(value) {
-      //   if (!validator.isEmail(value)) {
-      //     throw new Error('Invalid email');
-      //   }
-      // },
+      validate(value) {
+        if (!validator.isEmail(value)) {
+          throw new Error('Invalid email');
+        }
+      },
     },
     instagram: {
       type: Object,
