@@ -14,6 +14,7 @@ const router = express.Router();
 router.post('/combine', validate(urlCollectionValidation.combine), urlCollectionController.combine);
 
 router.get('/:uid', urlCollectionController.getAllLinks);
+router.patch('/:uid/:index', urlCollectionController.updateLinkInCollection);
 router.delete('/:uid', urlCollectionController.deleteLink);
 
 module.exports = router;
