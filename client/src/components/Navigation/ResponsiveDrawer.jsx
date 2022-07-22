@@ -16,6 +16,8 @@ import GroupIcon from '@mui/icons-material/Group';
 import LinkIcon from '@mui/icons-material/Link';
 import ParkIcon from '@mui/icons-material/Park';
 
+import { Link } from 'react-router-dom';
+
 const drawerWidth = 240;
 
 function ResponsiveDrawer(props) {
@@ -30,46 +32,56 @@ function ResponsiveDrawer(props) {
     <div>
       <Divider />
       <List>
-        <ListItem disablePadding>
-          <ListItemButton>
-            <ListItemIcon>
-              <DashboardIcon/>
-            </ListItemIcon>
-            <ListItemText primary="Dashboard" />
-          </ListItemButton>
-        </ListItem>
-        <ListItem disablePadding>
-          <ListItemButton>
-            <ListItemIcon>
-              <ShareIcon/>
-            </ListItemIcon>
-            <ListItemText primary="Share" />
-          </ListItemButton>
-        </ListItem>
-        <ListItem disablePadding>
-          <ListItemButton>
-            <ListItemIcon>
-              <LinkIcon/>
-            </ListItemIcon>
-            <ListItemText primary="URL Shortener" />
-          </ListItemButton>
-        </ListItem>
-        <ListItem disablePadding>
-          <ListItemButton>
-            <ListItemIcon>
-              <ParkIcon/>
-            </ListItemIcon>
-            <ListItemText primary="Linktree" />
-          </ListItemButton>
-        </ListItem>
-        <ListItem disablePadding>
-          <ListItemButton>
-            <ListItemIcon>
-              <GroupIcon/>
-            </ListItemIcon>
-            <ListItemText primary="Profiles" />
-          </ListItemButton>
-        </ListItem>
+        <Link to='/' style={{color: 'inherit'}}>
+          <ListItem disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                <DashboardIcon/>
+              </ListItemIcon>
+              <ListItemText primary="Dashboard" />
+            </ListItemButton>
+          </ListItem>
+        </Link>
+        <Link to='/share' style={{color: 'inherit'}}>
+          <ListItem disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                <ShareIcon/>
+              </ListItemIcon>
+              <ListItemText primary="Share" />
+            </ListItemButton>
+          </ListItem>
+        </Link>
+        <Link to='/url' style={{color: 'inherit'}}>
+          <ListItem disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                <LinkIcon/>
+              </ListItemIcon>
+              <ListItemText primary="URL Shortener" />
+            </ListItemButton>
+          </ListItem>
+        </Link>
+        <Link to='/linktree' style={{color: 'inherit'}}>
+          <ListItem disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                <ParkIcon/>
+              </ListItemIcon>
+              <ListItemText primary="Linktree" />
+            </ListItemButton>
+          </ListItem>
+        </Link>
+        <Link to='/channels/connect' style={{color: 'inherit'}}>
+          <ListItem disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                <GroupIcon/>
+              </ListItemIcon>
+              <ListItemText primary="Profiles" />
+            </ListItemButton>
+          </ListItem>
+        </Link>
       </List>
     </div>
   );

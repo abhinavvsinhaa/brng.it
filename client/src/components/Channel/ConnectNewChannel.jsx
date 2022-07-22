@@ -82,6 +82,7 @@ const ConnectNewChannel = () => {
             style={{
               fontWeight: 700,
               fontSize: "32px",
+              margin: 0
             }}
           >
             Connect a new channel
@@ -90,6 +91,7 @@ const ConnectNewChannel = () => {
             style={{
               fontSize: "14px",
               opacity: 0.8,
+              margin: 0
             }}
           >
             Looking for step-by-step instructions? Visit our Help Center to read
@@ -100,7 +102,6 @@ const ConnectNewChannel = () => {
             </span>
             guides and learn about supported channel types.
           </p>
-          <br />
 
           {/* Search Customer */}
           {

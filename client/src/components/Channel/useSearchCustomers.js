@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import createIcon from "../../assets/images/add-white.png";
 import { LoadingOutlined } from "@ant-design/icons";
-import { Spin, Divider, Radio, Table } from "antd";
+import { Spin, Table } from "antd";
 import axios from "../../api/axios";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
@@ -105,14 +105,6 @@ export default function useSearchCustomers() {
     setLoading(false);
   };
 
-  const onFinish = (values) => {
-    console.log("Success:", values);
-  };
-
-  const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
-  };
-
   return {
     selectedProfile,
     render: (
@@ -133,7 +125,7 @@ export default function useSearchCustomers() {
               <>
                 <Table
                   rowSelection={{
-                    type: 'checkbox',
+                    type: 'radio',
                     ...rowSelection,
                   }}
                   columns={columns}
@@ -154,64 +146,64 @@ export default function useSearchCustomers() {
         </Modal>
   
         {/* Create new customer profile */}
-        <Modal show={showCreateModal} onHide={handleCloseCreateModal}>
-          <Modal.Header
-            style={{
-              padding: 0,
-            }}
-          >
-            <div class="form-title">Create Profile</div>
-          </Modal.Header>
-          <Modal.Body
-            style={{
-              padding: 0,
-            }}
-          >
-            <div class="card-form">
-              <form class="signup">
-                <div class="form-body">
-                  <div class="form-row">
-                    <input
-                      type="text"
-                      placeholder="First Name*"
-                      value={newProfileFirstName}
-                      onChange={(e) => setNewProfileFirstName(e.target.value)}
-                    />
-                    <input
-                      type="text"
-                      placeholder="Last Name*"
-                      value={newProfileLastName}
-                      onChange={(e) => setNewProfileLastName(e.target.value)}
-                    />
-                  </div>
-                  <div class="form-row">
-                    <input
-                      type="text"
-                      placeholder="Email Address*"
-                      value={newProfileEmail}
-                      onChange={(e) => setNewProfileEmail(e.target.value)}
-                    />
-                  </div>
+      `<Modal show={showCreateModal} onHide={handleCloseCreateModal}>
+        <Modal.Header
+          style={{
+            padding: 0,
+          }}
+        >
+          <div class="form-title">Create Profile</div>
+        </Modal.Header>
+        <Modal.Body
+          style={{
+            padding: 0,
+          }}
+        >
+          <div class="card-form">
+            <form class="signup">
+              <div class="form-body">
+                <div class="form-row">
+                  <input
+                    type="text"
+                    placeholder="First Name*"
+                    value={newProfileFirstName}
+                    onChange={(e) => setNewProfileFirstName(e.target.value)}
+                  />
+                  <input
+                    type="text"
+                    placeholder="Last Name*"
+                    value={newProfileLastName}
+                    onChange={(e) => setNewProfileLastName(e.target.value)}
+                  />
                 </div>
-              </form>
-            </div>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button
-              variant="secondary"
-              onClick={handleCloseCreateModal}
-              className="url-submit-btn border-0"
-            >
-              Close
-            </Button>
-            <Button
-              onClick={registerProfile}
-              className="url-success-btn border-0"
-            >
-              Create
-            </Button>
-          </Modal.Footer>
-        </Modal>
+                <div class="form-row">
+                  <input
+                    type="text"
+                    placeholder="Email Address*"
+                    value={newProfileEmail}
+                    onChange={(e) => setNewProfileEmail(e.target.value)}
+                  />
+                </div>
+              </div>
+            </form>
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button
+            variant="secondary"
+            onClick={handleCloseCreateModal}
+            className="url-submit-btn border-0"
+          >
+            Close
+          </Button>
+          <Button
+            onClick={registerProfile}
+            className="url-success-btn border-0"
+          >
+            Create
+          </Button>
+        </Modal.Footer>
+      </Modal>`
   
         <div class="flex">
           <div class="flex">
