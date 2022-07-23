@@ -19,6 +19,8 @@ export default function LinkTree() {
   const [colMainUrl, setColMainUrl] = useState([]);
 
   const [treeUrlArr, setTreeUrlArr] = useState([]);
+  const [treeUrl, setTreeUrl] = useState([]);
+
 
   const openNotificationWithIcon = (type) => {
     notification[type]({
@@ -46,7 +48,8 @@ export default function LinkTree() {
       description,
     });
     console.log(res);
-    setTreeUrlArr((treeUrlArr) => [...treeUrlArr, res.data.data]);
+    // setTreeUrlArr((treeUrlArr) => [...treeUrlArr, res.data.data]); 
+    setTreeUrl(res.data.data)
     setColMainUrlArr([]);
   };
 
@@ -121,7 +124,7 @@ export default function LinkTree() {
                   id="urlCol"
                   aria-describedby="emailHelp"
                 />
-                {treeUrlArr &&
+                {/* {treeUrlArr &&
                   treeUrlArr.map((p, i) => {
                     return (
                       <>
@@ -131,8 +134,9 @@ export default function LinkTree() {
                         <SingleTreeUrl id={i} treeArr={p} />
                       </>
                     );
-                  })}
-
+                  })} */}
+                  <span style={{ fontWeight: 500 }}>My Linktree: </span>
+                  <SingleTreeUrl treeArr={treeUrl} />
                 <Divider />
                 {colMainUrlArr &&
                   colMainUrlArr.map((url, i) => {

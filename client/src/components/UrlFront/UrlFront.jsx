@@ -11,6 +11,8 @@ export default function UrlFront() {
   const varJson = {};
 
   const [urlArr, setUrlArr] = useState([]);
+  const [singleUrl, setSingleUrl] = useState({});
+  
 
   const [alert, setAlert] = useState(false);
 
@@ -26,7 +28,8 @@ export default function UrlFront() {
       console.log(res);
       varJson.shortUrl = res.data.data.short;
       varJson.uid = res.data.data.uid;
-      setUrlArr((urlArr) => [...urlArr, varJson]);
+      // setUrlArr((urlArr) => [...urlArr, varJson]);
+      setSingleUrl(varJson)
       setMainUrl("");
     } catch (err) {
       console.log(err);
@@ -41,7 +44,8 @@ export default function UrlFront() {
       console.log(res);
       varJson.shortUrl = res.data.data.short;
       varJson.uid = res.data.data.uid;
-      setUrlArr((urlArr) => [...urlArr, varJson]);
+      // setUrlArr((urlArr) => [...urlArr, varJson]);
+      setSingleUrl(varJson)
       setMainUrl("");
     } catch (err) {
       console.log(err);
@@ -118,7 +122,7 @@ export default function UrlFront() {
               </div>
 
               <br />
-              {urlArr &&
+              {/* {urlArr &&
                 urlArr.map((p, i) => {
                   return (
                     <>
@@ -127,7 +131,9 @@ export default function UrlFront() {
                       <br />
                     </>
                   );
-                })}
+                })} */}
+                <span style={{ fontWeight: 500 }}>Shortened URL: </span>
+                <SingleUrl varArr={singleUrl} />
             </div>
           </div>
           {/*Custom Url */}
@@ -203,7 +209,7 @@ export default function UrlFront() {
               </div>
 
               <br />
-              {urlArr &&
+              {/* {urlArr &&
                 urlArr.map((p, i) => {
                   return (
                     <>
@@ -212,7 +218,9 @@ export default function UrlFront() {
                       <br />
                     </>
                   );
-                })}
+                })} */}
+                <span style={{ fontWeight: 500 }}>Shortened URL: </span>
+                <SingleUrl varArr={singleUrl}/>
             </div>
           </div>
 
