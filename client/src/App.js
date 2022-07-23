@@ -19,6 +19,7 @@ import TreeUrlRedirect from "./components/TreeUrlRedirect/TreeUrlRedirect";
 import "./App.css";
 import Share from "./components/Share/Share";
 import LinkTree from "./components/UrlFront/LinkTree";
+import WithNav from "./components/WithNav";
 
 function App() {
   useEffect(() => {}, []);
@@ -26,10 +27,11 @@ function App() {
   return (
     <CalenderProvider>
       <div className="app">
-        <Navbar />
         <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<SignUp />} />
+          <Route element={<WithNav />}>
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<SignUp />} />
+          </Route>
           <Route element={<PersistLogin />}>
             <Route path="/" element={<Private Component={Calender} />} />
             <Route path="/channels" element={<Private Component={Channel} />} />
@@ -38,13 +40,13 @@ function App() {
               path="/channels/connect"
               element={<Private Component={ConnectNewChannel} />}
             />
-            <Route path="/share" element={<Share />} />
-            <Route path="*" element={<Error />} />
-            <Route path="/tree/:uid" element={<TreeUrlRedirect />} />
             <Route path="/linktree" element={<LinkTree />} />
             <Route path="/url" element={<UrlFront />} />
-            <Route path="url/:uid" element={<UrlRedirect />} />
+            <Route path="/share" element={<Share />} />
+            <Route path="*" element={<Error />} />
           </Route>
+          <Route path="/tree/:uid" element={<TreeUrlRedirect />} />
+          <Route path="url/:uid" element={<UrlRedirect />} />
         </Routes>
       </div>
     </CalenderProvider>
