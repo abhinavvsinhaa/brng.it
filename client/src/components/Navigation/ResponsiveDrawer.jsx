@@ -72,7 +72,7 @@ function ResponsiveDrawer(props) {
             </ListItemButton>
           </ListItem>
         </Link>
-        <Link to="/channels/connect" style={{ color: "inherit" }}>
+        <Link to="/profile" style={{ color: "inherit" }}>
           <ListItem disablePadding>
             <ListItemButton>
               <ListItemIcon>
