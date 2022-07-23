@@ -1,5 +1,5 @@
 const httpStatus = require('http-status');
-const { Client } = require('../models');
+const { Client, User } = require('../models');
 const ApiError = require('../utils/ApiError');
 
 /*
@@ -16,8 +16,13 @@ const createClient = async (clientBody) => {
       client
     })
   }
-
+  
   const newClient = await Client.create(clientBody);
+  // update in user collection also
+  await User.findByIdAndUpdate(clientBody.user, {
+    $push: { customers: newClient._id }
+  })
+
   return ({
     status: true,
     newClient

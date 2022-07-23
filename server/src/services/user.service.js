@@ -37,6 +37,16 @@ const getUserById = async (id) => {
   return User.findById(id);
 };
 
+
+/**
+ * Get user by id populated customer
+ * @param {ObjectId} id
+ * @returns {Promise<User>}
+ */
+ const getUserByIdPopulatedCustomers = async (id) => {
+  return User.findById(id).populate('customers');
+};
+
 /**
  * Get user by email
  * @param {string} email
@@ -86,4 +96,5 @@ module.exports = {
   getUserByEmail,
   updateUserById,
   deleteUserById,
+  getUserByIdPopulatedCustomers
 };

@@ -23,6 +23,10 @@ const userSchema = mongoose.Schema(
         }
       },
     },
+    customers: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Client'
+    }],
     password: {
       type: String,
       required: true,

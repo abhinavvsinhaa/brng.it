@@ -15,6 +15,7 @@ const clientSchema = mongoose.Schema(
     },
     user: {
       type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
       require: true,
     },
     email: {
