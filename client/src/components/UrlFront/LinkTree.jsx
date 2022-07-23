@@ -11,6 +11,7 @@ import ResponsiveDrawer from "../Navigation/ResponsiveDrawer";
 export default function LinkTree() {
   const [link, setLink] = useState("");
   const [linkName, setLinkName] = useState("");
+  const [description, setDescription] = useState("");
 
   const [ColMainUserName, setColMainUserName] = useState("");
   const [colMainUrlArr, setColMainUrlArr] = useState([]);
@@ -42,6 +43,7 @@ export default function LinkTree() {
     const res = await axios.post("http://localhost:8000/v1/tree/combine", {
       original: colMainUrlArr,
       name: ColMainUserName,
+      description,
     });
     console.log(res);
     setTreeUrlArr((treeUrlArr) => [...treeUrlArr, res.data.data]);
@@ -52,9 +54,32 @@ export default function LinkTree() {
     <>
       <div className="container url-container">
         <div className="row justify-content-center">
-          <div className="col-xl-6 col-lg-12 col-md-12 col-sm-12 col-12">
+          <div className="lg:ml-96">
             <div className="urlContainer">
               <div className="form-label urlHead">Linktree</div>
+              <input
+                type="text"
+                name="colMainUrl"
+                placeholder="Tree Name"
+                onChange={(e) => {
+                  setColMainUserName(e.target.value);
+                }}
+                className="form-control textBox mb-3"
+                id="urlCol"
+                aria-describedby="emailHelp"
+              />
+              <textarea
+                type="text"
+                name="colMainUrl"
+                placeholder="Tree Description"
+                value={description}
+                onChange={(e) => {
+                  setDescription(e.target.value);
+                }}
+                className="form-control textBox"
+                id="urlCol"
+              />
+              <br />
               <p className="text-14px" style={{ opacity: 0.8 }}>
                 Linktree allows you to create a personalized and customizable
                 page that houses all the important links that you want to share
@@ -71,34 +96,23 @@ export default function LinkTree() {
               </button>
               <br />
               <br />
-              <input
-                type="text"
-                name="colMainUrl"
-                placeholder="John Doe"
-                onChange={(e) => {
-                  setColMainUserName(e.target.value);
-                }}
-                className="form-control textBox"
-                id="urlCol"
-                aria-describedby="emailHelp"
-              />
-              <br />
               <div>
                 <input
                   type="text"
                   name="colMainUrl"
                   placeholder="Facebook"
+                  value={linkName}
                   onChange={(e) => {
                     setLinkName(e.target.value);
                   }}
                   className="form-control textBox"
                   id="urlCol"
-                  aria-describedby="emailHelp"
                 />
                 <br />
                 <input
                   type="text"
                   name="colMainUrl"
+                  value={link}
                   placeholder="https://www.facebook.com/john"
                   onChange={(e) => {
                     setLink(e.target.value);
@@ -169,14 +183,6 @@ export default function LinkTree() {
                             }}
                           >
                             <DeleteIcon
-                              sx={{
-                                fontSize: "14px",
-                                color: "white",
-                              }}
-                            />
-                          </button>
-                          <button className="edit-button">
-                            <EditIcon
                               sx={{
                                 fontSize: "14px",
                                 color: "white",

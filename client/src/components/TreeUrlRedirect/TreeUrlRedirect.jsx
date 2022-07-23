@@ -3,26 +3,18 @@ import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import './TreeUrlRedirect.css'
+import "./TreeUrlRedirect.css";
 
 export default function TreeUrlRedirect() {
   const location = useLocation();
   const path = location.pathname.split("/")[2];
 
-  const [urlArr, setUrlArr] = useState([]);
-  const [userImage, setUserImage] = useState('');
-  const [userName, setUserName] = useState('');
-
-
-
+  const [data, setData] = useState({});
   useEffect(() => {
     const fetchAllLinks = async () => {
       try {
         const res = await axios.get("http://localhost:8000/v1/tree/" + path);
-        setUrlArr(res.data.data.original);
-        setUserImage(res.data.data.image);
-        setUserName(res.data.data.name)
-
+        setData(res.data.data);
       } catch (err) {
         console.log(err);
       }
@@ -33,18 +25,24 @@ export default function TreeUrlRedirect() {
 
   return (
     <div className="bodyBackground">
+      <div className="myvideo"></div>
 
-<div class="myvideo">
-  </div>
-  
-    <img alt='profilepic' src={userImage}  class="profile-picture"/>
-    
-    <div class="profile-name">{userName}</div>
+      <img alt="profilepic" src={data?.image} className="profile-picture" />
 
+      <div className="flex flex-col">
+        <div className="profile-name max-w-96 mx-auto">{data?.name}</div>
+        <div className="profile-name bg-gray-50 max-w-[32rem] mx-auto">
+          {data?.description}
+        </div>
+      </div>
 
-      {urlArr &&
-        urlArr.map((p, i) => {
-          return <a href={p.link} class="links" id={i}>{p.title}</a>;
+      {data &&
+        data?.original?.map((p, i) => {
+          return (
+            <a href={p.link} className="links" id={i}>
+              {p.title}
+            </a>
+          );
         })}
     </div>
   );
