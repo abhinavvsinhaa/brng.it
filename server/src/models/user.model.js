@@ -44,6 +44,11 @@ const userSchema = mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    url: {
+      type: Array,
+      ref: 'Url',
+      default: [],
+    },
   },
   {
     timestamps: true,

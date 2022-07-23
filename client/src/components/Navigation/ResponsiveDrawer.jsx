@@ -1,20 +1,20 @@
-import * as React from 'react';
-import PropTypes from 'prop-types';
-import Box from '@mui/material/Box';
-import CssBaseline from '@mui/material/CssBaseline';
-import Divider from '@mui/material/Divider';
-import Drawer from '@mui/material/Drawer';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
+import * as React from "react";
+import PropTypes from "prop-types";
+import Box from "@mui/material/Box";
+import CssBaseline from "@mui/material/CssBaseline";
+import Divider from "@mui/material/Divider";
+import Drawer from "@mui/material/Drawer";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
 
-import DashboardIcon from '@mui/icons-material/Dashboard';
-import ShareIcon from '@mui/icons-material/Share';
-import GroupIcon from '@mui/icons-material/Group';
-import LinkIcon from '@mui/icons-material/Link';
-import ParkIcon from '@mui/icons-material/Park';
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import ShareIcon from "@mui/icons-material/Share";
+import GroupIcon from "@mui/icons-material/Group";
+import LinkIcon from "@mui/icons-material/Link";
+import ParkIcon from "@mui/icons-material/Park";
 
 const drawerWidth = 240;
 
@@ -33,7 +33,7 @@ function ResponsiveDrawer(props) {
         <ListItem disablePadding>
           <ListItemButton>
             <ListItemIcon>
-              <DashboardIcon/>
+              <DashboardIcon />
             </ListItemIcon>
             <ListItemText primary="Dashboard" />
           </ListItemButton>
@@ -41,7 +41,7 @@ function ResponsiveDrawer(props) {
         <ListItem disablePadding>
           <ListItemButton>
             <ListItemIcon>
-              <ShareIcon/>
+              <ShareIcon />
             </ListItemIcon>
             <ListItemText primary="Share" />
           </ListItemButton>
@@ -49,7 +49,7 @@ function ResponsiveDrawer(props) {
         <ListItem disablePadding>
           <ListItemButton>
             <ListItemIcon>
-              <LinkIcon/>
+              <LinkIcon />
             </ListItemIcon>
             <ListItemText primary="URL Shortener" />
           </ListItemButton>
@@ -57,7 +57,7 @@ function ResponsiveDrawer(props) {
         <ListItem disablePadding>
           <ListItemButton>
             <ListItemIcon>
-              <ParkIcon/>
+              <ParkIcon />
             </ListItemIcon>
             <ListItemText primary="Linktree" />
           </ListItemButton>
@@ -65,7 +65,7 @@ function ResponsiveDrawer(props) {
         <ListItem disablePadding>
           <ListItemButton>
             <ListItemIcon>
-              <GroupIcon/>
+              <GroupIcon />
             </ListItemIcon>
             <ListItemText primary="Profiles" />
           </ListItemButton>
@@ -74,10 +74,11 @@ function ResponsiveDrawer(props) {
     </div>
   );
 
-  const container = window !== undefined ? () => window().document.body : undefined;
+  const container =
+    window !== undefined ? () => window().document.body : undefined;
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ display: "flex" }}>
       <CssBaseline />
       <Box
         component="nav"
@@ -94,8 +95,11 @@ function ResponsiveDrawer(props) {
             keepMounted: true, // Better open performance on mobile.
           }}
           sx={{
-            display: { xs: 'block', sm: 'none' },
-            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+            display: { xs: "block", sm: "none" },
+            "& .MuiDrawer-paper": {
+              boxSizing: "border-box",
+              width: drawerWidth,
+            },
           }}
         >
           {drawer}
@@ -103,8 +107,13 @@ function ResponsiveDrawer(props) {
         <Drawer
           variant="permanent"
           sx={{
-            display: { xs: 'none', sm: 'block' },
-            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth, marginTop: '64px', backgroundColor: '#f5f5f5' },
+            display: { xs: "none", sm: "block" },
+            "& .MuiDrawer-paper": {
+              boxSizing: "border-box",
+              width: drawerWidth,
+              marginTop: "64px",
+              backgroundColor: "#f5f5f5",
+            },
           }}
           open
         >

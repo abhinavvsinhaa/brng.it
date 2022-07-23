@@ -12,15 +12,13 @@ import Navbar from "../src/components/Layout/Navbar";
 import Calender from "./components/CalenderV1/Calender";
 import ConnectNewChannel from "./components/Channel/ConnectNewChannel";
 import Profile from "./components/Profile/Profile";
-import UrlFront from './components/UrlFront/UrlFront';
-import UrlRedirect from './components/UrlRedirectPage/UrlRedirect';
-import TreeUrlRedirect from './components/TreeUrlRedirect/TreeUrlRedirect';
-import ResponsiveDrawer from './components/Navigation/ResponsiveDrawer'
+import UrlFront from "./components/UrlFront/UrlFront";
+import UrlRedirect from "./components/UrlRedirectPage/UrlRedirect";
+import TreeUrlRedirect from "./components/TreeUrlRedirect/TreeUrlRedirect";
 
-import './App.css'
+import "./App.css";
 import Share from "./components/Share/Share";
 import LinkTree from "./components/UrlFront/LinkTree";
-
 
 function App() {
   useEffect(() => {}, []);
@@ -28,7 +26,7 @@ function App() {
   return (
     <CalenderProvider>
       <div className="app">
-        <Navbar/>
+        <Navbar />
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
@@ -40,12 +38,12 @@ function App() {
               path="/channels/connect"
               element={<Private Component={ConnectNewChannel} />}
             />
-            <Route path='/share' element={<Share/>}/>
-            <Route path='/url' element={<UrlFront/>}/>
-            <Route path='/url/:uid' element={<UrlRedirect/>} />
+            <Route path="/share" element={<Share />} />
             <Route path="*" element={<Error />} />
-            <Route path='/tree/:uid' element={<TreeUrlRedirect/>} />
-            <Route path='/linktree' element={<LinkTree />} />
+            <Route path="/tree/:uid" element={<TreeUrlRedirect />} />
+            <Route path="/linktree" element={<LinkTree />} />
+            <Route path="/url" element={<UrlFront />} />
+            <Route path="url/:uid" element={<UrlRedirect />} />
           </Route>
         </Routes>
       </div>

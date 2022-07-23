@@ -19,15 +19,6 @@ export default function UrlRedirect() {
   return (
     <>
       <h1>Redirecting</h1>
-      <div class="spinner-border text-primary" role="status">
-        <span class="visually-hidden">Loading...</span>
-      </div>
-      <div class="spinner-border text-secondary" role="status">
-        <span class="visually-hidden">Loading...</span>
-      </div>
-      <div class="spinner-border text-success" role="status">
-        <span class="visually-hidden">Loading...</span>
-      </div>
       <div class="spinner-border text-danger" role="status">
         <span class="visually-hidden">Loading...</span>
       </div>

@@ -2,6 +2,7 @@
 const ShortUniqueId = require('short-unique-id');
 const ApiError = require('../utils/ApiError');
 const Url = require('../models/url.model');
+const User = require('../models/user.model');
 const httpStatus = require('http-status');
 const catchAsync = require('../utils/catchAsync');
 
@@ -77,11 +78,15 @@ const shortenMultipleUrlAsync = async (req, _res, next) => {
 
 const shortenUrl = catchAsync(async (req, res, next) => {
   const newUrl = await shortenSingleUrl(req, res, next);
+
   if (!newUrl)
     return res.status(400).json({
       status: 'failure',
       message: 'something went wrong, most likely url name already in use!',
     });
+  console.log(newUrl);
+  const newUser = await User.updateOne({ _id: req.user._id }, { $addToSet: { url: newUrl._id } });
+  console.log(newUser);
 
   res.status(201).json({
     status: 'success',

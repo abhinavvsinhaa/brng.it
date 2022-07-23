@@ -11,7 +11,7 @@ const router = express.Router();
  *  validate(authValidation.shorten) => manage incoming request validation
  */
 
-router.post('/shorten', validate(urlValidation.shortenOne), urlController.shortenUrl);
+router.post('/shorten', validate(urlValidation.shortenOne), auth(), urlController.shortenUrl);
 router.post('/shortenmultiple', validate(urlValidation.shortenMany), urlController.shortenMultipleUrl);
 
 router.get('/:uid', urlController.getShortUrl);

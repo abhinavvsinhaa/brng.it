@@ -1,22 +1,41 @@
-import React from "react";
+import React, { useRef } from "react";
 import { useState } from "react";
 import "./UrlFront.css";
-import axios from "axios";
 import SingleUrl from "../SingleUrl/SingleUrl";
-import SingleTreeUrl from "../SingleTreeUrl/SingleTreeUrl";
-import ResponsiveDrawer from "../Navigation/ResponsiveDrawer";
+import Analytics from "./Analytics";
+import { axiosPrivate } from "../../api/axios";
 
 export default function UrlFront() {
   const [mainUrl, setMainUrl] = useState("");
+  const [mainName, setMainName] = useState("");
   const varJson = {};
 
   const [urlArr, setUrlArr] = useState([]);
 
   const [alert, setAlert] = useState(false);
 
+  const general = useRef(null);
+  const custom = useRef(null);
+
+  const convertCustomUrl = async () => {
+    try {
+      const res = await axiosPrivate.post("/url/shorten", {
+        original: mainUrl,
+        name: mainName,
+      });
+      console.log(res);
+      varJson.shortUrl = res.data.data.short;
+      varJson.uid = res.data.data.uid;
+      setUrlArr((urlArr) => [...urlArr, varJson]);
+      setMainUrl("");
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const convertMainUrl = async () => {
     try {
-      const res = await axios.post("http://localhost:8000/v1/url/shorten", {
+      const res = await axiosPrivate.post("/url/shorten", {
         original: mainUrl,
       });
       console.log(res);
@@ -32,8 +51,9 @@ export default function UrlFront() {
   return (
     <>
       <div className="container url-container">
-        <div className="row justify-content-center">
-          <div className="col-xl-6 col-lg-12 col-md-12 col-sm-12 col-12">
+        <div ref={general} className="row justify-content-center">
+          {/*URL shortener */}
+          <div className="w-4/5 url-container-inner">
             {alert && (
               <div className="alertAdded">
                 <div class="alert alert-success" role="alert">
@@ -43,7 +63,24 @@ export default function UrlFront() {
             )}
             <div className="urlContainer">
               <br />
-              <div className="urlHead">URL Shortener</div>
+              <div className="flex">
+                <div className="urlHead">URL Shortener</div>
+                <button
+                  onClick={() => {
+                    document
+                      .getElementsByClassName("url-container-inner-custom")[0]
+                      .classList.remove("hidden");
+                    document
+                      .getElementsByClassName("url-container-inner")[0]
+                      .classList.add("hidden");
+                  }}
+                  type="submit"
+                  class="px-6 ml-2 m-2   text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                >
+                  Custom
+                </button>
+              </div>
+
               <p
                 style={{
                   fontSize: "14px",
@@ -51,25 +88,24 @@ export default function UrlFront() {
                 }}
               >
                 Free URL shortener to create perfect URLs for your business. Use
-                our tool to shorten links and then share them, in addition you can
-                monitor traffic statistics.
+                our tool to shorten links and then share them, in addition you
+                can monitor traffic statistics.
               </p>
               <br />
 
               <label for="url" class="form-label text-14px">
                 Single URL
               </label>
+              <div></div>
 
-              <div style={{ display: 'flex'}}>
+              <div style={{ display: "flex" }}>
                 <input
-                  type="email"
                   class="form-control textBox"
                   id="url"
                   name="mainUrl"
                   onChange={(e) => {
                     setMainUrl(e.target.value);
                   }}
-                  aria-describedby="emailHelp"
                   placeholder="https://www.facebook.com/john"
                 />
                 <button
@@ -85,15 +121,102 @@ export default function UrlFront() {
               {urlArr &&
                 urlArr.map((p, i) => {
                   return (
-                  <>
-                    <span style={{fontWeight: 500}}>Shortened URL: </span>
-                    <SingleUrl id={i} varArr={p} />
-                    <br />
-                  </>
-                  )
-              })}
+                    <>
+                      <span style={{ fontWeight: 500 }}>Shortened URL: </span>
+                      <SingleUrl id={i} varArr={p} />
+                      <br />
+                    </>
+                  );
+                })}
             </div>
           </div>
+          {/*Custom Url */}
+          <div ref={custom} className="w-4/5 url-container-inner-custom hidden">
+            {alert && (
+              <div className="alertAdded">
+                <div class="alert alert-success" role="alert">
+                  Url Added
+                </div>
+              </div>
+            )}
+            <div className="urlContainer">
+              <br />
+              <div className="flex">
+                <div className="urlHead">Custom Shortener </div>
+                <button
+                  onClick={() => {
+                    document
+                      .getElementsByClassName("url-container-inner-custom")[0]
+                      .classList.add("hidden");
+                    document
+                      .getElementsByClassName("url-container-inner")[0]
+                      .classList.remove("hidden");
+                  }}
+                  type="submit"
+                  class="px-6 ml-2 m-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                >
+                  General
+                </button>
+              </div>
+
+              <p
+                style={{
+                  fontSize: "14px",
+                  opacity: 0.8,
+                }}
+              >
+                Free URL shortener to create perfect URLs for your business. Use
+                our tool to shorten links and then share them, in addition you
+                can monitor traffic statistics.
+              </p>
+              <br />
+
+              <label for="url" class="form-label text-14px m-1">
+                Single URL
+              </label>
+
+              <div className="flex">
+                <input
+                  class="form-control textBox my-4 flex-2 "
+                  id="url"
+                  name="mainUrl"
+                  onChange={(e) => {
+                    setMainUrl(e.target.value);
+                  }}
+                  placeholder="https://www.facebook.com/john"
+                />
+                <input
+                  class="form-control textBox m-4"
+                  id="urlName"
+                  onChange={(e) => {
+                    setMainName(e.target.value);
+                  }}
+                  placeholder="custom"
+                />
+                <button
+                  onClick={convertCustomUrl}
+                  type="submit"
+                  class="btn url-success-btn m-4"
+                >
+                  Generate
+                </button>
+              </div>
+
+              <br />
+              {urlArr &&
+                urlArr.map((p, i) => {
+                  return (
+                    <>
+                      <span style={{ fontWeight: 500 }}>Shortened URL: </span>
+                      <SingleUrl id={i} varArr={p} />
+                      <br />
+                    </>
+                  );
+                })}
+            </div>
+          </div>
+
+          <Analytics />
         </div>
       </div>
     </>

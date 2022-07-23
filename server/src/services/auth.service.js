@@ -40,7 +40,7 @@ const logout = async (refreshToken) => {
 const refreshAuth = async (refreshToken) => {
   try {
     const refreshTokenDoc = await tokenService.verifyToken(refreshToken, tokenTypes.REFRESH);
-    const user = await userService.getUserById(refreshTokenDoc.user);
+    const user = await (await userService.getUserById(refreshTokenDoc.user)).populate('url');
     if (!user) {
       throw new Error();
     }
