@@ -23,10 +23,12 @@ const userSchema = mongoose.Schema(
         }
       },
     },
-    customers: [{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Client'
-    }],
+    customers: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Client',
+      },
+    ],
     password: {
       type: String,
       required: true,
@@ -51,6 +53,11 @@ const userSchema = mongoose.Schema(
     url: {
       type: Array,
       ref: 'Url',
+      default: [],
+    },
+    urlGroup: {
+      type: Array,
+      ref: 'UrlCollection',
       default: [],
     },
   },

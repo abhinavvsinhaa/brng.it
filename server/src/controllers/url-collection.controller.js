@@ -1,10 +1,10 @@
 const ShortUniqueId = require('short-unique-id');
 const ApiError = require('../utils/ApiError');
 const UrlCollection = require('../models/url-collection.model');
-const Url = require('../models/url.model');
 const catchAsync = require('../utils/catchAsync');
 
 const httpStatus = require('http-status');
+const User = require('../models/user.model');
 
 const combine = catchAsync(async (req, res, _next) => {
   let uid = new ShortUniqueId({ length: 12 });
@@ -26,6 +26,8 @@ const combine = catchAsync(async (req, res, _next) => {
     short: process.env.SHORT_BASE + link,
     uid: link,
   });
+  await User.updateOne({ _id: req.user._id }, { $addToSet: { urlGroup: combinedLink._id } });
+
   res.status(201).json({
     status: 'success',
     data: combinedLink,

@@ -11,11 +11,10 @@ const router = express.Router();
  *  validate(authValidation.shorten) => manage incoming request validation
  */
 
-router.post('/combine', validate(urlCollectionValidation.combine), urlCollectionController.combine);
-
+router.post('/combine', validate(urlCollectionValidation.combine), auth(), urlCollectionController.combine);
 router.get('/:uid', urlCollectionController.getAllLinks);
 router.patch('/:uid/:index', urlCollectionController.updateLinkInCollection);
-router.delete('/:uid', urlCollectionController.deleteLink);
+router.delete('/:uid', auth(), urlCollectionController.deleteLink);
 
 module.exports = router;
 
