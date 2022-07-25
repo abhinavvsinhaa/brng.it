@@ -7,6 +7,7 @@ import { Divider, notification } from "antd";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ResponsiveDrawer from "../Navigation/ResponsiveDrawer";
+import { axiosPrivate } from "../../api/axios";
 
 export default function LinkTree() {
   const [link, setLink] = useState("");
@@ -42,7 +43,7 @@ export default function LinkTree() {
   };
 
   const convertLinkUrl = async () => {
-    const res = await axios.post("http://localhost:8000/v1/tree/combine", {
+    const res = await axiosPrivate.post("/tree/combine", {
       original: colMainUrlArr,
       name: ColMainUserName,
       description,
@@ -57,9 +58,14 @@ export default function LinkTree() {
     <>
       <div className="container url-container">
         <div className="row justify-content-center">
-          <div className="lg:ml-96">
+          <div className="col-xl-6">
             <div className="urlContainer">
               <div className="form-label urlHead">Linktree</div>
+              <p className="text-14px" style={{ opacity: 0.8 }}>
+                Linktree allows you to create a personalized and customizable
+                page that houses all the important links that you want to share
+                with your audience.
+              </p>
               <input
                 type="text"
                 name="colMainUrl"
@@ -83,11 +89,7 @@ export default function LinkTree() {
                 id="urlCol"
               />
               <br />
-              <p className="text-14px" style={{ opacity: 0.8 }}>
-                Linktree allows you to create a personalized and customizable
-                page that houses all the important links that you want to share
-                with your audience.
-              </p>
+              
               <button onClick={addMainUrl} className="btn url-submit-btn">
                 Add Link
               </button>
@@ -124,19 +126,9 @@ export default function LinkTree() {
                   id="urlCol"
                   aria-describedby="emailHelp"
                 />
-                {/* {treeUrlArr &&
-                  treeUrlArr.map((p, i) => {
-                    return (
-                      <>
-                        <br />
-                        <span style={{ fontWeight: 500 }}>My Linktree: </span>
-                        &nbsp;
-                        <SingleTreeUrl id={i} treeArr={p} />
-                      </>
-                    );
-                  })} */}
-                  <span style={{ fontWeight: 500 }}>My Linktree: </span>
-                  <SingleTreeUrl treeArr={treeUrl} />
+                <br />
+                <span style={{ fontWeight: 500 }}>My Linktree: </span>
+                <SingleTreeUrl treeArr={treeUrl} />
                 <Divider />
                 {colMainUrlArr &&
                   colMainUrlArr.map((url, i) => {

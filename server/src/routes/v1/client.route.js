@@ -14,7 +14,7 @@ router
 
 router
   .route('/find')
-  .get(clientController.findClientByName)
+  .get(clientController.findClientByNameOrEmail)
 
 router
   .route('/:clientId')

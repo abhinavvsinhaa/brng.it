@@ -6,6 +6,7 @@ const clientRoute = require('./client.route');
 const urlCollectionRoute = require('./url-collection.route');
 const callbackRoute = require('./callback.route');
 const docsRoute = require('./docs.route');
+const shareRoute = require('./share.route')
 const config = require('../../config/config');
 
 const router = express.Router();
@@ -36,6 +37,10 @@ const defaultRoutes = [
     path: '/client',
     route: clientRoute,
   },
+  {
+    path: '/share',
+    route: shareRoute
+  }
 ];
 
 // Routes available only in development mode

@@ -8,11 +8,10 @@ import "./Share.css";
 import "antd/dist/antd.css";
 import axios from "../../api/axios";
 import useAuth from "../../hooks/useAuth";
-import LinkedInIcon from '@mui/icons-material/LinkedIn';
-import FacebookIcon from '@mui/icons-material/Facebook';
-import InstagramIcon from '@mui/icons-material/Instagram';
-import { Checkbox } from 'antd';
-import { CheckboxValueType } from 'antd/es/checkbox/Group';
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
+import FacebookIcon from "@mui/icons-material/Facebook";
+import InstagramIcon from "@mui/icons-material/Instagram";
+import { Checkbox, notification } from "antd";
 
 const antIcon = (
   <LoadingOutlined
@@ -34,37 +33,145 @@ const columnsShare = [
   {
     title: "Email",
     dataIndex: "email",
-  }
+  },
+  {
+    title: "Platform",
+    dataIndex: "platform",
+  },
 ];
 
-const options = [
-  { label: 'facebook', value: <FacebookIcon/> },
-  { label: 'instagram', value: <InstagramIcon/> },
-  { label: 'linkedin', value: <LinkedInIcon/> },
-];
+const shareNowLinkedIn = async (author, caption, access_token, file) => {
+  // console.log('access_token', access_token);
+  // console.log('author', author);
+  // console.log('caption', caption);
+
+  // if (file) {
+  //   const reader = new FileReader();
+  //   const binaryImage = reader.readAsBinaryString(file);
+  //   console.log("binary", binaryImage);
+  // }
+
+  const res = await axios.post("/share?linkedin=true", {
+    access_token,
+    caption,
+    author,
+    file
+  });
+  console.log(res);
+};
 
 const Share = () => {
   const { auth, setAuth } = useAuth();
   const [loading, setLoading] = useState(true);
   const [showSearchModal, setShowSearchModal] = useState(false);
-  const handleCloseSearchModal = () => setShowSearchModal(false);
+
   const [customers, setCustomers] = useState([]);
-  const [selectedCustomer, setSelectedCustomer] = useState({})
+  const [selectedCustomer, setSelectedCustomer] = useState(null);
   const [caption, setCaption] = useState("");
   const [showPicker, setShowPicker] = useState(false);
-  const [file, setFile] = useState(null);
+  const [file, setFile] = useState('');
+
+  // storing platforms details to perform actions
+  const [linkedin, setLinkedin] = useState(null);
+  const [instagram, setInstagram] = useState(null);
+  const [facebook, setFacebook] = useState(null);
+  const [selectedPlatformsToPostOn, setSelectedPlatformsToPostOn] =
+    useState(null);
 
   const [checkboxOptions, setCheckboxOptions] = useState([]);
+
+  const handleShareNowButton = () => {
+    if (!selectedCustomer)
+      return openNotificationWithIcon("error", "No account choosen");
+
+    if (selectedPlatformsToPostOn === [])
+      return openNotificationWithIcon(
+        "error",
+        "Please select platform to post on."
+      );
+      
+    if (!caption && !file)
+      return openNotificationWithIcon('error', 'No caption entered or file choosen');
+
+    else if (!caption)
+      openNotificationWithIcon("warning", "No caption entered");
+
+    console.log(linkedin);
+    // console.log(caption);
+
+    selectedPlatformsToPostOn.map((platform) => {
+      if (platform === "linkedin") {
+        shareNowLinkedIn(linkedin.user.id, caption, linkedin.access_token, file);
+      }
+    });
+  };
+
+  const handleCloseSearchModal = () => setShowSearchModal(false);
+
+  // notification
+  const openNotificationWithIcon = (type, title, content) => {
+    notification[type]({
+      message: title,
+      description: content,
+    });
+  };
 
   const onEmojiClick = (event, emojiObject) => {
     setCaption((prevInput) => prevInput + emojiObject.emoji);
     setShowPicker(false);
   };
 
+  const confirmSelectedUser = async () => {
+    handleCloseSearchModal();
+    if (selectedCustomer == null) {
+      return openNotificationWithIcon(
+        "error",
+        "No account selected",
+        "Please select any one account, then click on confirm button."
+      );
+    }
+
+    openNotificationWithIcon(
+      "success",
+      "User account selected",
+      "Now choose from available social media platforms, on which you want to post or schedule."
+    );
+    // if user account is selected, fetch their details
+    let array = [];
+    const res = await axios.get(`/client/find?email=${selectedCustomer}`);
+    console.log(res);
+    if (res.data.linkedin) {
+      array.push({
+        label: <LinkedInIcon />,
+        value: "linkedin",
+      });
+      setLinkedin(res.data.linkedin);
+    }
+    if (res.data.facebook) {
+      array.push({
+        label: <FacebookIcon />,
+        value: "facebook",
+      });
+      setFacebook(res.data.facebook);
+    }
+    if (res.data.instagram) {
+      array.push({
+        label: <InstagramIcon />,
+        value: "instagram",
+      });
+      setInstagram(res.data.instagram);
+    }
+
+    setCheckboxOptions(array);
+  };
+
   const rowSelectionShare = {
-    onChange: (selectedRowKeys, selectedRows) => {
-      setSelectedCustomer(selectedRowKeys)
-      console.log(selectedRowKeys)
+    onChange: async (selectedRowKeys, selectedRows) => {
+      setSelectedCustomer(selectedRowKeys);
+      setLinkedin(null);
+      setInstagram(null);
+      setFacebook(null);
+      setCheckboxOptions([]);
     },
     getCheckboxProps: (record) => ({
       disabled: record.name === "Disabled User",
@@ -72,12 +179,17 @@ const Share = () => {
     }),
   };
 
+  const checkboxMarked = (e) => {
+    // e -> will return an array of checked lists in sorted manner
+    console.log(e);
+    setSelectedPlatformsToPostOn(e);
+  };
+
   // todo: make share now working
   const fetchCustomers = async () => {
     try {
-      const response = await axios.get(`/users/${auth.user.id}?customers=true`)
-      const array = []
-      // const checkbox = [];
+      const response = await axios.get(`/users/${auth.user.id}?customers=true`);
+      const array = [];
       response.data.customers.map((customer) => {
         let details = {
           key: customer.email,
@@ -85,12 +197,9 @@ const Share = () => {
           email: customer.email,
         };
 
-        if (customer.linkedin)
-          details.linkedin = customer.linkedin
-        if (customer.instagram)
-          details.instagram = customer.instagram
-        if (customer.facebook)
-          details.facebook = customer.facebook
+        if (customer.linkedin) details.linkedin = customer.linkedin;
+        if (customer.instagram) details.instagram = customer.instagram;
+        if (customer.facebook) details.facebook = customer.facebook;
 
         array.push(details);
       });
@@ -102,9 +211,9 @@ const Share = () => {
   };
 
   const handleChooseAccountButton = () => {
-    setShowSearchModal(true)
+    setShowSearchModal(true);
     fetchCustomers();
-  }
+  };
 
   return (
     <>
@@ -142,6 +251,13 @@ const Share = () => {
           >
             Close
           </Button>
+          <Button
+            variant="secondary"
+            onClick={confirmSelectedUser}
+            className="url-success-btn"
+          >
+            Confirm
+          </Button>
         </Modal.Footer>
       </Modal>
       <div className="container share-container">
@@ -161,12 +277,35 @@ const Share = () => {
               To share a post you see on your Feed, click or tap on Share button
               to share now or you can also schedule the post on a further time.
             </p>
-            <div>
-              <button className="btn btn-share-post" onClick={handleChooseAccountButton}>Choose Account</button>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <button
+                className="btn btn-share-post"
+                onClick={handleChooseAccountButton}
+              >
+                Choose Account
+              </button>
               <div>
-
+                <Checkbox.Group
+                  options={checkboxOptions}
+                  onChange={(e) => checkboxMarked(e)}
+                />
               </div>
             </div>
+            <br />
+            {selectedCustomer && (
+              <p>
+                <span style={{ fontWeight: 500 }}>
+                  Selected account: &nbsp;
+                </span>
+                {selectedCustomer}
+              </p>
+            )}
             <br />
             <div className="share-post-inner-div ">
               <form action="" className="shadow-sm py-2 px-2 rounded">
@@ -199,8 +338,20 @@ const Share = () => {
                       name="image"
                       id="image"
                       accept="image/*"
-                      value={file}
-                      onChange={(e) => console.log(e.target.files[0])}
+                      onChange={async (e) => {
+                        var reader = new FileReader();
+
+                        reader.onload = function (e) {
+                          // binary data
+                          setFile(e.target.result);
+                        };
+                        reader.onerror = function (e) {
+                          // error occurred
+                          console.log("Error : " + e.type);
+                        };
+
+                        reader.readAsBinaryString(e.target.files[0]);
+                      }}
                       className="custom-file-input"
                     />
                   </div>
@@ -208,7 +359,12 @@ const Share = () => {
               </form>
               <br />
               <div className="flex">
-                <button className="btn btn-share-post">Share Now</button>
+                <button
+                  className="btn btn-share-post"
+                  onClick={handleShareNowButton}
+                >
+                  Share Now
+                </button>
                 <button className="btn mx-2 btn-share-post">Schedule</button>
               </div>
             </div>

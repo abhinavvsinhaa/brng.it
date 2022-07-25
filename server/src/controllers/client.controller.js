@@ -27,10 +27,19 @@ const getClient = catchAsync(async (req, res) => {
   res.send(client);
 });
 
-const findClientByName = catchAsync(async (req, res) => {
-  const { name } = req.query;
-  console.log(req.query.name);
-  const client = await clientService.getClientByName(name);
+const findClientByNameOrEmail = catchAsync(async (req, res) => {
+  let client;
+  if (req.query.name) {
+    client = await clientService.getClientByName(req.query.name);
+  }
+
+  if (req.query.email) {
+    client = await clientService.getClientByEmail(req.query.email);
+  }
+
+  if (!client)
+    throw new ApiError(httpStatus.NOT_FOUND, 'client not found'); 
+  
   res.send(client);
 })
 
@@ -57,6 +66,6 @@ module.exports = {
   getClient,
   updateClientById,
   deleteClient,
-  findClientByName,
-  findClientByEmailAndUpdate
+  findClientByNameOrEmail,
+  findClientByEmailAndUpdate,
 };
