@@ -8,6 +8,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ResponsiveDrawer from "../Navigation/ResponsiveDrawer";
 import { axiosPrivate } from "../../api/axios";
+import TreeAnalytics from "./TreeAnalytics";
 
 export default function LinkTree() {
   const [link, setLink] = useState("");
@@ -21,7 +22,6 @@ export default function LinkTree() {
 
   const [treeUrlArr, setTreeUrlArr] = useState([]);
   const [treeUrl, setTreeUrl] = useState([]);
-
 
   const openNotificationWithIcon = (type) => {
     notification[type]({
@@ -49,8 +49,8 @@ export default function LinkTree() {
       description,
     });
     console.log(res);
-    // setTreeUrlArr((treeUrlArr) => [...treeUrlArr, res.data.data]); 
-    setTreeUrl(res.data.data)
+    // setTreeUrlArr((treeUrlArr) => [...treeUrlArr, res.data.data]);
+    setTreeUrl(res.data.data);
     setColMainUrlArr([]);
   };
 
@@ -89,7 +89,7 @@ export default function LinkTree() {
                 id="urlCol"
               />
               <br />
-              
+
               <button onClick={addMainUrl} className="btn url-submit-btn">
                 Add Link
               </button>
@@ -194,6 +194,7 @@ export default function LinkTree() {
             </div>
           </div>
         </div>
+        <TreeAnalytics />
       </div>
     </>
   );

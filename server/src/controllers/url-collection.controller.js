@@ -27,7 +27,6 @@ const combine = catchAsync(async (req, res, _next) => {
     uid: link,
   });
   await User.updateOne({ _id: req.user._id }, { $addToSet: { urlGroup: combinedLink._id } });
-
   res.status(201).json({
     status: 'success',
     data: combinedLink,

@@ -1,4 +1,4 @@
-import axios from "axios";
+import api from "../../api/axios";
 import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
@@ -13,7 +13,7 @@ export default function TreeUrlRedirect() {
   useEffect(() => {
     const fetchAllLinks = async () => {
       try {
-        const res = await axios.get("http://localhost:8000/v1/tree/" + path);
+        const res = await api.get("/tree/" + path);
         setData(res.data.data);
       } catch (err) {
         console.log(err);
@@ -39,9 +39,17 @@ export default function TreeUrlRedirect() {
       {data &&
         data?.original?.map((p, i) => {
           return (
-            <a href={p.link} className="links" id={i}>
+            <button
+              onClick={async () => {
+                console.log(p);
+                await api.patch(`/tree/${path}/${i}`);
+                window.location.href = p.link;
+              }}
+              className="links hover:bg-white hover:text-black"
+              id={i}
+            >
               {p.title}
-            </a>
+            </button>
           );
         })}
     </div>
