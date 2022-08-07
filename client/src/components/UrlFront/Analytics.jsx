@@ -5,8 +5,8 @@ const Analytics = () => {
   const { setAuth, auth } = useAuth();
   console.log(auth);
   return (
-    <div class="overflow-x-auto relative lg:ml-80">
-      <table class="w-4/5 text-sm text-left text-gray-500 dark:text-gray-400">
+    <div class="overflow-x-auto relative">
+      <table class=" text-sm text-left text-gray-500 dark:text-gray-400">
         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
           <tr>
             <th scope="col" class="py-3 px-6">
@@ -18,6 +18,7 @@ const Analytics = () => {
             <th scope="col" class="py-3 px-6">
               Clicks
             </th>
+            <th>QR code</th>
           </tr>
         </thead>
         <tbody>
@@ -32,6 +33,13 @@ const Analytics = () => {
                 </th>
                 <td class="py-4 px-6">{url.short}</td>
                 <td class="py-4 px-6">{url.visits}</td>
+                <td>
+                  <img
+                    src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${url.short}`}
+                    alt="QR"
+                    className="p-3"
+                  ></img>
+                </td>
               </tr>
             );
           })}

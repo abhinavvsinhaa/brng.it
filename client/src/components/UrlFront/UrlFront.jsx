@@ -10,9 +10,7 @@ export default function UrlFront() {
   const [mainName, setMainName] = useState("");
   const varJson = {};
 
-  const [urlArr, setUrlArr] = useState([]);
   const [singleUrl, setSingleUrl] = useState({});
-  
 
   const [alert, setAlert] = useState(false);
 
@@ -29,7 +27,7 @@ export default function UrlFront() {
       varJson.shortUrl = res.data.data.short;
       varJson.uid = res.data.data.uid;
       // setUrlArr((urlArr) => [...urlArr, varJson]);
-      setSingleUrl(varJson)
+      setSingleUrl(varJson);
       setMainUrl("");
     } catch (err) {
       console.log(err);
@@ -45,7 +43,7 @@ export default function UrlFront() {
       varJson.shortUrl = res.data.data.short;
       varJson.uid = res.data.data.uid;
       // setUrlArr((urlArr) => [...urlArr, varJson]);
-      setSingleUrl(varJson)
+      setSingleUrl(varJson);
       setMainUrl("");
     } catch (err) {
       console.log(err);
@@ -132,8 +130,8 @@ export default function UrlFront() {
                     </>
                   );
                 })} */}
-                <span style={{ fontWeight: 500 }}>Shortened URL: </span>
-                <SingleUrl varArr={singleUrl} />
+              <span style={{ fontWeight: 500 }}>Shortened URL: </span>
+              <SingleUrl varArr={singleUrl} />
             </div>
           </div>
           {/*Custom Url */}
@@ -219,12 +217,10 @@ export default function UrlFront() {
                     </>
                   );
                 })} */}
-                <span style={{ fontWeight: 500 }}>Shortened URL: </span>
-                <SingleUrl varArr={singleUrl}/>
+              <span style={{ fontWeight: 500 }}>Shortened URL: </span>
+              <SingleUrl varArr={singleUrl} />
             </div>
           </div>
-
-          <Analytics />
         </div>
       </div>
     </>
