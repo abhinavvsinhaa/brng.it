@@ -24,10 +24,12 @@ const Preview = ({ data }) => {
 export default function LinkTree() {
   const [link, setLink] = useState("");
   const [linkName, setLinkName] = useState("");
-  const [description, setDescription] = useState("");
-  const [pfp, setPfp] = useState("");
+  const [description, setDescription] = useState("Description of your links!");
+  const [pfp, setPfp] = useState(
+    "https://images.unsplash.com/photo-1603415526960-f7e0328c63b1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
+  );
 
-  const [ColMainUserName, setColMainUserName] = useState("");
+  const [ColMainUserName, setColMainUserName] = useState("Rhythm Shandlya");
   const [colMainUrlArr, setColMainUrlArr] = useState([]);
 
   const [colMainUrl, setColMainUrl] = useState([]);
@@ -82,12 +84,12 @@ export default function LinkTree() {
               type="text"
               name="colMainUrl"
               placeholder="Tree Name"
+              value={ColMainUserName}
               onChange={(e) => {
                 setColMainUserName(e.target.value);
               }}
               className="form-control mb-3"
               id="urlCol"
-              aria-describedby="emailHelp"
             />
             <textarea
               type="text"
