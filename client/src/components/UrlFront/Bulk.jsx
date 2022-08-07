@@ -55,15 +55,20 @@ const App = () => {
       const res = await axiosPrivate.post("/url/shortenmultiple", {
         original,
       });
-      console.log(res?.data?.data);
       setShortData(res?.data?.data);
     } catch (err) {
       alert("Error");
     }
+  };
 
+  const handleDownload = async () => {
+    if (shortData.length === 0) {
+      alert("Please convert!");
+      return;
+    }
     const dataString = Papa.unparse(shortData, config);
     const blob = new Blob([dataString], { type: "text/csv;charset=utf-8" });
-    saveAs(blob, "myfile.csv");
+    saveAs(blob, "short.csv");
   };
 
   return (
@@ -100,6 +105,12 @@ const App = () => {
         onClick={handleSubmit}
       >
         Covert
+      </button>
+      <button
+        className="text-center text-white font-bold rounded py-2 my-2 w-[80px] focus:outline-none bg-blue-700 border-2 border-indigo-400"
+        onClick={handleDownload}
+      >
+        Download
       </button>
       <div className="mt-3 h-[250px] w-full overflow-auto">
         <p>Shortened Links: </p>

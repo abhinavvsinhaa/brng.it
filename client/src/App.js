@@ -13,6 +13,7 @@ import Calender from "./components/CalenderV1/Calender";
 import ConnectNewChannel from "./components/Channel/ConnectNewChannel";
 import Profile from "./components/Profile/Profile";
 import UrlTabs from "./components/UrlFront/Tabs";
+import TreeTabs from "./components/UrlFront/TreeTabs";
 import UrlRedirect from "./components/UrlRedirectPage/UrlRedirect";
 import TreeUrlRedirect from "./components/TreeUrlRedirect/TreeUrlRedirect";
 
@@ -42,7 +43,7 @@ function App() {
               path="/channels/connect"
               element={<Private Component={ConnectNewChannel} />}
             />
-            <Route path="/linktree" element={<LinkTree />} />
+            <Route path="/linktree" element={<TreeTabs />} />
             <Route path="/url" element={<UrlTabs />} />
             <Route path="/share" element={<Share />} />
             <Route path="*" element={<Error />} />

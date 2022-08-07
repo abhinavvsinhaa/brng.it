@@ -1,8 +1,7 @@
 import { Tabs } from "antd";
 import React from "react";
-import Analytics from "./Analytics";
-import UrlFront from "./UrlFront";
-import Bulk from "./Bulk";
+import LinkTree from "./LinkTree";
+import TreeAnalytics from "./TreeAnalytics";
 
 const { TabPane } = Tabs;
 
@@ -14,13 +13,11 @@ const TabPanel = () => (
   <div className="lg:ml-[260px]">
     <Tabs defaultActiveKey="1" onChange={onChange}>
       <TabPane tab="Shortener" key="1">
-        <UrlFront />
+        <LinkTree />
       </TabPane>
-      <TabPane tab="Bulk" key="2">
-        <Bulk />
-      </TabPane>
+      <TabPane tab="Bulk" key="2"></TabPane>
       <TabPane tab="Analytics" key="3">
-        <Analytics />
+        <TreeAnalytics />
       </TabPane>
     </Tabs>
   </div>

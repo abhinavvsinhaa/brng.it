@@ -13,14 +13,13 @@ img {
   }
 
 .profile-picture {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-   
-    height: auto;
-    max-width: 150px;
-     border-radius:50%;
-  }
+  display: block;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0 auto;
+}
 
 .profile-name {
       text-align: center;
