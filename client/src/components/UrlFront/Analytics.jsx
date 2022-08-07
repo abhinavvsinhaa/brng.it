@@ -34,11 +34,16 @@ const Analytics = () => {
                 <td class="py-4 px-6">{url.short}</td>
                 <td class="py-4 px-6">{url.visits}</td>
                 <td>
-                  <img
-                    src={`https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=${url.short}`}
-                    alt="QR"
-                    className="p-3"
-                  ></img>
+                  <a
+                    href={`https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=${url.short}`}
+                    download
+                  >
+                    <img
+                      src={`https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=${url.short}`}
+                      alt="QR"
+                      className="p-3"
+                    ></img>
+                  </a>
                 </td>
               </tr>
             );

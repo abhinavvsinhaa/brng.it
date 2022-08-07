@@ -53,6 +53,7 @@ const shortenMultipleUrlAsync = async (req, _res, next) => {
     const urlInDb = await Url.findOne({ original: originalUrl });
     // If already present in  the database!
     if (urlInDb) {
+      await User.updateOne({ _id: req.user._id }, { $addToSet: { url: urlInDb._id } });
       multipleShortUrl.push(urlInDb);
     } else {
       let uuid = '';
@@ -69,6 +70,7 @@ const shortenMultipleUrlAsync = async (req, _res, next) => {
         short: url,
         uid: uuid,
       });
+      await User.updateOne({ _id: req.user._id }, { $addToSet: { url: newUrl._id } });
       multipleShortUrl.push(newUrl);
     }
   });
@@ -84,9 +86,7 @@ const shortenUrl = catchAsync(async (req, res, next) => {
       status: 'failure',
       message: 'something went wrong, most likely url name already in use!',
     });
-  console.log(newUrl);
-  const newUser = await User.updateOne({ _id: req.user._id }, { $addToSet: { url: newUrl._id } });
-  console.log(newUser);
+  await User.updateOne({ _id: req.user._id }, { $addToSet: { url: newUrl._id } });
 
   res.status(201).json({
     status: 'success',
@@ -102,7 +102,7 @@ const shortenMultipleUrl = catchAsync(async (req, res, next) => {
       status: 'success',
       data: multipleShortUrl,
     });
-  }, 1000);
+  }, 2000);
 });
 
 const getShortUrl = catchAsync(async (req, res, next) => {
