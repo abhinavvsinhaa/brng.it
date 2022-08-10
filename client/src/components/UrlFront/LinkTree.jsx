@@ -8,13 +8,12 @@ import { axiosPrivate } from "../../api/axios";
 import ReactDevicePreview from "react-device-preview";
 import TreePreview from "./TreePreview";
 
-const Preview = ({ data }) => {
+const Preview = ({ i, data }) => {
   return (
     <div className="App">
       <div>
         <ReactDevicePreview device="iphonex" scale="0.7">
-          <br />
-          <TreePreview data={data} />
+          <TreePreview data={data} i={i} />
         </ReactDevicePreview>
       </div>
     </div>
@@ -36,6 +35,17 @@ export default function LinkTree() {
 
   const [treeUrlArr, setTreeUrlArr] = useState([]);
   const [treeUrl, setTreeUrl] = useState([]);
+
+  const [theme, setTheme] = useState(0);
+
+  const themeImages = [
+    "https://mfe-appearance.production.linktr.ee/images/selector-air-black.5105551e3a9ddafd3c2dd0a9e77eba8e.png",
+    "https://mfe-appearance.production.linktr.ee/images/selector-snow.aea6aaa8f34b5aab24d7c1613a56238c.png",
+    "https://mfe-appearance.production.linktr.ee/images/selector-leaf.73edfd8defcc4e7ccd1ae8fcfdc155c8.png",
+    "https://mfe-appearance.production.linktr.ee/images/selector-moon.02b1fed163b6018d449d6bab0ae46d73.png",
+    "https://mfe-appearance.production.linktr.ee/images/selector-smoke.0ceb5cab838b848707a45a858b28482a.png",
+    "https://mfe-appearance.production.linktr.ee/images/selector-air-grey.4d1b030e5fd825ab08ecc1efe0e33a3a.png",
+  ];
 
   const openNotificationWithIcon = (type) => {
     notification[type]({
@@ -114,6 +124,23 @@ export default function LinkTree() {
               className="form-control"
               id="urlCol"
             />
+            <br />
+            <p>Select Theme:</p>
+            <div className="">
+              {themeImages.map((src, i) => {
+                return (
+                  <button
+                    className="w-[90px] m-2"
+                    key={i}
+                    onClick={() => {
+                      setTheme(i);
+                    }}
+                  >
+                    <img src={src} alt="" />
+                  </button>
+                );
+              })}
+            </div>
             <br />
 
             <button onClick={addMainUrl} className="btn url-submit-btn">
@@ -221,6 +248,7 @@ export default function LinkTree() {
       </div>
       <div>
         <Preview
+          i={theme}
           data={{
             original: colMainUrlArr,
             name: ColMainUserName,
