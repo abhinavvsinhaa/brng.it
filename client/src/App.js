@@ -12,9 +12,11 @@ import Navbar from "../src/components/Layout/Navbar";
 import Calender from "./components/CalenderV1/Calender";
 import ConnectNewChannel from "./components/Channel/ConnectNewChannel";
 import Profile from "./components/Profile/Profile";
-import UrlFront from "./components/UrlFront/UrlFront";
+import UrlTabs from "./components/UrlFront/Tabs";
+import TreeTabs from "./components/UrlFront/TreeTabs";
 import UrlRedirect from "./components/UrlRedirectPage/UrlRedirect";
 import TreeUrlRedirect from "./components/TreeUrlRedirect/TreeUrlRedirect";
+import WiseStamp from "./components/WiseStamp/WiseStamp";
 
 import "./App.css";
 import Share from "./components/Share/Share";
@@ -32,6 +34,8 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
           </Route>
+          <Route path="/tree/:uid" element={<TreeUrlRedirect />} />
+          <Route path="url/:uid" element={<UrlRedirect />} />
           <Route element={<PersistLogin />}>
             <Route path="/" element={<Private Component={Calender} />} />
             <Route path="/channels" element={<Private Component={Channel} />} />
@@ -40,14 +44,12 @@ function App() {
               path="/channels/connect"
               element={<Private Component={ConnectNewChannel} />}
             />
-            <Route path="/linktree" element={<LinkTree />} />
-            <Route path="/url" element={<UrlFront />} />
+            <Route path="/linktree" element={<TreeTabs />} />
+            <Route path="/url" element={<UrlTabs />} />
             <Route path="/share" element={<Share />} />
             <Route path="/wisestamp" element={<WiseStamp />} />
             <Route path="*" element={<Error />} />
           </Route>
-          <Route path="/tree/:uid" element={<TreeUrlRedirect />} />
-          <Route path="url/:uid" element={<UrlRedirect />} />
         </Routes>
       </div>
     </CalenderProvider>

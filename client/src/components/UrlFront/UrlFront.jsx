@@ -2,7 +2,6 @@ import React, { useRef } from "react";
 import { useState } from "react";
 import "./UrlFront.css";
 import SingleUrl from "../SingleUrl/SingleUrl";
-import Analytics from "./Analytics";
 import { axiosPrivate } from "../../api/axios";
 
 export default function UrlFront() {
@@ -10,26 +9,24 @@ export default function UrlFront() {
   const [mainName, setMainName] = useState("");
   const varJson = {};
 
-  const [urlArr, setUrlArr] = useState([]);
   const [singleUrl, setSingleUrl] = useState({});
-  
-
-  const [alert, setAlert] = useState(false);
 
   const general = useRef(null);
   const custom = useRef(null);
 
   const convertCustomUrl = async () => {
+    if (mainName.length < 7 || isNaN(mainName.split("-")[1])) {
+      alert("Must have digits at the end and len greater than 7 characters");
+      return;
+    }
     try {
       const res = await axiosPrivate.post("/url/shorten", {
         original: mainUrl,
         name: mainName,
       });
-      console.log(res);
       varJson.shortUrl = res.data.data.short;
       varJson.uid = res.data.data.uid;
-      // setUrlArr((urlArr) => [...urlArr, varJson]);
-      setSingleUrl(varJson)
+      setSingleUrl(varJson);
       setMainUrl("");
     } catch (err) {
       console.log(err);
@@ -45,7 +42,7 @@ export default function UrlFront() {
       varJson.shortUrl = res.data.data.short;
       varJson.uid = res.data.data.uid;
       // setUrlArr((urlArr) => [...urlArr, varJson]);
-      setSingleUrl(varJson)
+      setSingleUrl(varJson);
       setMainUrl("");
     } catch (err) {
       console.log(err);
@@ -57,14 +54,7 @@ export default function UrlFront() {
       <div className="container url-container">
         <div ref={general} className="row justify-content-center">
           {/*URL shortener */}
-          <div className="w-4/5 url-container-inner">
-            {alert && (
-              <div className="alertAdded">
-                <div class="alert alert-success" role="alert">
-                  Url Added
-                </div>
-              </div>
-            )}
+          <div className="w-4/5 mt-10 url-container-inner">
             <div className="urlContainer">
               <br />
               <div className="flex">
@@ -132,19 +122,12 @@ export default function UrlFront() {
                     </>
                   );
                 })} */}
-                <span style={{ fontWeight: 500 }}>Shortened URL: </span>
-                <SingleUrl varArr={singleUrl} />
+              <span style={{ fontWeight: 500 }}>Shortened URL: </span>
+              <SingleUrl varArr={singleUrl} />
             </div>
           </div>
           {/*Custom Url */}
           <div ref={custom} className="w-4/5 url-container-inner-custom hidden">
-            {alert && (
-              <div className="alertAdded">
-                <div class="alert alert-success" role="alert">
-                  Url Added
-                </div>
-              </div>
-            )}
             <div className="urlContainer">
               <br />
               <div className="flex">
@@ -197,7 +180,7 @@ export default function UrlFront() {
                   onChange={(e) => {
                     setMainName(e.target.value);
                   }}
-                  placeholder="custom"
+                  placeholder="custom-3846"
                 />
                 <button
                   onClick={convertCustomUrl}
@@ -207,24 +190,11 @@ export default function UrlFront() {
                   Generate
                 </button>
               </div>
-
               <br />
-              {/* {urlArr &&
-                urlArr.map((p, i) => {
-                  return (
-                    <>
-                      <span style={{ fontWeight: 500 }}>Shortened URL: </span>
-                      <SingleUrl id={i} varArr={p} />
-                      <br />
-                    </>
-                  );
-                })} */}
-                <span style={{ fontWeight: 500 }}>Shortened URL: </span>
-                <SingleUrl varArr={singleUrl}/>
+              <span style={{ fontWeight: 500 }}>Shortened URL: </span>
+              <SingleUrl varArr={singleUrl} />
             </div>
           </div>
-
-          <Analytics />
         </div>
       </div>
     </>

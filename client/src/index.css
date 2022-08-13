@@ -1,13 +1,32 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+.ant-tabs > .ant-tabs-nav .ant-tabs-nav-wrap, .ant-tabs > div > .ant-tabs-nav .ant-tabs-nav-wrap{
+    display: grid;
+}
+
+.ant-tabs > .ant-tabs-nav .ant-tabs-nav-list, .ant-tabs > div > .ant-tabs-nav .ant-tabs-nav-list{
+    display: grid;
+    grid-auto-flow: column;
+}
+
+.ant-tabs > .ant-tabs-nav, .ant-tabs > div > .ant-tabs-nav{
+    background-color: #F8F9FB;
+}
+
+.ant-tabs-tab{
+    display: grid;
+    align-items: center;
+    justify-items: center;
+}
+
 :root {
   --index: #535ffd; 
 }
-/* 326CCC */
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Roboto', 'Oxygen',

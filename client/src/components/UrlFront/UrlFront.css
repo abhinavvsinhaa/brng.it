@@ -12,16 +12,8 @@
     background-color:#02002f;
     border-radius: 30px;
     color: white;
-    margin: 50px;
 }
 
-
-.alertAdded{
-    position: absolute;
-    top: 5%;
-    left: 25%;
-    width: 50%;
-}
 .urlContainer{
     /* text-align: center; */
     padding: 20px;
@@ -67,11 +59,9 @@
 }
 
 .linktreeurl-description {
-    width: 50%;
     padding: 8px 20px;
     border-radius: 5px;
     background-color: white;
-    height: 90px;
 }
 
 .delete-button, .edit-button {

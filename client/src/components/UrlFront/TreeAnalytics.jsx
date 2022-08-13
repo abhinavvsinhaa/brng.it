@@ -3,7 +3,7 @@ import useAuth from "../../hooks/useAuth";
 
 const SubTable = ({ original }) => {
   return (
-    <table class="text-sm text-gray-500 dark:text-gray-400 w-[400px]">
+    <table class="text-sm text-gray-500 bg-gray-500 w-[400px]">
       <tbody>
         {original.map((url) => {
           return (
@@ -30,7 +30,7 @@ const TreeAnalytics = () => {
   console.log(auth.user.urlGroup);
 
   return (
-    <div className="flex flex-col lg:ml-80">
+    <div className="flex flex-col">
       <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div className="py-2 inline-block min-w-full sm:px-3 lg:px-8">
           <div className="overflow-hidden">
@@ -65,7 +65,7 @@ const TreeAnalytics = () => {
                     scope="col"
                     className="text-sm font-medium text-gray-900 text-left"
                   >
-                    <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                    <thead class="text-xs text-gray-700 uppercase ">
                       <tr>
                         <th scope="col" class="px-2">
                           Title
@@ -85,7 +85,7 @@ const TreeAnalytics = () => {
                 {auth.user.urlGroup.map((tree, index) => {
                   return (
                     <>
-                      <tr className="bg-gray-100 border-b" key={index}>
+                      <tr className=" border-b bg-white" key={index}>
                         <td className="px-3 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                           {index + 1}
                         </td>

@@ -1,67 +1,27 @@
-.bodyBackground {
-    background: white;
-    color: black;
-    font-family: 'Open Sans', sans-serif;
-    font-size: 15px;
-    letter-spacing: 2px;
-    height: 100vh;
-    padding: 30px;
+.profile-picture {
+  display: block;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0 auto;
 }
 
-img {
-    border-radius: 0%;
-  }
-
-.profile-picture {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-   
-    height: auto;
-    max-width: 150px;
-     border-radius:50%;
-  }
-
-.profile-name {
-      text-align: center;
-      padding: 30px;
-  }
-
 .links {
-        background-color: #2A3235;
       text-align: center;
       margin-top: 20px;
       padding: 20px;
-      border: 1px solid black;
       border-width: 2px;
-      width: 50%;
+      width: 80%;
+      max-width: 500px;
       display: block;
-      margin-left: auto;
-      margin-right: auto;
-      color: white;
+      margin: 20px auto;
       border-radius: 10px;
   }
-
-.links a {
-    text-decoration: none;
-    color: white;
-    transition: cubic-bezier(0.215, 0.610, 0.355, 1)
-}
 
 .bottom-text {
     text-align: center;
     margin-top: 40px;
     font-size: 20px;
     font-weight: bold;
-}
-
-a:hover {
-    color: #000;
-    background: white;
-    transition-duration: 0.5s;
-}
-
-.euVideo {
- 
-  
 }
