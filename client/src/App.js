@@ -43,6 +43,7 @@ function App() {
             <Route path="/linktree" element={<LinkTree />} />
             <Route path="/url" element={<UrlFront />} />
             <Route path="/share" element={<Share />} />
+            <Route path="/wisestamp" element={<WiseStamp />} />
             <Route path="*" element={<Error />} />
           </Route>
           <Route path="/tree/:uid" element={<TreeUrlRedirect />} />
