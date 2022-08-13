@@ -82,6 +82,16 @@ function ResponsiveDrawer(props) {
             </ListItemButton>
           </ListItem>
         </Link>
+        <Link to="/wisestamp" style={{ color: "inherit" }}>
+          <ListItem disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                <ParkIcon />
+              </ListItemIcon>
+              <ListItemText primary="Wisestamp" />
+            </ListItemButton>
+          </ListItem>
+        </Link>
         <Link to="/profile" style={{ color: "inherit" }}>
           <ListItem disablePadding>
             <ListItemButton>

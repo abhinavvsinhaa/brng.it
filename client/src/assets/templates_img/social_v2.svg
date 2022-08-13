@@ -1,0 +1,38 @@
+<svg width="190" height="134" viewBox="0 0 190 134" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path opacity="0.4" d="M40 0.199951H0V40.2H40V0.199951Z" fill="#1CB4E7"/>
+<mask id="mask0" mask-type="alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="40" height="41">
+<path d="M40 0.199951H0V40.2H40V0.199951Z" fill="#F0F4F6"/>
+</mask>
+<g mask="url(#mask0)">
+<path d="M7.36206 41.3462C7.36206 34.3432 13.014 28.666 19.9859 28.666C26.9578 28.666 32.6098 34.3432 32.6098 41.3462V42.4989H7.36206V41.3462Z" fill="white"/>
+<path d="M20.5595 29.8184C25.947 29.8184 30.3144 25.4316 30.3144 20.0201C30.3144 14.6087 25.947 10.2218 20.5595 10.2218C15.1721 10.2218 10.8047 14.6087 10.8047 20.0201C10.8047 25.4316 15.1721 29.8184 20.5595 29.8184Z" fill="white"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M18.1758 18.1225C18.019 18.057 17.8349 18.0791 17.6982 18.1803C16.8342 18.819 15.6913 19.4263 14.0276 19.6351C12.2149 19.6351 11.3939 19.5817 11.0285 19.5268C10.8291 19.4968 10.7484 19.2745 10.7351 19.0723C10.6329 17.5264 10.6392 11.1319 17.5609 9.83471C20.6745 9.25128 23.0053 9.72693 24.7383 10.6558C24.7745 10.6753 24.8142 10.6904 24.8542 10.6998C28.2253 11.4981 28.5567 10.8986 29.2576 9.63097C29.2707 9.60749 29.2839 9.58368 29.2971 9.55971C29.4503 9.283 29.8303 9.25569 30.0267 9.50321C35.9632 16.9818 29.8566 23.0065 18.1758 18.1225Z" fill="#4F4F4F"/>
+</g>
+<path opacity="0.4" d="M77 50H0V58H77V50Z" fill="#191C2B"/>
+<path opacity="0.2" d="M0 63H57V70H0V63Z" fill="#191C2B"/>
+<path opacity="0.2" d="M61 63H112V70H61V63Z" fill="#191C2B"/>
+<path opacity="0.2" d="M44 82H7V86H44V82Z" fill="#191C2B"/>
+<path opacity="0.2" d="M190 85H159V89H190V85Z" fill="#191C2B"/>
+<path opacity="0.2" d="M185 99H159V103H185V99Z" fill="#191C2B"/>
+<path opacity="0.2" d="M190 113H159V117H190V113Z" fill="#191C2B"/>
+<path opacity="0.2" d="M187 127H159V131H187V127Z" fill="#191C2B"/>
+<path opacity="0.2" d="M126 82H61V86H126V82Z" fill="#191C2B"/>
+<path opacity="0.2" d="M61 102H7V106H61V102Z" fill="#191C2B"/>
+<path opacity="0.2" d="M71 92H7V96H71V92Z" fill="#191C2B"/>
+<path d="M154 92L154 82L144 82L144 92L154 92Z" fill="#4460A0"/>
+<path d="M154 134L154 124L144 124L144 134L154 134Z" fill="url(#paint0_radial)"/>
+<path d="M154 106L154 96L144 96L144 106L154 106Z" fill="#1178B3"/>
+<path d="M154 120L154 110L144 110L144 120L154 120Z" fill="#5AADEC"/>
+<rect opacity="0.4" y="82" width="4" height="4" fill="#191C2B"/>
+<rect opacity="0.4" y="102" width="4" height="4" fill="#191C2B"/>
+<rect opacity="0.4" x="54" y="82" width="4" height="4" fill="#191C2B"/>
+<rect opacity="0.4" y="92" width="4" height="4" fill="#191C2B"/>
+<defs>
+<radialGradient id="paint0_radial" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(143.98 125.492) rotate(90) scale(12.7547)">
+<stop stop-color="#FFB140"/>
+<stop offset="0.2559" stop-color="#FF5445"/>
+<stop offset="0.599" stop-color="#FC2B82"/>
+<stop offset="1" stop-color="#8E40B7"/>
+</radialGradient>
+</defs>
+</svg>
