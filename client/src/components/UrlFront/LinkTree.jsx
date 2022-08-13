@@ -7,6 +7,10 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { axiosPrivate } from "../../api/axios";
 import ReactDevicePreview from "react-device-preview";
 import TreePreview from "./TreePreview";
+import { storage } from "../../util/Firebase";
+import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
+
+// TODO: create individual folder for each new user, otherwise image name can match, which will replace the previous image with same name or add UUID
 
 const Preview = ({ i, data }) => {
   return (
@@ -27,6 +31,7 @@ export default function LinkTree() {
   const [pfp, setPfp] = useState(
     "https://images.unsplash.com/photo-1603415526960-f7e0328c63b1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
   );
+  const [dp, setDP] = useState('')
 
   const [ColMainUserName, setColMainUserName] = useState("Rhythm Shandlya");
   const [colMainUrlArr, setColMainUrlArr] = useState([]);
@@ -46,6 +51,32 @@ export default function LinkTree() {
     "https://mfe-appearance.production.linktr.ee/images/selector-smoke.0ceb5cab838b848707a45a858b28482a.png",
     "https://mfe-appearance.production.linktr.ee/images/selector-air-grey.4d1b030e5fd825ab08ecc1efe0e33a3a.png",
   ];
+
+  const handleLinktreeProfilePictureImageUpload = () => {
+    if (!dp) {
+      alert('Please choose a file');
+      return;
+    }
+
+    // creating a reference inside bucket with file name
+    const storageRef = ref(storage, `/image/${dp.name}`)
+
+    // uploading file
+    uploadBytes(storageRef, dp)
+      .then((snapshot) => {
+        console.log('Uploaded a blob or file!', snapshot.ref.toString());
+        getDownloadURL(ref(storage, `image/${dp.name}`))
+          .then(url => {
+            setPfp(url)
+          })
+          .catch(error => {
+            console.log(error)
+          })
+      })
+      .catch(error => {
+        console.log(error);
+      })
+  }
 
   const openNotificationWithIcon = (type) => {
     notification[type]({
@@ -113,7 +144,9 @@ export default function LinkTree() {
               id="urlCol"
             />
             <br />
-            <input
+            
+            {/* Image file link */}
+            {/* <input
               type="text"
               name="colMainUrl"
               value={pfp}
@@ -123,8 +156,14 @@ export default function LinkTree() {
               }}
               className="form-control"
               id="urlCol"
-            />
-            <br />
+            /> */}
+
+            {/* Image file upload */}
+            <input type="file" name="imageupload" id="imageupload" onChange={(e) => {
+              setDP(e.target.files[0])
+            }}/>
+            <button onClick={handleLinktreeProfilePictureImageUpload} className='btn url-submit-btn'>Upload</button>
+            <br /><br />
             <p>Select Theme:</p>
             <div className="">
               {themeImages.map((src, i) => {
