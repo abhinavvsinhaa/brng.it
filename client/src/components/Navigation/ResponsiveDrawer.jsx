@@ -72,13 +72,23 @@ function ResponsiveDrawer(props) {
             </ListItemButton>
           </ListItem>
         </Link>
+        <Link to="/channels/connect" style={{ color: "inherit" }}>
+          <ListItem disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                <GroupIcon />
+              </ListItemIcon>
+              <ListItemText primary="Manage Channels" />
+            </ListItemButton>
+          </ListItem>
+        </Link>
         <Link to="/profile" style={{ color: "inherit" }}>
           <ListItem disablePadding>
             <ListItemButton>
               <ListItemIcon>
                 <GroupIcon />
               </ListItemIcon>
-              <ListItemText primary="Profiles" />
+              <ListItemText primary="Account" />
             </ListItemButton>
           </ListItem>
         </Link>

@@ -4,9 +4,11 @@ import useAuth from "../../hooks/useAuth";
 import { axiosPrivate, axiosIgnoreInterceptor } from "../../api/axios";
 import Loading from "../Loading/Loading";
 import { useNavigate } from "react-router-dom";
+import { GoogleAuth } from "../../util/Firebase";
 
 // Assets
 import bannerBg from "../../assets/images/sp-login-image.png";
+import { Divider } from "antd";
 
 const Login = () => {
   const { setAuth } = useAuth();
@@ -44,7 +46,6 @@ const Login = () => {
         <div className="col-xl-5 col-lg-5 col-md-12 col-sm-12 col-12 form-col">
           <div className="form">
             <p className="form-heading">Log in</p>
-            <br />
             <form action="">
               <label htmlFor="email">Email Address</label>
               <br />
@@ -67,7 +68,6 @@ const Login = () => {
                 onChange={(e) => setPassword(e.target.value)}
               />
               <br />
-              <br />
               <p className="password-requirements">{error}</p>
               <br />
               <button
@@ -78,7 +78,6 @@ const Login = () => {
                 <Loading display={loading} />
               </button>
             </form>
-
             {/* Create Account or Forgot Password */}
             <div
               style={{
@@ -96,17 +95,15 @@ const Login = () => {
               </div>
             </div>
 
-            <p
-              style={{
-                textAlign: "center",
-                marginTop: "40px",
-                fontSize: "14px",
-                opacity: "0.8",
-              }}
-            >
-              We no longer support social sign on. Please click here to set your
-              password and access your account
-            </p>
+            <Divider/>
+            <div class="google-btn" onClick={GoogleAuth}>
+              <div class="google-icon-wrapper">
+                <img class="google-icon" src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"/>
+              </div>
+              <div>
+                <p class="btn-text">Sign in with Google</p>
+              </div>
+            </div>
           </div>
         </div>
         <div className="col-xl-7 col-lg-7 image-col">

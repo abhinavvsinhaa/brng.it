@@ -5,6 +5,7 @@ import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
 import useAuth from "../../hooks/useAuth";
 import React, { useState } from "react";
 import ResponsiveDrawer from "../Navigation/ResponsiveDrawer";
+import bringIt from '../../assets/images/brngit logo.png';
 
 const navigation = [
   { name: "About", href: "#", current: false },
@@ -62,12 +63,12 @@ export default function Navbar() {
                   <div className="flex-shrink-0 flex items-center">
                     <img
                       className="block lg:hidden h-8 w-auto"
-                      src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg"
+                      src={bringIt}
                       alt="Workflow"
                     />
                     <img
-                      className="hidden lg:block h-8 w-auto"
-                      src="https://tailwindui.com/img/logos/workflow-logo-indigo-500-mark-white-text.svg"
+                      className="hidden lg:block h-10 w-auto"
+                      src={bringIt}
                       alt="Workflow"
                     />
                   </div>
