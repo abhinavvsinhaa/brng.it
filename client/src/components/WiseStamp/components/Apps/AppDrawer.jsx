@@ -5,6 +5,7 @@ import DownloadApp from "./DownloadApp";
 import SignOff from "./SignOff";
 import Quote from "./Quote";
 import GreenFooter from "./GreenFooter";
+import OnlineScheduler from "./OnlineScheduler";
 export default function AppDrawer({whichApp,visible,setVisible}){
     const onClose = () => {
         setVisible(false);
@@ -48,6 +49,13 @@ export default function AppDrawer({whichApp,visible,setVisible}){
         return(
             <Drawer width='80%' title="Quote" placement="right" onClose={onClose} visible={visible}>
                 <GreenFooter/>
+            </Drawer>
+        )
+    }
+    else if(whichApp==='onlinescheduler'){
+        return(
+            <Drawer width='80%' title="Quote" placement="right" onClose={onClose} visible={visible}>
+                <OnlineScheduler/>
             </Drawer>
         )
     }

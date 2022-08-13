@@ -25,15 +25,15 @@ export default function GreenFooter(){
                 <div className="grid grid-rows-[40px_auto] gap-[10px] pl-[10px]">
                     <div className="font-bold text-[18px]">Choose a text</div>
                     <div className="grid grid-rows-[20px_20px_20px_20px_20px_20px_20px_20px_20px] gap-[10px]">
-                        <div className="grid grid-cols-[auto_1fr] gap-[10px] place-content-center"><div className="grid place-content-center"><input type="radio" name="conf" id="conf" checked={greenIndex===0?true:false} onClick={()=>{setgreenIndex(0)}}/></div><div>Environmental responsibility</div></div>
-                        <div className="grid grid-cols-[auto_1fr] gap-[10px] place-content-center"><div className="grid place-content-center"><input type="radio" name="vir" id="vir" checked={greenIndex===1?true:false} onClick={()=>{setgreenIndex(1)}}/></div><div>Environmental responsibility short</div></div>
-                        <div className="grid grid-cols-[auto_1fr] gap-[10px] place-content-center"><div className="grid place-content-center"><input type="radio" name="nbrand" id="nbrand" checked={greenIndex===2?true:false} onClick={()=>{setgreenIndex(2)}}/></div><div>Do you really need...?</div></div>
-                        <div className="grid grid-cols-[auto_1fr] gap-[10px] place-content-center"><div className="grid place-content-center"><input type="radio" name="po" id="po" checked={greenIndex===3?true:false} onClick={()=>{setgreenIndex(3)}}/></div><div>Printing kills trees</div></div>
-                        <div className="grid grid-cols-[auto_1fr] gap-[10px] place-content-center"><div className="grid place-content-center"><input type="radio" name="cr" id="cr" checked={greenIndex===4?true:false} onClick={()=>{setgreenIndex(4)}}/></div><div>Don't print this</div></div>
-                        <div className="grid grid-cols-[auto_1fr] gap-[10px] place-content-center"><div className="grid place-content-center"><input type="radio" name="custom" id="custom" checked={greenIndex===5?true:false} onClick={()=>{setgreenIndex(5)}}/></div><div>Printing email is SO 2009</div></div>
-                        <div className="grid grid-cols-[auto_1fr] gap-[10px] place-content-center"><div className="grid place-content-center"><input type="radio" name="custom" id="custom" checked={greenIndex===6?true:false} onClick={()=>{setgreenIndex(6)}}/></div><div>Save a tree - kill a beaver</div></div>
-                        <div className="grid grid-cols-[auto_1fr] gap-[10px] place-content-center"><div className="grid place-content-center"><input type="radio" name="custom" id="custom" checked={greenIndex===7?true:false} onClick={()=>{setgreenIndex(7)}}/></div><div>Be Carbon free</div></div>
-                        <div className="grid grid-cols-[auto_1fr] gap-[10px] place-content-center"><div className="grid place-content-center"><input type="radio" name="custom" id="custom" checked={greenIndex===8?true:false} onClick={()=>{setgreenIndex(8)}}/></div><div>Save ink catridges</div></div>
+                        <div className="grid grid-cols-[auto_1fr] gap-[10px] place-content-center"><div className="grid place-content-center"><input type="radio" name="conf" id="conf"  readOnly checked={greenIndex===0?true:false} onClick={()=>{setgreenIndex(0)}}/></div><div>Environmental responsibility</div></div>
+                        <div className="grid grid-cols-[auto_1fr] gap-[10px] place-content-center"><div className="grid place-content-center"><input type="radio" name="vir" id="vir"  readOnly checked={greenIndex===1?true:false} onClick={()=>{setgreenIndex(1)}}/></div><div>Environmental responsibility short</div></div>
+                        <div className="grid grid-cols-[auto_1fr] gap-[10px] place-content-center"><div className="grid place-content-center"><input type="radio" name="nbrand" id="nbrand"  readOnly checked={greenIndex===2?true:false} onClick={()=>{setgreenIndex(2)}}/></div><div>Do you really need...?</div></div>
+                        <div className="grid grid-cols-[auto_1fr] gap-[10px] place-content-center"><div className="grid place-content-center"><input type="radio" name="po" id="po"  readOnly checked={greenIndex===3?true:false} onClick={()=>{setgreenIndex(3)}}/></div><div>Printing kills trees</div></div>
+                        <div className="grid grid-cols-[auto_1fr] gap-[10px] place-content-center"><div className="grid place-content-center"><input type="radio" name="cr" id="cr"  readOnly checked={greenIndex===4?true:false} onClick={()=>{setgreenIndex(4)}}/></div><div>Don't print this</div></div>
+                        <div className="grid grid-cols-[auto_1fr] gap-[10px] place-content-center"><div className="grid place-content-center"><input type="radio" name="custom" id="custom"  readOnly checked={greenIndex===5?true:false} onClick={()=>{setgreenIndex(5)}}/></div><div>Printing email is SO 2009</div></div>
+                        <div className="grid grid-cols-[auto_1fr] gap-[10px] place-content-center"><div className="grid place-content-center"><input type="radio" name="custom" id="custom"  readOnly checked={greenIndex===6?true:false} onClick={()=>{setgreenIndex(6)}}/></div><div>Save a tree - kill a beaver</div></div>
+                        <div className="grid grid-cols-[auto_1fr] gap-[10px] place-content-center"><div className="grid place-content-center"><input type="radio" name="custom" id="custom"  readOnly checked={greenIndex===7?true:false} onClick={()=>{setgreenIndex(7)}}/></div><div>Be Carbon free</div></div>
+                        <div className="grid grid-cols-[auto_1fr] gap-[10px] place-content-center"><div className="grid place-content-center"><input type="radio" name="custom" id="custom"  readOnly checked={greenIndex===8?true:false} onClick={()=>{setgreenIndex(8)}}/></div><div>Save ink catridges</div></div>
                     </div>
                 </div>
                 <div className="grid grid-rows-[50px_50px_50px_50px_50px] gap-[10px] pt-[30px]">
@@ -44,7 +44,7 @@ export default function GreenFooter(){
                             <div className="grid grid-cols-[1fr_1fr_1fr] gap-[25px]">
                                 <div className={`grid grid-cols-[auto_1fr] gap-[5px]`}>
                                     <div className="grid place-content-center">
-                                        <input checked={icon==='tree'?true:false} onClick={() => {setIcon('tree')}} type="radio" name="tree" id="tree" />
+                                        <input  readOnly checked={icon==='tree'?true:false} onClick={() => {setIcon('tree')}} type="radio" name="tree" id="tree" />
                                     </div>
                                     <div className="grid place-content-center">
                                         <Trees width={'40px'} color='#53B700'/>
@@ -52,7 +52,7 @@ export default function GreenFooter(){
                                 </div>
                                 <div className={`grid grid-cols-[auto_1fr] gap-[5px]`}>
                                 <div className="grid place-content-center">
-                                        <input checked={icon==='leaf'?true:false} onClick={() => {setIcon('leaf')}} type="radio" name="leaf" id="leaf" />
+                                        <input  readOnly checked={icon==='leaf'?true:false} onClick={() => {setIcon('leaf')}} type="radio" name="leaf" id="leaf" />
                                     </div>
                                     <div className="grid place-content-center">
                                         <Leaf width={'40px'} color='#53B700'/>
@@ -60,7 +60,7 @@ export default function GreenFooter(){
                                 </div>
                                 <div className={`grid grid-cols-[auto_1fr] gap-[5px]`}>
                                 <div className="grid place-content-center">
-                                        <input checked={icon==='none'?true:false} onClick={() => {setIcon('none')}} type="radio" name="none" id="none" />
+                                        <input  readOnly checked={icon==='none'?true:false} onClick={() => {setIcon('none')}} type="radio" name="none" id="none" />
                                     </div>
                                     <div className="grid place-content-center">
                                         None
