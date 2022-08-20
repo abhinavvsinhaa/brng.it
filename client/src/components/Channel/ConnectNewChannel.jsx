@@ -12,7 +12,7 @@ import useSearchCustomers from "./useSearchCustomers";
 
 const ConnectNewChannel = () => {
 
-  const { selectedProfile, render } = useSearchCustomers();
+  // const { selectedProfile, render } = useSearchCustomers();
 
   const [code, setCode] = useState("");
   const [customer, setCustomer] = useState(null);
@@ -21,15 +21,6 @@ const ConnectNewChannel = () => {
   const navigate = useNavigate();
 
   async function linkedinCardClickValidate() {
-    // if customer is not selected or not created
-    if (selectedProfile == '') {
-      alert("Please select customer first.");
-      return;
-    }
-
-    window.sessionStorage.setItem('selectedProfileEmail', selectedProfile);
-
-    // else redirect to linkedin login page
     window.location.replace(
       `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${process.env.REACT_APP_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_REDIRECT_URL}&scope=${process.env.REACT_APP_SCOPES}`
     );
@@ -48,23 +39,6 @@ const ConnectNewChannel = () => {
       console.log(response);
       const user = await axios.post("/authorization/user", response);
       console.log(JSON.parse(user.data));
-
-      // update auth.user.id -> add authorized user in customers[]
-      // const getRootUser = await axios.get(`/users/${auth.user.id}`);
-      // update or add customer
-
-      const client = await axios.put(`/client/`, {
-        email: window.sessionStorage.getItem('selectedProfileEmail'),
-        updateBody: {
-          linkedin: {
-            access_token: response.access_token,
-            user: JSON.parse(user.data)
-          }
-        }
-      });
-
-      console.log(client);
-      window.sessionStorage.removeItem('selectedProfileEmail')
     }
   }
 
@@ -104,9 +78,9 @@ const ConnectNewChannel = () => {
           </p>
 
           {/* Search Customer */}
-          {
+          {/* {
             render
-          }
+          } */}
 
         </div>
       </div>
