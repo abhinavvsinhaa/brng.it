@@ -1,17 +1,17 @@
 import { FacebookF, Instagram, LinkedinIn, Pinterest, Twitter, Youtube } from "@styled-icons/fa-brands";
 import defsign from '../../../assets/default-sig-photo.jpg'
-export default function ClassicTemplate({variableInput}){
+export default function ClassicTemplate({variableInput,design}){
     return(
-        <div style={{padding: "30px",display:'grid',gridTemplateColumns:'1fr 4fr',gap:'15px',width:'635px'}}>
-                    <div style={{borderRight:'1.5px solid #BDBDBD'}}>
-                    <div style={{display:'grid',placeContent:'center',paddingRight:'10px'}}>
-                    {variableInput.url===""?<img src={defsign} alt="User"/>:<img src={`https://wisestamp-api.herokuapp.com/${variableInput.url}`} style={{width:'125px'}} alt="User"/>}
+        <div style={{fontFamily:design.font,padding: "30px",paddingTop:design.spaceContent*30+'px',display:'grid',gridTemplateColumns:'1fr 4fr',gap:design.lineSpacing*15+'px',width:'635px'}}>
+                    <div style={{borderRight:'1.5px solid #BDBDBD',display:'grid'}}>
+                    <div style={{display:'grid',placeContent:'center',alignSelf:design.imagePosition,paddingRight:design.lineSpacing*10+'px'}}>
+                    {variableInput.url===""?<a href={design.imageLink}><img src={defsign} style={{borderRadius: design.imageShape==='rect'?'':design.imageShape==='round'?'10px':'100px'}} alt="User"/></a>:<a href={design.imageLink}><img src={`https://wisestamp-api.herokuapp.com/${variableInput.url}`} style={{width:'125px'}} alt="User"/></a>}
                     </div>
                     </div>
                     <div>
-                    <div style={{color:'#646464',fontSize:'16px',lineHeight:'1.2',fontWeight:'bold',textTransform:'initial',letterSpacing:'0px'}}>{variableInput.name}</div>
-                    <p style={{color:'#646464',fontSize:'13px',lineHeight:'1.2',fontWeight:'bold',textTransform:'initial'}}>{variableInput.titleSign}{ (variableInput.company === "") ? <>Hello</> : <>, &nbsp;</>}{variableInput.company}</p>
-                    <p style={{paddingTop:'14px',fontSize:'11px',color:'#212121',whiteSpace:'nowrap'}}>
+                    <div style={{color:design.templateColor,fontSize:(design.fontSize*16)+'px',lineHeight:'1.2',fontWeight:'bold',textTransform:'initial',letterSpacing:'0px'}}>{variableInput.name}</div>
+                    <p style={{color:'#646464',fontSize:(design.fontSize*13)+'px',lineHeight:'1.2',fontWeight:'bold',textTransform:'initial'}}>{variableInput.titleSign}{ (variableInput.company === "") ? <>Hello</> : <>, &nbsp;</>}{variableInput.company}</p>
+                    <p style={{paddingTop:design.lineSpacing*14+'px',fontSize:(design.fontSize*11)+'px',color:'#212121',whiteSpace:'nowrap'}}>
                         {
                             variableInput.phone===""?
                             ''
@@ -37,7 +37,7 @@ export default function ClassicTemplate({variableInput}){
                             <a style={{color:'inherit',textDecoration:'inherit',paddingRight:'5px',borderRight:'1px solid black'}} onMouseOut={(e) => {e.target.style.color="inherit"}} onMouseOver={(e) => {e.target.style.color="#40a9ff"}} href={`${variableInput.website}`}> {variableInput.website}</a> 
                         }
                         <br/>
-                        <div style={{paddingTop:'10px',paddingBottom:'10px',fontSize:'11px'}}>{variableInput.address}</div>
+                        <div style={{paddingTop:'10px',paddingBottom:'10px',fontSize:(design.fontSize*11)+'px'}}>{variableInput.address}</div>
                     </p>
                     <div style={{display:'grid','gridAutoFlow':'column','width':'fit-content','gridGap':'10px'}}>
                     {

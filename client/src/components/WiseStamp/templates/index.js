@@ -10,65 +10,65 @@ import CentralTemplate from './central';
 import CorporateTemplate from './corporate';
 import FooterTemplate from './footer';
 import TopBarTemplate from './topbar';
-export default function VariousTemplates({selectedTemplate,variableInput}){
+export default function VariousTemplates({selectedTemplate,variableInput,design}){
     if(selectedTemplate===1){
         return(
-            <ClassicTemplate variableInput={variableInput}/>
+            <ClassicTemplate design={design} variableInput={variableInput}/>
         )
     }
     else if(selectedTemplate === 2){
         return(
-            <HorizontalTemplate variableInput={variableInput}/>
+            <HorizontalTemplate design={design} variableInput={variableInput}/>
         )
     }
     else if(selectedTemplate === 3){
         return(
-            <SocialTemplate variableInput={variableInput}/>
+            <SocialTemplate design={design} variableInput={variableInput}/>
         )
     }
     else if(selectedTemplate === 4){
         return(
-            <StripTemplate variableInput={variableInput} />
+            <StripTemplate design={design} variableInput={variableInput} />
         )
     }
     else if(selectedTemplate === 5){
         return(
-            <WideTemplate variableInput={variableInput} />
+            <WideTemplate design={design} variableInput={variableInput} />
         )
     }
     else if(selectedTemplate === 6){
         return(
-            <CompactTemplate variableInput={variableInput} />
+            <CompactTemplate design={design} variableInput={variableInput} />
         )
     }
     else if(selectedTemplate === 7){
         return(
-            <StackedTemplate variableInput={variableInput} />
+            <StackedTemplate design={design} variableInput={variableInput} />
         )
     }
     else if(selectedTemplate === 8){
         return(
-            <RightSideTemplate variableInput={variableInput} />
+            <RightSideTemplate design={design} variableInput={variableInput} />
         )
     }
     else if(selectedTemplate === 9){
         return(
-            <CentralTemplate variableInput={variableInput} />
+            <CentralTemplate design={design} variableInput={variableInput} />
         )
     }
     else if(selectedTemplate === 10){
         return(
-            <CorporateTemplate variableInput={variableInput} />
+            <CorporateTemplate design={design} variableInput={variableInput} />
         )
     }
     else if(selectedTemplate === 11){
         return(
-            <FooterTemplate variableInput={variableInput} />
+            <FooterTemplate design={design} variableInput={variableInput} />
         )
     }
     else if(selectedTemplate === 12){
         return(
-            <TopBarTemplate variableInput={variableInput} />
+            <TopBarTemplate design={design} variableInput={variableInput} />
         )
     }
 }

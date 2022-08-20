@@ -32,10 +32,32 @@ function App() {
     const [website , setWebsite] = useState("https://www.test.com");
     const [email , setEmail] = useState("test@test.com");
     const [address , setAddress] = useState("Near Metro Station, USA");
+    const [font , setFont] = useState("Arial");
+    const [fontSize , setFontSize] = useState(1.0);
+    const [lineSpacing , setlineSpacing] = useState(1.0);
+    const [spaceContent , setspaceContent] = useState(1);
+    const [templateColor , settemplateColor] = useState('#646464');
+    const [imageShape , setImageShape] = useState('rect');
+    const [imageSize , setimageSize] = useState(14);
+    const [imagePosition , setimagePosition] = useState('baseline');
+    const [imageLink , setimageLink] = useState('');
+    const [label , setLabel] = useState('www.website.com');
+    const [direction , setDirection] = useState('www.website.com');
+    const [seperator , setseperator] = useState('www.website.com');
+    const [textColor , settextColor] = useState('www.website.com');
+    const [socialFill , setsocialFill] = useState('fill');
+    const [socialShape , setsocialShape] = useState('rect');
+    const [socialSize , setsocialSize] = useState(11);
+    const [socialSpace , setsocialSpace] = useState(0);
+    const [matchTemplate , setmatchTemplate] = useState(false);
+    const [lineStyle , setlineStyle] = useState('normal');
+    const [matchLineTemplate , setmatchLineTemplate] = useState(false);
+    const [lineColor , setlineColor] = useState('grey');
     const [extraFields] = useState([]);
     const [selectedTemplate , setSelectedTemplate] = useState(1);
     const [variableInput , setVariableInput] = useState({name:name,url:url,titleSign:titleSign,company:company,phone:phone,mobile:mobile,website:website,email:email,address:address,fb:fb,insta:insta,linkedin:linkedin,twitter:twitter,yt:yt,pinterest:pinterest,extraFields:extraFields});
-
+    const [design,setDesign] = useState({font : font , fontSize,lineSpacing,spaceContent,templateColor,imageShape,imageSize,imagePosition,
+        imageLink,label,direction,seperator,textColor,socialFill,socialShape,socialSize,socialSpace,matchTemplate,matchLineTemplate,lineColor})
     // const [formSubmitted, setFormSubmitted] = useState(false);
 
     // const handleEmailSignatureFormSubmission = e => {
@@ -69,6 +91,7 @@ function App() {
                                 variableInput={variableInput}
                                 selectedTemplate={selectedTemplate}
                                 setisLoading={setisLoading}
+                                design={design}
                             />
                         {/* } */}
                     </div>
@@ -177,7 +200,7 @@ function App() {
                             <Template selectedTemplate={selectedTemplate} setSelectedTemplate={setSelectedTemplate}/>
                         </TabPane>
                         <TabPane tab={<div className="grid grid-flow-row gap-[5px] place-items-center text-center"> <PaintBucket className="w-[28px]"/> Design</div>} key="design">
-                            <Design/>    
+                            <Design design={design} setDesign={setDesign}/>    
                         </TabPane>
                         <TabPane tab={<div className="grid grid-flow-row gap-[5px] place-items-center text-center"> <AppsAddIn className="w-[28px]"/> Apps</div>} key="apps">
                             <Apps/>

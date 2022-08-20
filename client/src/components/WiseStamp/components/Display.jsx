@@ -3,7 +3,7 @@ import { message } from "antd";
 import React from "react";
 import VariousTemplates from '../templates/index'
 import CreateAndServeHTML from "../utils/createHTML";
-function Display ({variableInput,selectedTemplate,setisLoading}) {
+function Display ({variableInput,selectedTemplate,setisLoading,design}) {
     return(
         <div className="w-[695px]">
             <div style={{marginTop: "50px",height: "fit-content",backgroundColor: "white",borderRadius : "10px"}} className="shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] overflow-hidden">
@@ -22,7 +22,7 @@ function Display ({variableInput,selectedTemplate,setisLoading}) {
                     <hr />
                 </div>
                 <div id="main-editor">
-                <VariousTemplates  selectedTemplate={selectedTemplate} variableInput={variableInput}/>
+                <VariousTemplates design={design} selectedTemplate={selectedTemplate} variableInput={variableInput}/>
                 </div>
                 </div>
             </div>
