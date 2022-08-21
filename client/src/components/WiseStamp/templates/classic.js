@@ -3,7 +3,7 @@ import defsign from '../../../assets/default-sig-photo.jpg'
 export default function ClassicTemplate({variableInput,design}){
     return(
         <div style={{fontFamily:design.font,padding: "30px",paddingTop:design.spaceContent*30+'px',display:'grid',gridTemplateColumns:'1fr 4fr',gap:design.lineSpacing*15+'px',width:'635px'}}>
-                    <div style={{borderRight:'1.5px solid #BDBDBD',display:'grid'}}>
+                    <div style={{borderRight:`${design.lineStyle} ${design.matchLineTemplate?design.templateColor:design.lineColor}`,display:'grid'}}>
                     <div style={{display:'grid',placeContent:'center',alignSelf:design.imagePosition,paddingRight:design.lineSpacing*10+'px'}}>
                     {variableInput.url===""?<a href={design.imageLink}><img src={defsign} style={{borderRadius: design.imageShape==='rect'?'':design.imageShape==='round'?'10px':'100px'}} alt="User"/></a>:<a href={design.imageLink}><img src={`https://wisestamp-api.herokuapp.com/${variableInput.url}`} style={{width:'125px'}} alt="User"/></a>}
                     </div>
@@ -66,23 +66,23 @@ export default function ClassicTemplate({variableInput,design}){
                         }
                     </p>
                     <div style={{color:'#212121',paddingTop:'10px',paddingBottom:'10px',fontSize:(design.fontSize*11)+'px'}}>{variableInput.address}</div>
-                    <div style={{display:'grid','gridAutoFlow':'column','width':'fit-content','gridGap':'10px'}}>
+                    <div style={{display:'grid','gridAutoFlow':'column','width':'fit-content','gridGap':design.socialSpace*10+'px'}}>
                     {
                            variableInput.fb === ""?'':<a href={`https://www.facebook.com/${variableInput.fb}`}>
                            {
                             design.socialFill===1?
-                            <div style={{borderRadius:design.socialShape,background: '#3B5998',width:'24px',height:'24px',display:'grid'}}>
+                            <div style={{borderRadius:design.socialShape,background: `${design.matchTemplate?design.templateColor:'#3B5998'}`,width:design.socialSize*24+'px',height:design.socialSize*24+'px',display:'grid'}}>
                                    <FacebookF style={{color:'white',width:'100%',height:'50%','placeSelf':'center'}} />
                            </div>
                             :
                             design.socialFill === 2?
-                            <div style={{borderRadius:design.socialShape,border: '1px solid #3B5998',width:'24px',height:'24px',display:'grid'}}>
-                                   <FacebookF style={{color:'#3B5998',width:'100%',height:'50%','placeSelf':'center'}} />
+                            <div style={{borderRadius:design.socialShape,border: `1px solid ${design.matchTemplate?design.templateColor:'#3B5998'}`,width:design.socialSize*24+'px',height:design.socialSize*24+'px',display:'grid'}}>
+                                   <FacebookF style={{color:`${design.matchTemplate?design.templateColor:'#3B5998'}`,width:'100%',height:'50%','placeSelf':'center'}} />
                            </div>
                             :
                             design.socialFill === 3?
-                            <div style={{borderRadius:design.socialShape,width:'24px',height:'24px',display:'grid'}}>
-                                   <FacebookF style={{color:'#3B5998',width:'100%',height:'50%','placeSelf':'center'}} />
+                            <div style={{borderRadius:design.socialShape,width:design.socialSize*24+'px',height:design.socialSize*24+'px',display:'grid'}}>
+                                   <FacebookF style={{color:`${design.matchTemplate?design.templateColor:'#3B5998'}`,width:'100%',height:'50%','placeSelf':'center'}} />
                            </div>
                             :
                             ''
@@ -93,18 +93,18 @@ export default function ClassicTemplate({variableInput,design}){
                             variableInput.insta === ""?'':<a href={`https://www.insta.com/${variableInput.insta}`}>
                             {
                             design.socialFill===1?
-                            <div style={{borderRadius:design.socialShape,background: '#E5495F',width:'24px',height:'24px',display:'grid'}}>
+                            <div style={{borderRadius:design.socialShape,background: `${design.matchTemplate?design.templateColor:'#E5495F'}`,width:design.socialSize*24+'px',height:design.socialSize*24+'px',display:'grid'}}>
                                     <Instagram style={{color:'white',width:'100%',height:'50%','placeSelf':'center'}} />
                            </div>
                             :
                             design.socialFill === 2?
-                            <div style={{borderRadius:design.socialShape,border: '1px solid #E5495F',width:'24px',height:'24px',display:'grid'}}>
-                                   <Instagram style={{color:'#E5495F',width:'100%',height:'50%','placeSelf':'center'}} />
+                            <div style={{borderRadius:design.socialShape,border: `1px solid ${design.matchTemplate?design.templateColor:'#E5495F'}`,width:design.socialSize*24+'px',height:design.socialSize*24+'px',display:'grid'}}>
+                                   <Instagram style={{color:`${design.matchTemplate?design.templateColor:'#E5495F'}`,width:'100%',height:'50%','placeSelf':'center'}} />
                            </div>
                             :
                             design.socialFill === 3?
-                            <div style={{borderRadius:design.socialShape,width:'24px',height:'24px',display:'grid'}}>
-                                   <Instagram style={{color:'#E5495F',width:'100%',height:'50%','placeSelf':'center'}} />
+                            <div style={{borderRadius:design.socialShape,width:design.socialSize*24+'px',height:design.socialSize*24+'px',display:'grid'}}>
+                                   <Instagram style={{color:`${design.matchTemplate?design.templateColor:'#E5495F'}`,width:'100%',height:'50%','placeSelf':'center'}} />
                            </div>
                             :
                             ''
@@ -115,18 +115,18 @@ export default function ClassicTemplate({variableInput,design}){
                             variableInput.linkedin === ""?'':<a href={`https://www.linkedin.com/${variableInput.linkedin}`}>
                             {
                             design.socialFill===1?
-                            <div style={{borderRadius:design.socialShape,background: '#2377B5',width:'24px',height:'24px',display:'grid'}}>
+                            <div style={{borderRadius:design.socialShape,background: `${design.matchTemplate?design.templateColor:'#2377B5'}`,width:design.socialSize*24+'px',height:design.socialSize*24+'px',display:'grid'}}>
                                     <LinkedinIn style={{color:'white',width:'100%',height:'50%','placeSelf':'center'}} />
                            </div>
                             :
                             design.socialFill === 2?
-                            <div style={{borderRadius:design.socialShape,border: '1px solid #2377B5',width:'24px',height:'24px',display:'grid'}}>
-                                   <LinkedinIn style={{color:'#2377B5',width:'100%',height:'50%','placeSelf':'center'}} />
+                            <div style={{borderRadius:design.socialShape,border: `1px solid ${design.matchTemplate?design.templateColor:'#2377B5'}`,width:design.socialSize*24+'px',height:design.socialSize*24+'px',display:'grid'}}>
+                                   <LinkedinIn style={{color:`${design.matchTemplate?design.templateColor:'#2377B5'}`,width:'100%',height:'50%','placeSelf':'center'}} />
                            </div>
                             :
                             design.socialFill === 3?
-                            <div style={{borderRadius:design.socialShape,width:'24px',height:'24px',display:'grid'}}>
-                                   <LinkedinIn style={{color:'#2377B5',width:'100%',height:'50%','placeSelf':'center'}} />
+                            <div style={{borderRadius:design.socialShape,width:design.socialSize*24+'px',height:design.socialSize*24+'px',display:'grid'}}>
+                                   <LinkedinIn style={{color:`${design.matchTemplate?design.templateColor:'#2377B5'}`,width:'100%',height:'50%','placeSelf':'center'}} />
                            </div>
                             :
                             ''
@@ -137,18 +137,18 @@ export default function ClassicTemplate({variableInput,design}){
                             variableInput.twitter === ""?'':<a href={`https://www.twitter.com/${variableInput.twitter}`}>
                             {
                             design.socialFill===1?
-                            <div style={{borderRadius:design.socialShape,background: '#55ACEE',width:'24px',height:'24px',display:'grid'}}>
+                            <div style={{borderRadius:design.socialShape,background: `${design.matchTemplate?design.templateColor:'#55ACEE'}`,width:design.socialSize*24+'px',height:design.socialSize*24+'px',display:'grid'}}>
                                 <Twitter style={{color:'white',width:'100%',height:'50%','placeSelf':'center'}} />
                            </div>
                             :
                             design.socialFill === 2?
-                            <div style={{borderRadius:design.socialShape,border: '1px solid #55ACEE',width:'24px',height:'24px',display:'grid'}}>
-                                   <Twitter style={{color:'#55ACEE',width:'100%',height:'50%','placeSelf':'center'}} />
+                            <div style={{borderRadius:design.socialShape,border: `1px solid ${design.matchTemplate?design.templateColor:'#55ACEE'}`,width:design.socialSize*24+'px',height:design.socialSize*24+'px',display:'grid'}}>
+                                   <Twitter style={{color:`${design.matchTemplate?design.templateColor:'#55ACEE'}`,width:'100%',height:'50%','placeSelf':'center'}} />
                            </div>
                             :
                             design.socialFill === 3?
-                            <div style={{borderRadius:design.socialShape,width:'24px',height:'24px',display:'grid'}}>
-                                   <Twitter style={{color:'#55ACEE',width:'100%',height:'50%','placeSelf':'center'}} />
+                            <div style={{borderRadius:design.socialShape,width:design.socialSize*24+'px',height:design.socialSize*24+'px',display:'grid'}}>
+                                   <Twitter style={{color:`${design.matchTemplate?design.templateColor:'#55ACEE'}`,width:'100%',height:'50%','placeSelf':'center'}} />
                            </div>
                             :
                             ''
@@ -159,18 +159,18 @@ export default function ClassicTemplate({variableInput,design}){
                             variableInput.yt === ""?'':<a href={`https://www.youtube.com/${variableInput.yt}`}>
                                 {
                             design.socialFill===1?
-                            <div style={{borderRadius:design.socialShape,background: '#CE3C35',width:'24px',height:'24px',display:'grid'}}>
+                            <div style={{borderRadius:design.socialShape,background: `${design.matchTemplate?design.templateColor:'#CE3C35'}`,width:design.socialSize*24+'px',height:design.socialSize*24+'px',display:'grid'}}>
                                     <Youtube style={{color:'white',width:'100%',height:'50%','placeSelf':'center'}} />
                            </div>
                             :
                             design.socialFill === 2?
-                            <div style={{borderRadius:design.socialShape,border: '1px solid #CE3C35',width:'24px',height:'24px',display:'grid'}}>
-                                   <Youtube style={{color:'#CE3C35',width:'100%',height:'50%','placeSelf':'center'}} />
+                            <div style={{borderRadius:design.socialShape,border: `1px solid ${design.matchTemplate?design.templateColor:'#CE3C35'}`,width:design.socialSize*24+'px',height:design.socialSize*24+'px',display:'grid'}}>
+                                   <Youtube style={{color:`${design.matchTemplate?design.templateColor:'#CE3C35'}`,width:'100%',height:'50%','placeSelf':'center'}} />
                            </div>
                             :
                             design.socialFill === 3?
-                            <div style={{borderRadius:design.socialShape,width:'24px',height:'24px',display:'grid'}}>
-                                   <Youtube style={{color:'#CE3C35',width:'100%',height:'50%','placeSelf':'center'}} />
+                            <div style={{borderRadius:design.socialShape,width:design.socialSize*24+'px',height:design.socialSize*24+'px',display:'grid'}}>
+                                   <Youtube style={{color:`${design.matchTemplate?design.templateColor:'#CE3C35'}`,width:'100%',height:'50%','placeSelf':'center'}} />
                            </div>
                             :
                             ''
@@ -181,18 +181,18 @@ export default function ClassicTemplate({variableInput,design}){
                             variableInput.pinterest === ""?'':<a href={`https://www.pinterest.com/${variableInput.pinterest}`}>
                                 {
                             design.socialFill===1?
-                            <div style={{borderRadius:design.socialShape,background: '#BE3730',width:'24px',height:'24px',display:'grid'}}>
+                            <div style={{borderRadius:design.socialShape,background: `${design.matchTemplate?design.templateColor:'#BE3730'}`,width:design.socialSize*24+'px',height:design.socialSize*24+'px',display:'grid'}}>
                                     <Pinterest style={{color:'white',width:'100%',height:'50%','placeSelf':'center'}} />
                            </div>
                             :
                             design.socialFill === 2?
-                            <div style={{borderRadius:design.socialShape,border: '1px solid #BE3730',width:'24px',height:'24px',display:'grid'}}>
-                                   <Pinterest style={{color:'#BE3730',width:'100%',height:'50%','placeSelf':'center'}} />
+                            <div style={{borderRadius:design.socialShape,border: `1px solid ${design.matchTemplate?design.templateColor:'#BE3730'}`,width:design.socialSize*24+'px',height:design.socialSize*24+'px',display:'grid'}}>
+                                   <Pinterest style={{color:`${design.matchTemplate?design.templateColor:'#BE3730'}`,width:'100%',height:'50%','placeSelf':'center'}} />
                            </div>
                             :
                             design.socialFill === 3?
-                            <div style={{borderRadius:design.socialShape,width:'24px',height:'24px',display:'grid'}}>
-                                   <FacebookF style={{color:'#BE3730',width:'100%',height:'50%','placeSelf':'center'}} />
+                            <div style={{borderRadius:design.socialShape,width:design.socialSize*24+'px',height:design.socialSize*24+'px',display:'grid'}}>
+                                   <FacebookF style={{color:`${design.matchTemplate?design.templateColor:'#BE3730'}`,width:'100%',height:'50%','placeSelf':'center'}} />
                            </div>
                             :
                             ''

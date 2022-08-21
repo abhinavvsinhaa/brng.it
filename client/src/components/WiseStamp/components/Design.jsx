@@ -228,22 +228,27 @@ export default function Design({design,setDesign}){
                 <div className="p-[10px] gap-[7px] grid grid-rows-[1fr_1fr_1fr]">
                     <div className="grid grid-cols-[1fr_1fr]">
                         <div className="grid align-content-center text-gray-600 gap-[10px]">Style</div>
-                        <div className="grid grid-cols-[1fr_1fr_1fr] gap-[3px]">
-                            <div onClick={()=>{updateDesign({'socialFill':1})}} className={`rounded-md grid place-content-center cursor-pointer ${design.socialFill===1?'border-blue-500 border-2':'border'}`}>
-                                <div style={{background: '#55ACEE',width:'24px',height:'24px',display:'grid'}}>
-                                    <Twitter style={{color:'white',width:'100%',height:'50%','placeSelf':'center'}} />
-                                </div>
-                            </div>
-                            <div onClick={()=>{updateDesign({'socialFill':2})}} className={`rounded-md grid place-content-center cursor-pointer ${design.socialFill===2?'border-blue-500 border-2':'border'}`}>
-                                <div style={{border:`1px solid #55ACEE`,width:'24px',height:'24px',display:'grid'}}>
-                                    <Twitter style={{color:'#55ACEE',width:'100%',height:'50%','placeSelf':'center'}} />
-                                </div>
-                            </div>
-                            <div onClick={()=>{updateDesign({'socialFill':3})}} className={`rounded-md grid place-content-center cursor-pointer ${design.socialFill===3?'border-blue-500 border-2':'border'}`}>
-                                <div style={{width:'24px',height:'24px',display:'grid'}}>
-                                    <Twitter style={{color:'#55ACEE',width:'100%',height:'50%','placeSelf':'center'}} />
-                                </div>
-                            </div>
+                        <div>
+                            <select onChange={(e)=>{updateDesign({'lineStyle':e.target.value})}} value={design.lineStyle} className="form-select text-center appearance-none block w-full px-3 py-1.5 text-base font-normal  text-gray-700  bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0  focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" name="font" id="font">
+                                <option value="0px">
+                                    <div className="grid place-content-center">None</div>
+                                </option>
+                                <option value="0.5px solid">
+                                    <div className="grid place-content-center">Slim</div>
+                                </option>
+                                <option value="1px solid">
+                                    <div className="grid place-content-center">Normal</div>
+                                </option>
+                                <option value="2px solid">
+                                    <div className="grid place-content-center">Heavy</div>
+                                </option>
+                                <option value="2px dotted">
+                                    <div className="grid place-content-center">Dotted</div>
+                                </option>
+                                <option value="2px dashed">
+                                    <div className="grid place-content-center">Dashed</div>
+                                </option>
+                            </select>
                         </div>
                     </div>
                     <div className="grid grid-cols-[1fr_1fr]">
