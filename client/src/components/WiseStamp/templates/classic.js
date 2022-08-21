@@ -65,7 +65,7 @@ export default function ClassicTemplate({variableInput,design}){
                             </a>
                         }
                     </p>
-                    <div style={{color:'#212121',paddingTop:'10px',paddingBottom:'10px',fontSize:(design.fontSize*11)+'px'}}>{variableInput.address}</div>
+                    <div style={{color:design.textColor,paddingTop:'10px',paddingBottom:'10px',fontSize:(design.fontSize*11)+'px'}}>{variableInput.address}</div>
                     <div style={{display:'grid','gridAutoFlow':'column','width':'fit-content','gridGap':design.socialSpace*10+'px'}}>
                     {
                            variableInput.fb === ""?'':<a href={`https://www.facebook.com/${variableInput.fb}`}>

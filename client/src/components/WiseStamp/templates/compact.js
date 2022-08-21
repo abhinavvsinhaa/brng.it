@@ -2,11 +2,12 @@ import { Envelope, Globe, Telephone } from "@styled-icons/bootstrap";
 import { FacebookF, Instagram, LinkedinIn, Pinterest, Twitter, Youtube } from "@styled-icons/fa-brands";
 import { MapPin, Smartphone } from "@styled-icons/feather";
 import defsign from '../../../assets/default-sig-photo.jpg'
-export default function CompactTemplate({variableInput}){
+export default function CompactTemplate({variableInput,design}){
     return(
         <div style={{padding: "30px",display:'grid',gridTemplateRows:'auto auto',width:'635px'}}>
                     <div style={{display:'grid',gap:'10px',gridTemplateColumns:'auto 1fr'}}>
                     {variableInput.url===""?<img style={{borderRadius:'100%'}} src={defsign} alt="User"/>:<img src={`https://wisestamp-api.herokuapp.com/${variableInput.url}`} style={{width:'125px',borderRadius:'100%'}} alt="User"/>}
+                    {/* {variableInput.url===""?<a href={design.imageLink}><img src={defsign} style={{borderRadius: design.imageShape==='rect'?'':design.imageShape==='round'?'10px':'100px'}} alt="User"/></a>:<a href={design.imageLink}><img src={`https://wisestamp-api.herokuapp.com/${variableInput.url}`} style={{width:'125px'}} alt="User"/></a>} */}
                     <div style={{display:'grid',alignContent:'center'}}>
                             <div style={{color:'#646464',fontSize:'16px',lineHeight:'1.2',fontWeight:'bold',textTransform:'initial',letterSpacing:'0px'}}>{variableInput.name}</div>
                             <p style={{marginBottom:'10px',color:'#45668E',fontSize:'14px',lineHeight:'1.2',fontWeight:'bold',textTransform:'initial'}}>{variableInput.titleSign}{ (variableInput.company === "") ? <></> : <>, &nbsp;</>}<div>{variableInput.company}</div></p>
