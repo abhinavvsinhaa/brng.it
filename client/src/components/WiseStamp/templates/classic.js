@@ -11,75 +11,192 @@ export default function ClassicTemplate({variableInput,design}){
                     <div>
                     <div style={{color:design.templateColor,fontSize:(design.fontSize*16)+'px',lineHeight:'1.2',fontWeight:'bold',textTransform:'initial',letterSpacing:'0px'}}>{variableInput.name}</div>
                     <p style={{color:'#646464',fontSize:(design.fontSize*13)+'px',lineHeight:'1.2',fontWeight:'bold',textTransform:'initial'}}>{variableInput.titleSign}{ (variableInput.company === "") ? <>Hello</> : <>, &nbsp;</>}{variableInput.company}</p>
-                    <p style={{paddingTop:design.lineSpacing*14+'px',fontSize:(design.fontSize*11)+'px',color:'#212121',whiteSpace:'nowrap'}}>
+                    <p style={{width:'fit-content',margin:'0',display:'grid',gap:'5px',gridAutoFlow:design.direction,paddingTop:design.lineSpacing*14+'px',fontSize:(design.fontSize*11)+'px',color:'#212121',whiteSpace:'nowrap'}}>
                         {
                             variableInput.phone===""?
                             ''
                             :
-                            <a style={{color:'inherit',textDecoration:'inherit',paddingRight:'5px',borderRight:'1px solid black'}} onMouseOut={(e) => {e.target.style.color="inherit"}} onMouseOver={(e) => {e.target.style.color="#40a9ff"}} href={`tel:${variableInput.phone}`}>{variableInput.phone}</a>
+                            <a style={{color:design.textColor,height:'fit-content',gap:'4px',textDecoration:'inherit',paddingRight:'5px',display:'grid',gridTemplateColumns:'1fr 10px'}} onMouseOut={(e) => {e.target.style.color="inherit"}} onMouseOver={(e) => {e.target.style.color="#40a9ff"}} href={`tel:${variableInput.phone}`}>
+                                {variableInput.phone}
+                                <div style={{display:'grid'}}>
+                                    {
+                                        design.seperator==='line'?<div style={{width:'1px',background:design.textColor,justifySelf:'center'}}></div>:design.seperator==='dot'?<div style={{width:'6px',height:'6px', display:'grid',placeSelf:'center',background:design.textColor,borderRadius:'1000px'}}></div>:design.seperator==='square'?<div style={{width:'6px',height:'6px', display:'grid',placeSelf:'center',background:design.textColor}}></div>:<div></div>
+                                    }
+                                </div>
+                            </a>
                         }
                         {
                             variableInput.mobile===""?
                             ''
                             :
-                            <a style={{color:'inherit',textDecoration:'inherit',paddingRight:'5px',borderRight:'1px solid black'}} onMouseOut={(e) => {e.target.style.color="inherit"}} onMouseOver={(e) => {e.target.style.color="#40a9ff"}} href={`tel:${variableInput.mobile}`}> {variableInput.mobile}</a>
+                            <a style={{color:design.textColor,height:'fit-content',gap:'4px',textDecoration:'inherit',paddingRight:'5px',display:'grid',gridTemplateColumns:'1fr 10px'}} onMouseOut={(e) => {e.target.style.color="inherit"}} onMouseOver={(e) => {e.target.style.color="#40a9ff"}} href={`tel:${variableInput.mobile}`}>
+                                {variableInput.mobile}
+                                <div style={{display:'grid'}}>
+                                    {
+                                        design.seperator==='line'?<div style={{width:'1px',background:design.textColor,justifySelf:'center'}}></div>:design.seperator==='dot'?<div style={{width:'6px',height:'6px', display:'grid',placeSelf:'center',background:design.textColor,borderRadius:'1000px'}}></div>:design.seperator==='square'?<div style={{width:'6px',height:'6px', display:'grid',placeSelf:'center',background:design.textColor}}></div>:<div></div>
+                                    }
+                                </div>
+                            </a>
                         }
                         {
                             variableInput.email===""?
                             ''
                             :
-                            <a style={{color:'inherit',textDecoration:'inherit',paddingRight:'5px',borderRight:'1px solid black'}} onMouseOut={(e) => {e.target.style.color="inherit"}} onMouseOver={(e) => {e.target.style.color="#40a9ff"}} href={`mailto:${variableInput.email}`}> {variableInput.email}</a>
+                            <a style={{color:design.textColor,height:'fit-content',gap:'4px',textDecoration:'inherit',paddingRight:'5px',display:'grid',gridTemplateColumns:'1fr 10px'}} onMouseOut={(e) => {e.target.style.color="inherit"}} onMouseOver={(e) => {e.target.style.color="#40a9ff"}} href={`mailto:${variableInput.email}`}>
+                                {variableInput.email}
+                                <div style={{display:'grid'}}>
+                                    {
+                                        design.seperator==='line'?<div style={{width:'1px',background:design.textColor,justifySelf:'center'}}></div>:design.seperator==='dot'?<div style={{width:'6px',height:'6px', display:'grid',placeSelf:'center',background:design.textColor,borderRadius:'1000px'}}></div>:design.seperator==='square'?<div style={{width:'6px',height:'6px', display:'grid',placeSelf:'center',background:design.textColor}}></div>:<div></div>
+                                    }
+                                </div>
+                            </a>
                         }
                         {
                             variableInput.website===""?
                             ''
                             :
-                            <a style={{color:'inherit',textDecoration:'inherit',paddingRight:'5px',borderRight:'1px solid black'}} onMouseOut={(e) => {e.target.style.color="inherit"}} onMouseOver={(e) => {e.target.style.color="#40a9ff"}} href={`${variableInput.website}`}> {variableInput.website}</a> 
+                            <a style={{color:design.textColor,height:'fit-content',gap:'4px',textDecoration:'inherit',paddingRight:'5px',display:'grid',gridTemplateColumns:'1fr 10px'}} onMouseOut={(e) => {e.target.style.color="inherit"}} onMouseOver={(e) => {e.target.style.color="#40a9ff"}} href={`${variableInput.website}`}>
+                                {variableInput.website}
+                                <div style={{display:'grid'}}>
+                                    {
+                                        design.seperator==='line'?<div style={{width:'1px',background:design.textColor,justifySelf:'center'}}></div>:design.seperator==='dot'?<div style={{width:'6px',height:'6px', display:'grid',placeSelf:'center',background:design.textColor,borderRadius:'1000px'}}></div>:design.seperator==='square'?<div style={{width:'6px',height:'6px', display:'grid',placeSelf:'center',background:design.textColor}}></div>:<div></div>
+                                    }
+                                </div>
+                            </a>
                         }
-                        <br/>
-                        <div style={{paddingTop:'10px',paddingBottom:'10px',fontSize:(design.fontSize*11)+'px'}}>{variableInput.address}</div>
                     </p>
+                    <div style={{color:'#212121',paddingTop:'10px',paddingBottom:'10px',fontSize:(design.fontSize*11)+'px'}}>{variableInput.address}</div>
                     <div style={{display:'grid','gridAutoFlow':'column','width':'fit-content','gridGap':'10px'}}>
                     {
                            variableInput.fb === ""?'':<a href={`https://www.facebook.com/${variableInput.fb}`}>
-                           <div style={{background: '#3B5998',width:'24px',height:'24px',display:'grid'}}>
+                           {
+                            design.socialFill===1?
+                            <div style={{borderRadius:design.socialShape,background: '#3B5998',width:'24px',height:'24px',display:'grid'}}>
                                    <FacebookF style={{color:'white',width:'100%',height:'50%','placeSelf':'center'}} />
                            </div>
+                            :
+                            design.socialFill === 2?
+                            <div style={{borderRadius:design.socialShape,border: '1px solid #3B5998',width:'24px',height:'24px',display:'grid'}}>
+                                   <FacebookF style={{color:'#3B5998',width:'100%',height:'50%','placeSelf':'center'}} />
+                           </div>
+                            :
+                            design.socialFill === 3?
+                            <div style={{borderRadius:design.socialShape,width:'24px',height:'24px',display:'grid'}}>
+                                   <FacebookF style={{color:'#3B5998',width:'100%',height:'50%','placeSelf':'center'}} />
+                           </div>
+                            :
+                            ''
+                           }
                        </a>
                         }
                         {
                             variableInput.insta === ""?'':<a href={`https://www.insta.com/${variableInput.insta}`}>
-                            <div style={{background: '#E5495F',width:'24px',height:'24px',display:'grid'}}>
+                            {
+                            design.socialFill===1?
+                            <div style={{borderRadius:design.socialShape,background: '#E5495F',width:'24px',height:'24px',display:'grid'}}>
                                     <Instagram style={{color:'white',width:'100%',height:'50%','placeSelf':'center'}} />
-                            </div>
+                           </div>
+                            :
+                            design.socialFill === 2?
+                            <div style={{borderRadius:design.socialShape,border: '1px solid #E5495F',width:'24px',height:'24px',display:'grid'}}>
+                                   <Instagram style={{color:'#E5495F',width:'100%',height:'50%','placeSelf':'center'}} />
+                           </div>
+                            :
+                            design.socialFill === 3?
+                            <div style={{borderRadius:design.socialShape,width:'24px',height:'24px',display:'grid'}}>
+                                   <Instagram style={{color:'#E5495F',width:'100%',height:'50%','placeSelf':'center'}} />
+                           </div>
+                            :
+                            ''
+                           }
                         </a>
                         }
                         {
                             variableInput.linkedin === ""?'':<a href={`https://www.linkedin.com/${variableInput.linkedin}`}>
-                            <div style={{background: '#2377B5',width:'24px',height:'24px',display:'grid'}}>
+                            {
+                            design.socialFill===1?
+                            <div style={{borderRadius:design.socialShape,background: '#2377B5',width:'24px',height:'24px',display:'grid'}}>
                                     <LinkedinIn style={{color:'white',width:'100%',height:'50%','placeSelf':'center'}} />
-                            </div>
+                           </div>
+                            :
+                            design.socialFill === 2?
+                            <div style={{borderRadius:design.socialShape,border: '1px solid #2377B5',width:'24px',height:'24px',display:'grid'}}>
+                                   <LinkedinIn style={{color:'#2377B5',width:'100%',height:'50%','placeSelf':'center'}} />
+                           </div>
+                            :
+                            design.socialFill === 3?
+                            <div style={{borderRadius:design.socialShape,width:'24px',height:'24px',display:'grid'}}>
+                                   <LinkedinIn style={{color:'#2377B5',width:'100%',height:'50%','placeSelf':'center'}} />
+                           </div>
+                            :
+                            ''
+                           }
                         </a>
                         }
                         {
                             variableInput.twitter === ""?'':<a href={`https://www.twitter.com/${variableInput.twitter}`}>
-                            <div style={{background: '#55ACEE',width:'24px',height:'24px',display:'grid'}}>
-                                    <Twitter style={{color:'white',width:'100%',height:'50%','placeSelf':'center'}} />
-                            </div>
+                            {
+                            design.socialFill===1?
+                            <div style={{borderRadius:design.socialShape,background: '#55ACEE',width:'24px',height:'24px',display:'grid'}}>
+                                <Twitter style={{color:'white',width:'100%',height:'50%','placeSelf':'center'}} />
+                           </div>
+                            :
+                            design.socialFill === 2?
+                            <div style={{borderRadius:design.socialShape,border: '1px solid #55ACEE',width:'24px',height:'24px',display:'grid'}}>
+                                   <Twitter style={{color:'#55ACEE',width:'100%',height:'50%','placeSelf':'center'}} />
+                           </div>
+                            :
+                            design.socialFill === 3?
+                            <div style={{borderRadius:design.socialShape,width:'24px',height:'24px',display:'grid'}}>
+                                   <Twitter style={{color:'#55ACEE',width:'100%',height:'50%','placeSelf':'center'}} />
+                           </div>
+                            :
+                            ''
+                           }
                         </a>
                         }
                         {
                             variableInput.yt === ""?'':<a href={`https://www.youtube.com/${variableInput.yt}`}>
-                                <div style={{background: '#CE3C35',width:'24px',height:'24px',display:'grid'}}>
-                                        <Youtube style={{color:'white',width:'100%',height:'50%','placeSelf':'center'}} />
-                                </div>
+                                {
+                            design.socialFill===1?
+                            <div style={{borderRadius:design.socialShape,background: '#CE3C35',width:'24px',height:'24px',display:'grid'}}>
+                                    <Youtube style={{color:'white',width:'100%',height:'50%','placeSelf':'center'}} />
+                           </div>
+                            :
+                            design.socialFill === 2?
+                            <div style={{borderRadius:design.socialShape,border: '1px solid #CE3C35',width:'24px',height:'24px',display:'grid'}}>
+                                   <Youtube style={{color:'#CE3C35',width:'100%',height:'50%','placeSelf':'center'}} />
+                           </div>
+                            :
+                            design.socialFill === 3?
+                            <div style={{borderRadius:design.socialShape,width:'24px',height:'24px',display:'grid'}}>
+                                   <Youtube style={{color:'#CE3C35',width:'100%',height:'50%','placeSelf':'center'}} />
+                           </div>
+                            :
+                            ''
+                           }
                             </a>
                         }
                         {
                             variableInput.pinterest === ""?'':<a href={`https://www.pinterest.com/${variableInput.pinterest}`}>
-                                <div style={{background: '#BE3730',width:'24px',height:'24px',display:'grid'}}>
-                                        <Pinterest style={{color:'white',width:'100%',height:'50%','placeSelf':'center'}} />
-                                </div>
+                                {
+                            design.socialFill===1?
+                            <div style={{borderRadius:design.socialShape,background: '#BE3730',width:'24px',height:'24px',display:'grid'}}>
+                                    <Pinterest style={{color:'white',width:'100%',height:'50%','placeSelf':'center'}} />
+                           </div>
+                            :
+                            design.socialFill === 2?
+                            <div style={{borderRadius:design.socialShape,border: '1px solid #BE3730',width:'24px',height:'24px',display:'grid'}}>
+                                   <Pinterest style={{color:'#BE3730',width:'100%',height:'50%','placeSelf':'center'}} />
+                           </div>
+                            :
+                            design.socialFill === 3?
+                            <div style={{borderRadius:design.socialShape,width:'24px',height:'24px',display:'grid'}}>
+                                   <FacebookF style={{color:'#BE3730',width:'100%',height:'50%','placeSelf':'center'}} />
+                           </div>
+                            :
+                            ''
+                           }
                             </a>
                         }
                     </div>
