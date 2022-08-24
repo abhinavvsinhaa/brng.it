@@ -2,11 +2,12 @@ import { Envelope, Globe, Telephone } from "@styled-icons/bootstrap";
 import { FacebookF, Instagram, LinkedinIn, Pinterest, Twitter, Youtube } from "@styled-icons/fa-brands";
 import { MapPin, Smartphone } from "@styled-icons/feather";
 import defsign from '../../../assets/default-sig-photo.jpg'
-export default function WideTemplate({variableInput}){
+export default function WideTemplate({variableInput,design}){
     return(
-        <div style={{padding: "30px",display:'grid',gridTemplateColumns:'1fr 4fr',gap:'15px',width:'635px'}}>
+        <div style={{fontFamily:design.font,padding: "30px",display:'grid',gridTemplateColumns:'1fr 4fr',gap:design.lineSpacing*15+'px',width:'635px'}}>
                     <div>
-                    <div style={{display:'grid',placeContent:'center',paddingRight:'10px'}}>
+                    <div style={{display:'grid',placeContent:'center',alignSelf:design.imagePosition,paddingRight:design.lineSpacing*10+'px'}}>
+                    {/* <div style={{display:'grid',placeContent:'center',alignSelf:design.imagePosition,paddingRight:design.lineSpacing*10+'px'}}> */}
                     {variableInput.url===""?<img src={defsign} alt="User"/>:<img src={`https://wisestamp-api.herokuapp.com/${variableInput.url}`} style={{width:'125px'}} alt="User"/>}
                     </div>
                     </div>

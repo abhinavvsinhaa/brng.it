@@ -9,6 +9,7 @@ import OnlineScheduler from "./OnlineScheduler";
 import Video from "./Video";
 import VideoConference from "./VideoConference";
 import SalesEvent from "./SalesEvent";
+import CustomHTML from "./CustomHTML";
 export default function AppDrawer({whichApp,visible,setVisible}){
     const onClose = () => {
         setVisible(false);
@@ -80,6 +81,13 @@ export default function AppDrawer({whichApp,visible,setVisible}){
         return(
             <Drawer width='80%' title="Quote" placement="right" onClose={onClose} visible={visible}>
                 <SalesEvent/>
+            </Drawer>
+        )
+    }
+    else if(whichApp==='customHTML'){
+        return(
+            <Drawer width='80%' title="Quote" placement="right" onClose={onClose} visible={visible}>
+                <CustomHTML/>
             </Drawer>
         )
     }
