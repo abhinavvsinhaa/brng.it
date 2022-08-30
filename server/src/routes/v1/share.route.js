@@ -9,4 +9,9 @@ router
   .route('/')
   .post(shareController.share)
 
+router
+  .route('/fb')
+  .post(shareController.shareFacebook)
+  
+
 module.exports = router;

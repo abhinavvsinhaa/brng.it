@@ -37,6 +37,11 @@ const updateUser = catchAsync(async (req, res) => {
   res.send(user);
 });
 
+const addSubscription = catchAsync(async (req, res) => {
+  const user = await userService.updateUserByIdAndAddSubscription(req.params.userId, req.body);
+  res.send(user);
+})
+
 const deleteUser = catchAsync(async (req, res) => {
   await userService.deleteUserById(req.params.userId);
   res.status(httpStatus.NO_CONTENT).send();
@@ -48,4 +53,5 @@ module.exports = {
   getUser,
   updateUser,
   deleteUser,
+  addSubscription
 };

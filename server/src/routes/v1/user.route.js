@@ -14,9 +14,13 @@ router
 router
   .route('/:userId')
   .get(validate(userValidation.getUser), userController.getUser)
-  .patch(auth('manageUsers'), validate(userValidation.updateUser), userController.updateUser)
+  .patch(userController.updateUser)
   .delete(auth('manageUsers'), validate(userValidation.deleteUser), userController.deleteUser);
 
+router
+  .route('/:userId/subs')
+  .patch(userController.addSubscription)
+  
 module.exports = router;
 
 /**

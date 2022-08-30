@@ -8,14 +8,16 @@ import LinkedIn from "../../assets/images/linkedin-logo.png";
 import IGConnectModal from "./IGConnectModal";
 import useAuth from "../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
-import useSearchCustomers from "./useSearchCustomers";
+// import useSearchCustomers from "./useSearchCustomers";
+import FacebookLogin from "react-facebook-login";
 
 const ConnectNewChannel = () => {
-
   // const { selectedProfile, render } = useSearchCustomers();
 
   const [code, setCode] = useState("");
   const [customer, setCustomer] = useState(null);
+  const [longLivedUserAccessTokenFB, setLongLivedUserAccessTokenFB] =
+    useState("");
 
   const { auth, setAuth } = useAuth();
   const navigate = useNavigate();
@@ -42,8 +44,56 @@ const ConnectNewChannel = () => {
     }
   }
 
+  // store facebook credentials
+  async function responseFacebookLogin(response) {
+    console.log("short lived credentials", response);
+    const user = auth.user;
+    // stored short lived access token
+    let res = await axios.patch(`/users/${user.id}`, {
+      facebook: response,
+    });
+
+    // generate long lived access token and store
+    fetch(
+      `https://graph.facebook.com/v14.0/oauth/access_token?grant_type=fb_exchange_token&client_id=${process.env.REACT_APP_FACEBOOK_APP_ID}&client_secret=${process.env.REACT_APP_FACEBOOK_CLIENT_SECRET}&fb_exchange_token=${response.accessToken}`,
+      {
+        method: "GET",
+      }
+    )
+      .then((response) => response.json())
+      .then(async (result) => {
+        console.log(result.access_token);
+        res = await axios.patch(`/users/${user.id}`, {
+          facebook: result.access_token,
+        });
+
+        // generate and store page access tokens
+        fetch(
+          `https://graph.facebook.com/v14.0/${response.id}/accounts?access_token=${result.access_token}`,
+          {
+            method: "GET",
+          }
+        )
+          .then((response) => response.json())
+          .then(async (result) => {
+            // send result.data to server to store individual page details as subs
+            res = await axios.patch(`/users/${user.id}/subs`, result.data);
+            console.log(res);
+          })
+          .catch((error) =>
+            console.log(
+              "error in generating and storing page access tokens",
+              error
+            )
+          );
+      })
+      .catch((err) =>
+        console.log("error generating long lived access token", err)
+      );
+  }
+
   React.useEffect(() => {
-    loadData();
+    // loadData();
   }, []);
 
   return (
@@ -56,7 +106,7 @@ const ConnectNewChannel = () => {
             style={{
               fontWeight: 700,
               fontSize: "32px",
-              margin: 0
+              margin: 0,
             }}
           >
             Connect a new channel
@@ -65,7 +115,7 @@ const ConnectNewChannel = () => {
             style={{
               fontSize: "14px",
               opacity: 0.8,
-              margin: 0
+              margin: 0,
             }}
           >
             Looking for step-by-step instructions? Visit our Help Center to read
@@ -81,7 +131,6 @@ const ConnectNewChannel = () => {
           {/* {
             render
           } */}
-
         </div>
       </div>
       <br />
@@ -106,7 +155,7 @@ const ConnectNewChannel = () => {
               display: "flex",
               justifyContent: "center",
               backgroundColor: "white",
-              height: 200,
+              height: 350,
               alignItems: "center",
               textAlign: "center",
               borderRadius: "5px",
@@ -129,13 +178,18 @@ const ConnectNewChannel = () => {
           </Card>
         </div>
         <div className="col-xl-2 col-lg-4 col-md-4 col-sm-6 col-6">
+          {/* <FacebookLogin
+          appId={process.env.REACT_APP_FACEBOOK_APP_ID}
+          autoLoad={true}
+          callback={responseFacebookLogin}
+          render={renderProps => ( */}
           <Card
             className="shadow-md"
             style={{
               display: "flex",
               justifyContent: "center",
               backgroundColor: "white",
-              height: 200,
+              height: 350,
               alignItems: "center",
               textAlign: "center",
               borderRadius: "5px",
@@ -151,10 +205,18 @@ const ConnectNewChannel = () => {
             >
               <img src={FB} alt="" width="50px" />
             </div>
-            <p className="social-media-name">Facebook</p>
             <p className="social-media-subgroup">Page or Group</p>
+            <p className="social-media-name">Facebook</p>
             <p className="social-media-connect">Connect</p>
+            <FacebookLogin
+              appId={process.env.REACT_APP_FACEBOOK_APP_ID}
+              autoLoad={false}
+              callback={responseFacebookLogin}
+              scope="public_profile,pages_show_list,pages_read_engagement,pages_manage_posts"
+            />
           </Card>
+          {/* )} */}
+          {/* /> */}
         </div>
         <div className="col-xl-2 col-lg-4 col-md-4 col-sm-6 col-6">
           <Card
@@ -163,7 +225,7 @@ const ConnectNewChannel = () => {
               display: "flex",
               justifyContent: "center",
               backgroundColor: "white",
-              height: 200,
+              height: 350,
               alignItems: "center",
               textAlign: "center",
               borderRadius: "5px",

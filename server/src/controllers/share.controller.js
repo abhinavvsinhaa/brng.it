@@ -153,6 +153,12 @@ const share = catchAsync(async (req, res) => {
     });
 });
 
+
+const shareFacebook = catchAsync(async (req, res) => {
+  
+});
+
 module.exports = {
   share,
+  shareFacebook
 };

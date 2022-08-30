@@ -60,6 +60,10 @@ const shareNowLinkedIn = async (author, caption, access_token, file) => {
   console.log(res);
 };
 
+const shareNowFacebook = async (userId, caption, file, user_access_token, page_access_token) => {
+  const res = await axios.post("/share
+}
+
 const Share = () => {
   const { auth, setAuth } = useAuth();
   const [loading, setLoading] = useState(true);

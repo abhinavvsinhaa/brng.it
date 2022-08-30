@@ -37,13 +37,12 @@ const getUserById = async (id) => {
   return User.findById(id);
 };
 
-
 /**
  * Get user by id populated customer
  * @param {ObjectId} id
  * @returns {Promise<User>}
  */
- const getUserByIdPopulatedCustomers = async (id) => {
+const getUserByIdPopulatedCustomers = async (id) => {
   return User.findById(id).populate('customers');
 };
 
@@ -63,7 +62,7 @@ const getUserByEmail = async (email) => {
  * @returns {Promise<User>}
  */
 const updateUserById = async (userId, updateBody) => {
-  const user = await getUserById(userId);
+  const user = await User.findById(userId);
   if (!user) {
     throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
   }
@@ -72,6 +71,31 @@ const updateUserById = async (userId, updateBody) => {
   }
   Object.assign(user, updateBody);
   await user.save();
+  return user;
+};
+
+/**
+ * Update user by id and add subscription
+ * @param {ObjectId} userId
+ * @param {Object} updateBody
+ * @returns {Promise<User>}
+ */
+const updateUserByIdAndAddSubscription = async (userId, updateBody) => {
+  let user = await User.findById(userId);
+  if (!user) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
+  }
+
+  updateBody.map(async (data) => {
+    user = await User.findByIdAndUpdate(
+      userId,
+      {
+        $push: { subs: data },
+      },
+      { $new: true }
+    );
+  })
+
   return user;
 };
 
@@ -96,5 +120,6 @@ module.exports = {
   getUserByEmail,
   updateUserById,
   deleteUserById,
-  getUserByIdPopulatedCustomers
+  getUserByIdPopulatedCustomers,
+  updateUserByIdAndAddSubscription
 };

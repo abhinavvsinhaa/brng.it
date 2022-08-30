@@ -23,12 +23,25 @@ const userSchema = mongoose.Schema(
         }
       },
     },
+    facebook: {
+      type: Object,
+      default: {}
+    },
+    instagram: {
+      type: Object,
+      default: {}
+    },
+    linkedin: {
+      type: Object,
+      default: {}
+    },
     customers: [
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Client',
       },
     ],
+    subs: [Object],
     password: {
       type: String,
       required: true,
