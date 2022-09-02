@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Card } from "antd";
 import "./Channel.css";
-import axios from "../../api/axios";
+import axios, { axiosPrivate } from "../../api/axios";
 import IG from "../../assets/images/ig-logo.png";
 import FB from "../../assets/images/fb-icon.png";
 import LinkedIn from "../../assets/images/linkedin-logo.png";
@@ -76,8 +76,7 @@ const ConnectNewChannel = () => {
         )
           .then((response) => response.json())
           .then(async (result) => {
-            // send result.data to server to store individual page details as subs
-            res = await axios.patch(`/users/${user.id}/subs`, result.data);
+            res = await axiosPrivate.patch(`/users/${user.id}/subs?f=true`, result.data);
             console.log(res);
           })
           .catch((error) =>

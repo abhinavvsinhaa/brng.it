@@ -38,8 +38,19 @@ const updateUser = catchAsync(async (req, res) => {
 });
 
 const addSubscription = catchAsync(async (req, res) => {
-  const user = await userService.updateUserByIdAndAddSubscription(req.params.userId, req.body);
-  res.send(user);
+  if (req.query.f === 'true') {
+    const user = await userService.updateUserByIdAndAddSubscription(req.params.userId, req.body, 'facebook')
+    res.send('user');
+  }
+
+  // todo: for instagram and linkedin
+})
+
+const searchSubscriptionData = catchAsync(async (req, res) => {
+  if (req.query.f === 'true') {
+    const ans = await userService.findSubscription(req.params.userId, req.body.pageId, 'facebook')
+    return ans;
+  }
 })
 
 const deleteUser = catchAsync(async (req, res) => {
@@ -53,5 +64,6 @@ module.exports = {
   getUser,
   updateUser,
   deleteUser,
-  addSubscription
+  addSubscription,
+  searchSubscriptionData,
 };

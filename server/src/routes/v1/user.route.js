@@ -19,6 +19,7 @@ router
 
 router
   .route('/:userId/subs')
+  .post(userController.searchSubscriptionData)
   .patch(userController.addSubscription)
   
 module.exports = router;

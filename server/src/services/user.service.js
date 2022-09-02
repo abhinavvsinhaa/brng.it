@@ -75,26 +75,49 @@ const updateUserById = async (userId, updateBody) => {
 };
 
 /**
+ * find subscription
+ * @param {ObjectId} userId
+ * @param {string} subId
+ * @param {string} platform
+ * @returns {Promise<User>}
+ */
+const findSubscription = async (userId, subId, platform) => {
+  if (platform === 'facebook') {
+    let res = await User.find({
+      _id: userId,
+      facebookSub: {
+        id: subId
+      }
+    })
+
+    return res;
+  }
+}
+
+/**
  * Update user by id and add subscription
  * @param {ObjectId} userId
  * @param {Object} updateBody
  * @returns {Promise<User>}
  */
-const updateUserByIdAndAddSubscription = async (userId, updateBody) => {
+const updateUserByIdAndAddSubscription = async (userId, updateBody, platform) => {
   let user = await User.findById(userId);
   if (!user) {
     throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
   }
 
-  updateBody.map(async (data) => {
-    user = await User.findByIdAndUpdate(
-      userId,
-      {
-        $push: { subs: data },
-      },
-      { $new: true }
-    );
-  })
+  if (platform == 'facebook' || platform == 'instagram' || platform == 'linkedin') {
+    updateBody.map(async (data) => {
+      user = await User.findByIdAndUpdate(
+        userId,
+        {
+          $push: { facebookSub: data}
+        },
+        { $new: true }
+      );
+    })
+  }
+
 
   return user;
 };
@@ -121,5 +144,6 @@ module.exports = {
   updateUserById,
   deleteUserById,
   getUserByIdPopulatedCustomers,
-  updateUserByIdAndAddSubscription
+  updateUserByIdAndAddSubscription,
+  findSubscription
 };

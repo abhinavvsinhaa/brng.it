@@ -1,5 +1,5 @@
 .share-container {
-  height: calc(100vh - 64px);
+  height: 100% !important;
 }
 
 .share-post-inner-div > form {

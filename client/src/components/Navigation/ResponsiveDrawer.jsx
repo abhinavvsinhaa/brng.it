@@ -15,6 +15,9 @@ import ShareIcon from "@mui/icons-material/Share";
 import GroupIcon from "@mui/icons-material/Group";
 import LinkIcon from "@mui/icons-material/Link";
 import ParkIcon from "@mui/icons-material/Park";
+import FaceIcon from '@mui/icons-material/Face';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import EmailIcon from '@mui/icons-material/Email';
 
 import { Link } from "react-router-dom";
 
@@ -52,23 +55,13 @@ function ResponsiveDrawer(props) {
             </ListItemButton>
           </ListItem>
         </Link>
-        <Link to="/url" style={{ color: "inherit" }}>
+        <Link to="/team" style={{ color: "inherit" }}>
           <ListItem disablePadding>
             <ListItemButton>
               <ListItemIcon>
-                <LinkIcon />
+                <FaceIcon />
               </ListItemIcon>
-              <ListItemText primary="URL Shortener" />
-            </ListItemButton>
-          </ListItem>
-        </Link>
-        <Link to="/linktree" style={{ color: "inherit" }}>
-          <ListItem disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                <ParkIcon />
-              </ListItemIcon>
-              <ListItemText primary="Linktree" />
+              <ListItemText primary="Team Members"/>
             </ListItemButton>
           </ListItem>
         </Link>
@@ -82,13 +75,33 @@ function ResponsiveDrawer(props) {
             </ListItemButton>
           </ListItem>
         </Link>
-        <Link to="/wisestamp" style={{ color: "inherit" }}>
+        <Link to="/linktree" style={{ color: "inherit" }}>
           <ListItem disablePadding>
             <ListItemButton>
               <ListItemIcon>
                 <ParkIcon />
               </ListItemIcon>
+              <ListItemText primary="Linktree" />
+            </ListItemButton>
+          </ListItem>
+        </Link>
+        <Link to="/wisestamp" style={{ color: "inherit" }}>
+          <ListItem disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                <EmailIcon />
+              </ListItemIcon>
               <ListItemText primary="Wisestamp" />
+            </ListItemButton>
+          </ListItem>
+        </Link>
+        <Link to="/url" style={{ color: "inherit" }}>
+          <ListItem disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                <LinkIcon />
+              </ListItemIcon>
+              <ListItemText primary="URL Shortener" />
             </ListItemButton>
           </ListItem>
         </Link>
@@ -96,7 +109,7 @@ function ResponsiveDrawer(props) {
           <ListItem disablePadding>
             <ListItemButton>
               <ListItemIcon>
-                <GroupIcon />
+                <AccountCircleIcon />
               </ListItemIcon>
               <ListItemText primary="Account" />
             </ListItemButton>
@@ -131,6 +144,7 @@ function ResponsiveDrawer(props) {
             "& .MuiDrawer-paper": {
               boxSizing: "border-box",
               width: drawerWidth,
+              backgroundColor: 'white'
             },
           }}
         >
@@ -144,7 +158,7 @@ function ResponsiveDrawer(props) {
               boxSizing: "border-box",
               width: drawerWidth,
               marginTop: "64px",
-              backgroundColor: "#f5f5f5",
+              backgroundColor: "white",
             },
           }}
           open

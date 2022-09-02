@@ -35,13 +35,15 @@ const userSchema = mongoose.Schema(
       type: Object,
       default: {}
     },
-    customers: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Client',
-      },
-    ],
-    subs: [Object],
+    // customers: [
+    //   {
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     ref: 'Client',
+    //   },
+    // ],
+    facebookSub: [Object],
+    instagramSub: [Object],
+    linkedinSub: [Object],
     password: {
       type: String,
       required: true,
@@ -73,6 +75,11 @@ const userSchema = mongoose.Schema(
       ref: 'UrlCollection',
       default: [],
     },
+    teamMembers: {
+      type: [mongoose.Schema.Types.ObjectId],
+      ref: 'User',
+      default: [],
+    }
   },
   {
     timestamps: true,

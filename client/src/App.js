@@ -21,6 +21,7 @@ import WiseStamp from "./components/WiseStamp/WiseStamp";
 import "./App.css";
 import Share from "./components/Share/Share";
 import WithNav from "./components/WithNav";
+import Team from "./components/Team/Team";
 
 function App() {
   useEffect(() => {}, []);
@@ -47,6 +48,7 @@ function App() {
             <Route path="/url" element={<UrlTabs />} />
             <Route path="/share" element={<Share />} />
             <Route path="/wisestamp" element={<WiseStamp />} />
+            <Route path='/team' element={<Team />} />
             <Route path="*" element={<Error />} />
           </Route>
         </Routes>
