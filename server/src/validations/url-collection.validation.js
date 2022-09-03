@@ -8,7 +8,9 @@ const combine = {
     }),
     name: Joi.string(),
     description: Joi.string(),
-    image: Joi.string().uri(),
+    dp: Joi.string().uri(),
+    css: Joi.object(),
+    bg: Joi.string().uri().allow(''),
   }),
 };
 

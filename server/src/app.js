@@ -27,7 +27,7 @@ app.use(express.urlencoded({ extended: true, limit: '5mb' }));
 app.use(xss());
 app.use(mongoSanitize());
 app.use(compression());
-app.use(cors({ origin: '*' }));
+app.use(cors({ origin: true, credentials: true }));
 app.options('*', cors());
 
 app.use(passport.initialize());

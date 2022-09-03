@@ -14,6 +14,7 @@ const router = express.Router();
 router.post('/shorten', validate(urlValidation.shortenOne), auth(), urlController.shortenUrl);
 router.post('/shortenmultiple', validate(urlValidation.shortenMany), auth(), urlController.shortenMultipleUrl);
 
+router.patch('/:uid', urlController.updateShortUrl);
 router.get('/:uid', urlController.getShortUrl);
 router.delete('/:uid', urlController.deleteShortUrl);
 

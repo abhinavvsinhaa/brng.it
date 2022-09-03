@@ -107,9 +107,15 @@ const shortenMultipleUrl = catchAsync(async (req, res, next) => {
 
 const getShortUrl = catchAsync(async (req, res, next) => {
   const url = await Url.findOne({ uid: req.params.uid });
-  if (!url) return next(new ApiError('URL not found on the server!', 503, true));
-  url.visits++;
-  await url.save();
+  console.log(url);
+  res.status(201).json({
+    status: 'success',
+    data: url,
+  });
+});
+
+const updateShortUrl = catchAsync(async (req, res, next) => {
+  const url = await Url.findOneAndUpdate({ uid: req.params.uid }, { $push: { analytics: req.body } }, { new: true });
   res.status(201).json({
     status: 'success',
     data: url,
@@ -123,4 +129,4 @@ const deleteShortUrl = catchAsync(async (req, res, next) => {
   });
 });
 
-module.exports = { shortenUrl, getShortUrl, shortenMultipleUrl, deleteShortUrl };
+module.exports = { shortenUrl, shortenMultipleUrl, deleteShortUrl, getShortUrl, updateShortUrl };
