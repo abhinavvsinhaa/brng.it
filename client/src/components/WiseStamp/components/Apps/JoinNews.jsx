@@ -1,14 +1,17 @@
-import { Cart, ChevronRight, Droplet, Gift } from "@styled-icons/boxicons-solid"
-import { Tag } from "@styled-icons/fluentui-system-regular"
+import { At } from "@styled-icons/bootstrap"
+import { Telegram } from "@styled-icons/boxicons-logos"
+import { Cart, ChevronRight, Droplet, Gift, MessageEdit } from "@styled-icons/boxicons-solid"
+import { Mail, Tag } from "@styled-icons/fluentui-system-regular"
 import { Burst, BurstNew, BurstSale } from "@styled-icons/foundation"
 import { useState } from "react"
 import { ChromePicker } from "react-color"
+import NewsHelper from "./NewsHelper"
 import SalesHelper from "./SalesHelper"
 
-export default function SalesEvent(){
-    const [title,settitle] = useState('SALE SALE SALE')
-    const [buttonText,setbuttonText] = useState('Join our sales event here')
-    const [buttonUrl,setbuttonUrl] = useState('#')
+export default function JoinNews(){
+    const [title,settitle] = useState('Subscribe for free:')
+    const [buttonText,setbuttonText] = useState('eg. Get the best marketing tips')
+    const [buttonUrl,setbuttonUrl] = useState('https://')
     const [iconType,seticonType] = useState(1)
     const [buttonColor,setbuttonColor] = useState('#1BA2EB')
     const [buttonSize,setbuttonSize] = useState('14px')
@@ -21,24 +24,24 @@ export default function SalesEvent(){
         <div className="grid grid-cols-[1fr_1.5fr] gap-[10px] h-full pl-[30px]">
             <div className="grid grid-rows-[1fr_3fr_5.5fr]">
                 <div className="grid">
-                    <div className="font-bold pl-[5px] text-[30px] tracking-wide grid content-center">Sales Event</div>
+                    <div className="font-bold pl-[5px] text-[30px] tracking-wide grid content-center">Join our Newsletter</div>
                 </div>
                 <div className="grid grid-rows-[40px_auto] gap-[10px] pl-[10px]">
-                    <div className="font-bold text-[18px]">Enter your sales event details</div>
+                    <div className="font-bold text-[18px]">Enter your newsletter details</div>
                     <div className="grid grid-rows-[40px_40px_40px] gap-[10px]">
-                        <div className="grid grid-cols-[100px_1fr] gap-[10px]">
+                        <div className="grid grid-cols-[60px_1fr] gap-[10px]">
                             <div className="grid place-content-center text-[14px]">Title</div>
                             <div className="grid justify-content-center">
                                 <input value={title} className="outline-0 pl-[10px] border-[#a9a9a9] border-b-[1px]" type='text' onChange={(e)=>{settitle(e.target.value)}}/>
                             </div>
                         </div>
-                        <div className="grid grid-cols-[100px_1fr] gap-[10px]">
+                        <div className="grid grid-cols-[60px_1fr] gap-[10px]">
                             <div className="grid place-content-center text-[14px]">Link text</div>
                             <div className="grid justify-content-center">
                                 <input value={buttonText} className="outline-0 pl-[10px] border-[#a9a9a9] border-b-[1px]" type='text' onChange={(e)=>{setbuttonText(e.target.value)}}/>
                             </div>
                         </div>
-                        <div className="grid grid-cols-[100px_1fr] gap-[10px]">
+                        <div className="grid grid-cols-[60px_1fr] gap-[10px]">
                             <div className="grid place-content-center text-[14px]">Link URL</div>
                             <div className="grid justify-content-center">
                                 <input value={buttonUrl} className="outline-0 pl-[10px] border-[#a9a9a9] border-b-[1px]" type='text' onChange={(e)=>{setbuttonUrl(e.target.value)}}/>
@@ -51,22 +54,16 @@ export default function SalesEvent(){
                         <div className="grid tracking-wide text-[16px] pl-[5px] items-center">Choose an icon</div>
                         <div className="grid grid-flow-col">
                             <div className="rounded-[0px] w-4/5 justify-self-center" onClick={()=>{seticonType(1)}}>
-                                <Tag width={'20px'}/>
+                                <Mail width={'20px'}/>
                             </div>
                             <div className="rounded-[0px] w-4/5 justify-self-center" onClick={()=>{seticonType(2)}}>
-                                <Gift width={'20px'}/>
+                                <MessageEdit width={'20px'}/>
                             </div>
                             <div className="rounded-[0px] w-4/5 justify-self-center" onClick={()=>{seticonType(3)}}>
-                                <BurstNew width={'20px'}/>
-                            </div>
-                            <div className="rounded-[0px] w-4/5 justify-self-center" onClick={()=>{seticonType(4)}}>
-                                <Cart width={'20px'}/>
-                            </div>
-                            <div className="rounded-[0px] w-4/5 justify-self-center" onClick={()=>{seticonType(5)}}>
-                                <Burst width={'20px'}/>
+                                <At width={'20px'}/>
                             </div>
                             <div className="rounded-[0px] w-4/5 justify-self-center" onClick={()=>{seticonType(6)}}>
-                                <BurstSale width={'20px'}/>
+                                <Telegram width={'20px'}/>
                             </div>
                             <div className="rounded-[0px] w-4/5 justify-self-center" onClick={()=>{seticonType(7)}}>
                                 NONE
@@ -150,10 +147,10 @@ export default function SalesEvent(){
                         <div className="px-[10px] py-[10px]">
                             <div style={{display:'grid',gridAutoFlow:'column',width:'fit-content',gap:'5px'}}>
                                 <div>
-                                    <SalesHelper color={buttonColor} type={iconType}/>
+                                    <NewsHelper color={buttonColor} type={iconType}/>
                                 </div>
-                                <div style={{display:'grid',placeSelf:'center',color:fontColor,fontSize:buttonSize}}>{title}</div>
-                                <div style={{display:'grid',placeSelf:'center',color:fontColor,fontWeight:'bold',fontSize:buttonSize}}><a style={{color:fontColor}} href={buttonUrl}>{buttonText}</a></div>
+                                <div style={{display:'grid',placeSelf:'center',color:fontColor,fontSize:buttonSize,fontWeight:'bold'}}>{title}</div>
+                                <div style={{display:'grid',placeSelf:'center',color:fontColor,fontSize:buttonSize}}><a style={{color:fontColor}} href={buttonUrl}>{buttonText}</a></div>
                             </div>
                         </div>
                     </div>

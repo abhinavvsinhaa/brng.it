@@ -1,9 +1,9 @@
 import { QuoteAltLeft, RightArrowCircle } from "@styled-icons/boxicons-solid";
-import { Leaf, Mobile } from "@styled-icons/entypo";
+import { Leaf, Mobile, Newsletter } from "@styled-icons/entypo";
 import { Calendar } from "@styled-icons/feather";
-import { Braces, CameraVideo, Youtube } from "@styled-icons/bootstrap";
+import { Braces, CameraVideo, PersonFill, StarFill, Youtube } from "@styled-icons/bootstrap";
 import { InkStroke } from "@styled-icons/fluentui-system-regular";
-import { BurstSale } from "@styled-icons/foundation";
+import { BurstSale, ProjectionScreen } from "@styled-icons/foundation";
 import { Gavel } from "@styled-icons/material-rounded";
 import { useState } from "react";
 import AppDrawer from "./Apps/AppDrawer";
@@ -38,7 +38,7 @@ export default function Apps(){
                     <div className="cursor-pointer grid grid-flow-col place-self-center h-[50px] w-full shadow-[rgba(0,_0,_0,_0.02)_0px_1px_3px_0px,_rgba(27,_31,_35,_0.15)_0px_0px_0px_1px] rounded bg-[#f8f9fb]" onClick={() => {setVisible(true);setwhichDrawer('greenfooter')}}>
                         <div className="grid grid-cols-[auto_1fr] place-self-center gap-[8px]">
                             <div><Leaf className="w-[25px] text-green-700 font-bold"/></div>
-                            <div className="pl-[5px] font-bold">Grren Footer</div>
+                            <div className="pl-[5px] font-bold">Green Footer</div>
                         </div>
                     </div>
                     <div className="cursor-pointer grid grid-flow-col place-self-center h-[50px] w-full shadow-[rgba(0,_0,_0,_0.02)_0px_1px_3px_0px,_rgba(27,_31,_35,_0.15)_0px_0px_0px_1px] rounded bg-[#f8f9fb]" onClick={() => {setVisible(true);setwhichDrawer('video')}}>
@@ -85,7 +85,31 @@ export default function Apps(){
                     <div className="cursor-pointer grid grid-flow-col place-self-center h-[50px] w-full shadow-[rgba(0,_0,_0,_0.02)_0px_1px_3px_0px,_rgba(27,_31,_35,_0.15)_0px_0px_0px_1px] rounded bg-[#f8f9fb]" onClick={() => {setVisible(true);setwhichDrawer('customHTML')}}>
                         <div className="grid grid-cols-[auto_1fr] place-self-center gap-[8px]">
                             <div><Braces className="w-[25px] text-blue-700 font-bold"/></div>
-                            <div className="pl-[5px] font-bold">Custom HTML</div>
+                            <div className="pl-[5px] font-bold">HTML</div>
+                        </div>
+                    </div>
+                    <div className="cursor-pointer grid grid-flow-col place-self-center h-[50px] w-full shadow-[rgba(0,_0,_0,_0.02)_0px_1px_3px_0px,_rgba(27,_31,_35,_0.15)_0px_0px_0px_1px] rounded bg-[#f8f9fb]" onClick={() => {setVisible(true);setwhichDrawer('joboffer')}}>
+                        <div className="grid grid-cols-[auto_1fr] place-self-center gap-[8px]">
+                            <div><PersonFill className="w-[25px] text-blue-700 font-bold"/></div>
+                            <div className="pl-[5px] font-bold">Post a job offer</div>
+                        </div>
+                    </div>
+                    <div className="cursor-pointer grid grid-flow-col place-self-center h-[50px] w-full shadow-[rgba(0,_0,_0,_0.02)_0px_1px_3px_0px,_rgba(27,_31,_35,_0.15)_0px_0px_0px_1px] rounded bg-[#f8f9fb]" onClick={() => {setVisible(true);setwhichDrawer('joinnews')}}>
+                        <div className="grid grid-cols-[auto_1fr] place-self-center gap-[8px]">
+                            <div><Newsletter className="w-[25px] text-red-700 font-bold"/></div>
+                            <div className="pl-[5px] font-bold">Join newsletter</div>
+                        </div>
+                    </div>
+                    <div className="cursor-pointer grid grid-flow-col place-self-center h-[50px] w-full shadow-[rgba(0,_0,_0,_0.02)_0px_1px_3px_0px,_rgba(27,_31,_35,_0.15)_0px_0px_0px_1px] rounded bg-[#f8f9fb]" onClick={() => {setVisible(true);setwhichDrawer('joinweb')}}>
+                        <div className="grid grid-cols-[auto_1fr] place-self-center gap-[8px]">
+                            <div><ProjectionScreen className="w-[25px] text-red-700 font-bold"/></div>
+                            <div className="pl-[5px] font-bold">Join a webinar</div>
+                        </div>
+                    </div>
+                    <div className="cursor-pointer grid grid-flow-col place-self-center h-[50px] w-full shadow-[rgba(0,_0,_0,_0.02)_0px_1px_3px_0px,_rgba(27,_31,_35,_0.15)_0px_0px_0px_1px] rounded bg-[#f8f9fb]" onClick={() => {setVisible(true);setwhichDrawer('feedback')}}>
+                        <div className="grid grid-cols-[auto_1fr] place-self-center gap-[8px]">
+                            <div><StarFill className="w-[25px] text-yellow-300 font-bold"/></div>
+                            <div className="pl-[5px] font-bold">Give feedback</div>
                         </div>
                     </div>
                 </div>

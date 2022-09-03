@@ -10,6 +10,10 @@ import Video from "./Video";
 import VideoConference from "./VideoConference";
 import SalesEvent from "./SalesEvent";
 import CustomHTML from "./CustomHTML";
+import PostJobOffer from "./PostJobOffer";
+import JoinNews from "./JoinNews";
+import JoinWeb from "./JoinWeb";
+import GiveFeedback from "./GiveFeedback";
 export default function AppDrawer({whichApp,visible,setVisible}){
     const onClose = () => {
         setVisible(false);
@@ -88,6 +92,34 @@ export default function AppDrawer({whichApp,visible,setVisible}){
         return(
             <Drawer width='80%' title="Quote" placement="right" onClose={onClose} visible={visible}>
                 <CustomHTML/>
+            </Drawer>
+        )
+    }
+    else if(whichApp==='joboffer'){
+        return(
+            <Drawer width='80%' title="Quote" placement="right" onClose={onClose} visible={visible}>
+                <PostJobOffer/>
+            </Drawer>
+        )
+    }
+    else if(whichApp==='joinnews'){
+        return(
+            <Drawer width='80%' title="Quote" placement="right" onClose={onClose} visible={visible}>
+                <JoinNews/>
+            </Drawer>
+        )
+    }
+    else if(whichApp==='joinweb'){
+        return(
+            <Drawer width='80%' title="Quote" placement="right" onClose={onClose} visible={visible}>
+                <JoinWeb/>
+            </Drawer>
+        )
+    }
+    else if(whichApp==='feedback'){
+        return(
+            <Drawer width='80%' title="Quote" placement="right" onClose={onClose} visible={visible}>
+                <GiveFeedback/>
             </Drawer>
         )
     }
