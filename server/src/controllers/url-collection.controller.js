@@ -17,11 +17,13 @@ const combine = catchAsync(async (req, res, _next) => {
     link.visits = 0;
     return link;
   });
-
+  console.log(req.body);
   const combinedLink = await UrlCollection.create({
     name: req.body?.name,
     description: req.body?.description,
-    image: req.body?.image,
+    dp: req?.body?.dp,
+    css: req?.body?.css,
+    bg: req?.body?.bg,
     original: originalLinks,
     short: process.env.SHORT_BASE + link,
     uid: link,

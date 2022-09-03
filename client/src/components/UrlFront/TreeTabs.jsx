@@ -1,5 +1,6 @@
 import { Tabs } from "antd";
 import React from "react";
+import CustomModal from "./CustomModal";
 import LinkTree from "./LinkTree";
 import TreeAnalytics from "./TreeAnalytics";
 
@@ -15,7 +16,9 @@ const TabPanel = () => (
       <TabPane tab="Shortener" key="1">
         <LinkTree />
       </TabPane>
-      <TabPane tab="Bulk" key="2"></TabPane>
+      <TabPane tab="Custom" key="2">
+        <CustomModal />
+      </TabPane>
       <TabPane tab="Analytics" key="3">
         <TreeAnalytics />
       </TabPane>

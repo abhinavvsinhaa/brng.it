@@ -1,172 +1,74 @@
 import React from "react";
 
-const Light = ({ data }) => {
+const TreePreview = ({ data, css }) => {
   return (
-    <div className="p-3 bg-white h-full">
-      <br />
-      <br />
-      <img alt="pfp" src={data?.image} className="profile-picture" />
-
-      <div className="flex flex-col text-black my-3">
-        <div className="max-w-96 mx-auto my-3">{data?.name}</div>
-        <div className="text-center p-2 max-w-[32rem] mx-auto">
-          {data?.description}
-        </div>
-      </div>
-
-      {data?.original?.map((p, i) => {
-        return (
-          <button className="links bg-black text-white" id={i}>
-            {p.title}
-          </button>
-        );
-      })}
-    </div>
-  );
-};
-const LightGray = ({ data }) => {
-  return (
-    <div className="p-3 bg-[#ebeef1] h-full">
-      <br />
-      <br />
-      <img alt="pfp" src={data?.image} className="profile-picture" />
-
-      <div className="flex flex-col text-black my-3">
-        <div className="max-w-96 mx-auto my-3">{data?.name}</div>
-        <div className="text-center p-2 max-w-[32rem] mx-auto">
-          {data?.description}
-        </div>
-      </div>
-
-      {data?.original?.map((p, i) => {
-        return (
-          <button className="links bg-white text-black" id={i}>
-            {p.title}
-          </button>
-        );
-      })}
-    </div>
-  );
-};
-const AirBlack = ({ data }) => {
-  return (
-    <div className="p-3 bg-black h-full">
-      <br />
-      <br />
-      <img alt="pfp" src={data?.image} className="profile-picture" />
-
-      <div className="flex flex-col text-white my-3">
-        <div className=" max-w-96 mx-auto my-3">{data?.name}</div>
-        <div className="text-center p-2 max-w-[32rem] mx-auto">
-          {data?.description}
-        </div>
-      </div>
-
-      {data?.original?.map((p, i) => {
-        return (
-          <button
-            className="links bg-[#222222] border-[#222222] text-white hover:border-white transition-all"
-            id={i}
+    <div
+      className="h-screen"
+      style={{
+        backgroundColor: css.bg,
+        paddingTop: css.pt,
+        backgroundImage: `url(${data.backgroundImage})`,
+        backgroundPosition: "center",
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+      }}
+    >
+      <div className="max-w-[500px] w-full">
+        <img
+          alt="pfp"
+          src={data?.image}
+          style={{
+            display: "block",
+            width: css.profile.width,
+            height: css.profile.height,
+            borderRadius: css.profile.borderRadius,
+            border: `${css.profile.border} solid ${css.profile.borderColor}`,
+          }}
+          className="mx-auto object-cover"
+        />
+        <div className="flex flex-col text-white my-3">
+          <div
+            className="mx-auto my-3 font-semibold"
+            style={{
+              fontSize: css.title.size,
+              color: css.title.color,
+            }}
           >
-            {p.title}
-          </button>
-        );
-      })}
-    </div>
-  );
-};
-
-const LightBlue = ({ data }) => {
-  return (
-    <div className="">
-      <br />
-      <br />
-      <img alt="pfp" src={data?.image} className="profile-picture" />
-
-      <div className="flex flex-col my-3">
-        <div className="max-w-96 mx-auto my-3">{data?.name}</div>
-        <div className="text-center bg-gray-50 p-2 max-w-[32rem] mx-auto">
-          {data?.description}
-        </div>
-      </div>
-
-      {data?.original?.map((p, i) => {
-        return (
-          <button
-            className="links bg-blue-700 text-white hover:bg-blue-500"
-            id={i}
+            {data?.name}
+          </div>
+          <div
+            className="px-4 max-w-[32rem] mx-auto text-center"
+            style={{
+              fontSize: css.bio.size,
+              color: css.bio.color,
+            }}
           >
-            {p.title}
-          </button>
-        );
-      })}
-    </div>
-  );
-};
+            {data?.description}
+          </div>
+        </div>
 
-const LightGreen = ({ data }) => {
-  return (
-    <div className="">
-      <br />
-      <br />
-      <img alt="pfp" src={data?.image} className="profile-picture" />
-
-      <div className="flex flex-col my-3">
-        <div className="max-w-96 mx-auto my-3">{data?.name}</div>
-        <div className="text-center bg-gray-50 p-2 max-w-[32rem] mx-auto">
-          {data?.description}
+        <div className="flex flex-col my-3 ">
+          {data?.original?.map((p, i) => {
+            return (
+              <a
+                href="/"
+                className="w-[80%] p-[20px] mx-auto my-2 text-center"
+                style={{
+                  backgroundColor: css.link.bg,
+                  fontSize: css.link.size,
+                  color: css.link.color,
+                  border: `${css.link.border} solid ${css.link.borderColor}`,
+                  borderRadius: `${css.link.borderRadius}`,
+                }}
+                id={i}
+              >
+                {p.title}
+              </a>
+            );
+          })}
         </div>
       </div>
-
-      {data?.original?.map((p, i) => {
-        return (
-          <button
-            className="links bg-green-700 text-white hover:bg-green-500"
-            id={i}
-          >
-            {p.title}
-          </button>
-        );
-      })}
     </div>
-  );
-};
-
-const DarkGrey = ({ data }) => {
-  return (
-    <div className="bg-gray-700 h-full">
-      <br />
-      <br />
-      <img alt="pfp" src={data?.image} className="profile-picture" />
-
-      <div className="flex flex-col text-white my-3">
-        <div className="max-w-96 mx-auto my-3">{data?.name}</div>
-        <div className="p-2 max-w-[32rem] mx-auto text-center">
-          {data?.description}
-        </div>
-      </div>
-
-      {data?.original?.map((p, i) => {
-        return (
-          <button className="links bg-white text-black" id={i}>
-            {p.title}
-          </button>
-        );
-      })}
-    </div>
-  );
-};
-
-const TreePreview = ({ i = 0, data }) => {
-  return (
-    <>
-      {i === 0 && <AirBlack data={data} />}
-      {i === 1 && <Light data={data} />}
-      {i === 2 && <LightGreen data={data} />}
-      {i === 3 && <LightBlue data={data} />}
-      {i === 4 && <DarkGrey data={data} />}
-      {i === 5 && <LightGray data={data} />}
-    </>
   );
 };
 

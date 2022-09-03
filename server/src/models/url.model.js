@@ -16,9 +16,9 @@ const UrlSchema = new mongoose.Schema({
     type: String,
     unique: true,
   },
-  visits: {
-    type: Number,
-    default: 0,
+  analytics: {
+    type: Array,
+    default: {},
   },
 });
 

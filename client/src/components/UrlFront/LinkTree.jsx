@@ -8,16 +8,17 @@ import { axiosPrivate } from "../../api/axios";
 import ReactDevicePreview from "react-device-preview";
 import TreePreview from "./TreePreview";
 import { storage } from "../../util/Firebase";
+import defaultThemes from "./defaultThemes";
 import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
 
 // TODO: create individual folder for each new user, otherwise image name can match, which will replace the previous image with same name or add UUID
 
-const Preview = ({ i, data }) => {
+const Preview = ({ data, css }) => {
   return (
     <div className="App">
       <div>
         <ReactDevicePreview device="iphonex" scale="0.7">
-          <TreePreview data={data} i={i} />
+          <TreePreview data={data} css={css} />
         </ReactDevicePreview>
       </div>
     </div>
@@ -29,19 +30,17 @@ export default function LinkTree() {
   const [linkName, setLinkName] = useState("");
   const [description, setDescription] = useState("Description of your links!");
   const [pfp, setPfp] = useState(
-    "https://images.unsplash.com/photo-1603415526960-f7e0328c63b1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
+    "https://images.unsplash.com/photo-1529665253569-6d01c0eaf7b6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1085&q=80"
   );
-  const [dp, setDP] = useState('')
-
+  const [bgUrl, setBgUrl] = useState("");
+  const [bg, setBG] = useState(null);
+  const [dp, setDP] = useState(null);
   const [ColMainUserName, setColMainUserName] = useState("Rhythm Shandlya");
   const [colMainUrlArr, setColMainUrlArr] = useState([]);
-
   const [colMainUrl, setColMainUrl] = useState([]);
-
-  const [treeUrlArr, setTreeUrlArr] = useState([]);
   const [treeUrl, setTreeUrl] = useState([]);
-
   const [theme, setTheme] = useState(0);
+  const [custom, setCustom] = useState(defaultThemes[0]);
 
   const themeImages = [
     "https://mfe-appearance.production.linktr.ee/images/selector-air-black.5105551e3a9ddafd3c2dd0a9e77eba8e.png",
@@ -52,31 +51,57 @@ export default function LinkTree() {
     "https://mfe-appearance.production.linktr.ee/images/selector-air-grey.4d1b030e5fd825ab08ecc1efe0e33a3a.png",
   ];
 
-  const handleLinktreeProfilePictureImageUpload = () => {
+  const handleLinkTreeProfilePictureImageUpload = () => {
     if (!dp) {
-      alert('Please choose a file');
+      alert("Please choose a file");
       return;
     }
 
     // creating a reference inside bucket with file name
-    const storageRef = ref(storage, `/image/${dp.name}`)
+    const storageRef = ref(storage, `/image/${dp.name}`);
 
     // uploading file
     uploadBytes(storageRef, dp)
       .then((snapshot) => {
-        console.log('Uploaded a blob or file!', snapshot.ref.toString());
+        console.log("Uploaded a blob or file!", snapshot.ref.toString());
         getDownloadURL(ref(storage, `image/${dp.name}`))
-          .then(url => {
-            setPfp(url)
+          .then((url) => {
+            setPfp(url);
           })
-          .catch(error => {
-            console.log(error)
-          })
+          .catch((error) => {
+            console.log(error);
+          });
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
+      });
+  };
+
+  const handleLinkTreeBackground = () => {
+    if (!bg) {
+      alert("Please choose a file");
+      return;
+    }
+
+    // creating a reference inside bucket with file name
+    const storageRef = ref(storage, `/image/${bg.name}`);
+
+    // uploading file
+    uploadBytes(storageRef, bg)
+      .then((snapshot) => {
+        console.log("Uploaded a blob or file!", snapshot.ref.toString());
+        getDownloadURL(ref(storage, `image/${bg.name}`))
+          .then((url) => {
+            setBgUrl(url);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
       })
-  }
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   const openNotificationWithIcon = (type) => {
     notification[type]({
@@ -98,16 +123,21 @@ export default function LinkTree() {
   };
 
   const convertLinkUrl = async () => {
-    const res = await axiosPrivate.post("/tree/combine", {
-      original: colMainUrlArr,
-      name: ColMainUserName,
-      description,
-      image: pfp,
-    });
-    console.log(res);
-    // setTreeUrlArr((treeUrlArr) => [...treeUrlArr, res.data.data]);
-    setTreeUrl(res.data.data);
-    setColMainUrlArr([]);
+    try {
+      const res = await axiosPrivate.post("/tree/combine", {
+        original: colMainUrlArr,
+        name: ColMainUserName,
+        description,
+        dp: pfp,
+        css: custom,
+        bg: bgUrl,
+      });
+      console.log(res);
+      setTreeUrl(res.data.data);
+      setColMainUrlArr([]);
+    } catch (e) {
+      console.log(e.response);
+    }
   };
 
   return (
@@ -144,28 +174,61 @@ export default function LinkTree() {
               id="urlCol"
             />
             <br />
-            
-            {/* Image file link */}
-            {/* <input
-              type="text"
-              name="colMainUrl"
-              value={pfp}
-              placeholder="Image URL"
-              onChange={(e) => {
-                setPfp(e.target.value);
-              }}
-              className="form-control"
-              id="urlCol"
-            /> */}
 
+            <div className="flex items-end my-3">
+              <div>
+                <label
+                  for="formFile"
+                  class="form-label inline-block mb-2 text-gray-700"
+                >
+                  Choose A Profile Picture:
+                </label>
+                <input
+                  type="file"
+                  name="imageupload"
+                  id="imageupload"
+                  className="form-control block w-[300px] px-2 py-1.5 text-base font-normal  text-gray-700  bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0  focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                  onChange={(e) => {
+                    setDP(e.target.files[0]);
+                  }}
+                />
+              </div>
+              <button
+                onClick={handleLinkTreeProfilePictureImageUpload}
+                className="btn url-submit-btn h-[38px] mx-3"
+              >
+                Upload
+              </button>
+            </div>
             {/* Image file upload */}
-            <input type="file" name="imageupload" id="imageupload" onChange={(e) => {
-              setDP(e.target.files[0])
-            }}/>
-            <button onClick={handleLinktreeProfilePictureImageUpload} className='btn url-submit-btn'>Upload</button>
-            <br /><br />
+            <div className="flex items-end my-3">
+              <div>
+                <label
+                  for="formFile"
+                  class="form-label inline-block mb-2 text-gray-700"
+                >
+                  Choose A Background Image (optional)
+                </label>
+                <input
+                  type="file"
+                  name="imageupload"
+                  id="imageupload"
+                  className="form-control block w-[300px] px-2 py-1.5 text-base font-normal  text-gray-700  bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0  focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                  onChange={(e) => {
+                    setBG(e.target.files[0]);
+                  }}
+                />
+              </div>
+              <button
+                onClick={handleLinkTreeBackground}
+                className="btn url-submit-btn h-[38px] mx-3"
+              >
+                Upload
+              </button>
+            </div>
+
             <p>Select Theme:</p>
-            <div className="">
+            <div className="flex">
               {themeImages.map((src, i) => {
                 return (
                   <button
@@ -173,6 +236,7 @@ export default function LinkTree() {
                     key={i}
                     onClick={() => {
                       setTheme(i);
+                      setCustom(defaultThemes[i]);
                     }}
                   >
                     <img src={src} alt="" />
@@ -287,13 +351,15 @@ export default function LinkTree() {
       </div>
       <div>
         <Preview
-          i={theme}
           data={{
             original: colMainUrlArr,
             name: ColMainUserName,
             description,
             image: pfp,
+            backgroundImage: bgUrl,
           }}
+          css={custom}
+          setCss={setCustom}
         />
       </div>
     </div>
