@@ -21,7 +21,7 @@ const TreePreview = ({ data, css }) => {
             display: "block",
             width: css.profile.width,
             height: css.profile.height,
-            borderRadius: css.profile.borderRadius,
+            borderRadius: `${css.profile.borderRadius}%`,
             border: `${css.profile.border} solid ${css.profile.borderColor}`,
           }}
           className="mx-auto object-cover"

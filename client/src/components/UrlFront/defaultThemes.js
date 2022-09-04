@@ -5,7 +5,7 @@ const defaultThemes = [
     profile: {
       width: "200px",
       height: "200px",
-      borderRadius: "50%",
+      borderRadius: "50",
       border: "3px",
       borderColor: "#ffffff",
     },
@@ -32,7 +32,7 @@ const defaultThemes = [
     profile: {
       width: "200px",
       height: "200px",
-      borderRadius: "50%",
+      borderRadius: "50",
       border: "3px",
       borderColor: "#ffffff",
     },
@@ -59,7 +59,7 @@ const defaultThemes = [
     profile: {
       width: "200px",
       height: "200px",
-      borderRadius: "50%",
+      borderRadius: "50",
       border: "3px",
       borderColor: "#ffffff",
     },
@@ -86,7 +86,7 @@ const defaultThemes = [
     profile: {
       width: "200px",
       height: "200px",
-      borderRadius: "50%",
+      borderRadius: "50",
       border: "3px",
       borderColor: "#ffffff",
     },
@@ -113,7 +113,7 @@ const defaultThemes = [
     profile: {
       width: "200px",
       height: "200px",
-      borderRadius: "50%",
+      borderRadius: "50",
       border: "3px",
       borderColor: "#181824",
     },
@@ -140,7 +140,7 @@ const defaultThemes = [
     profile: {
       width: "200px",
       height: "200px",
-      borderRadius: "50%",
+      borderRadius: "50",
       border: "3px",
       borderColor: "#181824",
     },
@@ -167,7 +167,7 @@ const defaultThemes = [
     profile: {
       width: "200px",
       height: "200px",
-      borderRadius: "50%",
+      borderRadius: "50",
       border: "3px",
       borderColor: "#181824",
     },
