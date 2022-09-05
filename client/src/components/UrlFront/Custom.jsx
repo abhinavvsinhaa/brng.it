@@ -5,10 +5,12 @@ import SingleTreeUrl from "../SingleTreeUrl/SingleTreeUrl";
 import { Divider, notification } from "antd";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { axiosPrivate } from "../../api/axios";
+import defaultThemes from "./defaultThemes";
 import ReactDevicePreview from "react-device-preview";
 import TreePreview from "./TreePreview";
 import { storage } from "../../util/Firebase";
 import CustomForm from "./CustomForm";
+import FileUpload from "../FileUpload";
 import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
 
 // TODO: create individual folder for each new user, otherwise image name can match, which will replace the previous image with same name or add UUID
@@ -17,7 +19,7 @@ const Preview = ({ data, css }) => {
   return (
     <div className="App">
       <div>
-        <ReactDevicePreview device="iphonex" scale="0.7">
+        <ReactDevicePreview device="iphonex" scale="1">
           <TreePreview data={data} css={css} />
         </ReactDevicePreview>
       </div>
@@ -33,91 +35,12 @@ export default function LinkTree() {
     "https://images.unsplash.com/photo-1529665253569-6d01c0eaf7b6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1085&q=80"
   );
   const [bgUrl, setBgUrl] = useState("");
-  const [bg, setBG] = useState(null);
-  const [dp, setDP] = useState(null);
   const [ColMainUserName, setColMainUserName] = useState("Rhythm Shandlya");
   const [colMainUrlArr, setColMainUrlArr] = useState([]);
   const [colMainUrl, setColMainUrl] = useState([]);
   const [treeUrl, setTreeUrl] = useState([]);
-  const [custom, setCustom] = useState({
-    bg: "#000000",
-    pt: "40px",
-    profile: {
-      width: "200px",
-      height: "200px",
-      borderRadius: "50",
-      border: "3px",
-      borderColor: "#ffffff",
-    },
-    title: {
-      color: "#ffffff",
-      size: "30px",
-    },
-    bio: {
-      color: "#ffffff",
-      size: "18px",
-    },
-    link: {
-      bg: "#222222",
-      size: "16px",
-      color: "#ffffff",
-      border: "4px",
-      borderColor: "black",
-      borderRadius: "20px",
-    },
-  });
-
-  const handleLinkTreeProfilePictureImageUpload = () => {
-    if (!dp) {
-      alert("Please choose a file");
-      return;
-    }
-
-    // creating a reference inside bucket with file name
-    const storageRef = ref(storage, `/image/${dp.name}`);
-
-    // uploading file
-    uploadBytes(storageRef, dp)
-      .then((snapshot) => {
-        console.log("Uploaded a blob or file!", snapshot.ref.toString());
-        getDownloadURL(ref(storage, `image/${dp.name}`))
-          .then((url) => {
-            setPfp(url);
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
-  const handleLinkTreeBackground = () => {
-    if (!bg) {
-      alert("Please choose a file");
-      return;
-    }
-
-    // creating a reference inside bucket with file name
-    const storageRef = ref(storage, `/image/${bg.name}`);
-
-    // uploading file
-    uploadBytes(storageRef, bg)
-      .then((snapshot) => {
-        console.log("Uploaded a blob or file!", snapshot.ref.toString());
-        getDownloadURL(ref(storage, `image/${bg.name}`))
-          .then((url) => {
-            setBgUrl(url);
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
+  const [iconUrl, setIconUrl] = useState("");
+  const [custom, setCustom] = useState(defaultThemes[0]);
 
   const openNotificationWithIcon = (type) => {
     notification[type]({
@@ -190,65 +113,28 @@ export default function LinkTree() {
               id="urlCol"
             />
             <br />
+            <h2 className="my-4 text-lg">Customize your tree: </h2>
+            <div className="h-[450px] overflow-y-auto border-2 border-gray-500 p-4">
+              <FileUpload
+                setFileUrl={setPfp}
+                inputLabel="Choose A Profile Picture: "
+                inputLabelColor="#000000"
+                remove={true}
+              />
+              <FileUpload
+                setFileUrl={setBgUrl}
+                inputLabel="Choose A Background Image (optional)"
+                inputLabelColor="#000000"
+                remove={true}
+              />
 
-            <div className="flex items-end my-3">
-              <div>
-                <label
-                  for="formFile"
-                  class="form-label inline-block mb-2 text-gray-700"
-                >
-                  Choose A Profile Picture
-                </label>
-                <input
-                  type="file"
-                  name="imageupload"
-                  id="imageupload"
-                  className="form-control block w-[300px] px-2 py-1.5 text-base font-normal  text-gray-700  bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0  focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                  onChange={(e) => {
-                    setDP(e.target.files[0]);
-                  }}
-                />
-              </div>
-              <button
-                onClick={handleLinkTreeProfilePictureImageUpload}
-                className="btn url-submit-btn h-[38px] mx-3"
-              >
-                Upload
-              </button>
+              <br />
+              <p>Make Your Theme:</p>
+              <CustomForm setCustom={setCustom} custom={custom} />
+              <br />
             </div>
-            {/* Image file upload */}
-            <div className="flex items-end my-3">
-              <div>
-                <label
-                  for="formFile"
-                  class="form-label inline-block mb-2 text-gray-700"
-                >
-                  Choose A Background Image (optional)
-                </label>
-                <input
-                  type="file"
-                  name="imageupload"
-                  id="imageupload"
-                  className="form-control block w-[300px] px-2 py-1.5 text-base font-normal  text-gray-700  bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0  focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                  onChange={(e) => {
-                    setBG(e.target.files[0]);
-                  }}
-                />
-              </div>
-              <button
-                onClick={handleLinkTreeBackground}
-                className="btn url-submit-btn h-[38px] mx-3"
-              >
-                Upload
-              </button>
-            </div>
-
-            <br />
-            <p>Make Your Theme:</p>
-            <CustomForm setCustom={setCustom} custom={custom} />
-            <br />
-
-            <div>
+            <div className="bg-blue-500 p-4 my-4 rounded-lg">
+              <h2 className="text-white text-lg py-2">Link Settings:</h2>
               <input
                 type="text"
                 name="colMainUrl"
@@ -274,80 +160,81 @@ export default function LinkTree() {
                 aria-describedby="emailHelp"
               />
               <br />
-              <button onClick={addMainUrl} className="btn url-submit-btn">
+              <button onClick={addMainUrl} className="btn btn-light px-4 py-2">
                 Add Link
               </button>
-              <button
-                onClick={convertLinkUrl}
-                className="btn url-success-btn mx-2"
-              >
-                Generate
-              </button>
-              <br />
-              <br />
-              <span style={{ fontWeight: 500 }}>My Linktree: </span>
-              <SingleTreeUrl treeArr={treeUrl} />
-              <Divider />
-              {colMainUrlArr &&
-                colMainUrlArr.map((url, i) => {
-                  return (
-                    <>
-                      <div
-                        key={i}
-                        className="linktreeurl-description shadow-sm"
-                      >
-                        <div
-                          style={{
-                            display: "flex",
-                            alignItems: "center",
-                          }}
-                        >
-                          <span
-                            style={{
-                              fontWeight: "500",
-                              fontSize: "14px",
-                            }}
-                          >
-                            {url.title}
-                            <button
-                              className="delete-button p-1 ml-3"
-                              onClick={() => {
-                                const newArr = colMainUrlArr.filter(
-                                  (_ele, ind) => ind !== i
-                                );
-                                setColMainUrlArr(newArr);
-                              }}
-                            >
-                              <DeleteIcon
-                                sx={{
-                                  fontSize: "10px",
-                                  color: "white",
-                                }}
-                              />
-                            </button>
-                          </span>
-                        </div>
-
-                        <div
-                          style={{
-                            display: "flex",
-                            alignItems: "center",
-                          }}
-                        >
-                          <span
-                            style={{
-                              fontSize: "14px",
-                            }}
-                          >
-                            <a href={url.link}>{url.link}</a>
-                          </span>
-                        </div>
-                      </div>
-                      <br />
-                    </>
-                  );
-                })}
+              <FileUpload
+                setFileUrl={setIconUrl}
+                inputLabel="Choose An Icon:"
+                remove={true}
+              />
+              <img src={iconUrl} alt="loading.." />
             </div>
+            <button
+              onClick={convertLinkUrl}
+              className="btn url-success-btn w-full my-3"
+            >
+              Generate
+            </button>
+            <br />
+            <span style={{ fontWeight: 500 }}>My Linktree: </span>
+            <SingleTreeUrl treeArr={treeUrl} />
+            <Divider />
+            {colMainUrlArr &&
+              colMainUrlArr.map((url, i) => {
+                return (
+                  <>
+                    <div key={i} className="linktreeurl-description shadow-sm">
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                        }}
+                      >
+                        <span
+                          style={{
+                            fontWeight: "500",
+                            fontSize: "14px",
+                          }}
+                        >
+                          {url.title}
+                          <button
+                            className="delete-button p-1 ml-3"
+                            onClick={() => {
+                              const newArr = colMainUrlArr.filter(
+                                (_ele, ind) => ind !== i
+                              );
+                              setColMainUrlArr(newArr);
+                            }}
+                          >
+                            <DeleteIcon
+                              sx={{
+                                fontSize: "10px",
+                                color: "white",
+                              }}
+                            />
+                          </button>
+                        </span>
+                      </div>
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                        }}
+                      >
+                        <span
+                          style={{
+                            fontSize: "14px",
+                          }}
+                        >
+                          <a href={url.link}>{url.link}</a>
+                        </span>
+                      </div>
+                    </div>
+                    <br />
+                  </>
+                );
+              })}
           </div>
         </div>
       </div>

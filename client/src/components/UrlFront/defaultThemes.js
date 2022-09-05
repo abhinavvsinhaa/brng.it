@@ -22,8 +22,8 @@ const defaultThemes = [
       size: "16px",
       color: "#ffffff",
       border: "4px",
-      borderColor: "black",
-      borderRadius: "20px",
+      borderColor: "#000000",
+      borderRadius: "20",
     },
   },
   {
@@ -49,8 +49,8 @@ const defaultThemes = [
       size: "16px",
       color: "#ffffff",
       border: "4px",
-      borderColor: "black",
-      borderRadius: "20px",
+      borderColor: "#000000",
+      borderRadius: "20",
     },
   },
   {
@@ -77,7 +77,7 @@ const defaultThemes = [
       color: "#000000",
       border: "4px",
       borderColor: "#ffffff",
-      borderRadius: "20px",
+      borderRadius: "20",
     },
   },
   {
@@ -104,7 +104,7 @@ const defaultThemes = [
       color: "#ffffff",
       border: "4px",
       borderColor: "#ffffff",
-      borderRadius: "20px",
+      borderRadius: "20",
     },
   },
   {
@@ -131,7 +131,7 @@ const defaultThemes = [
       color: "#000000",
       border: "2px",
       borderColor: "#ffffff",
-      borderRadius: "20px",
+      borderRadius: "20",
     },
   },
   {
@@ -158,7 +158,7 @@ const defaultThemes = [
       color: "#000000",
       border: "2px",
       borderColor: "#ffffff",
-      borderRadius: "20px",
+      borderRadius: "20",
     },
   },
   {
@@ -185,7 +185,7 @@ const defaultThemes = [
       color: "#000000",
       border: "2px",
       borderColor: "#ffffff",
-      borderRadius: "20px",
+      borderRadius: "20",
     },
   },
 ];

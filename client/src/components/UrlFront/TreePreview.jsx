@@ -58,7 +58,7 @@ const TreePreview = ({ data, css }) => {
                   fontSize: css.link.size,
                   color: css.link.color,
                   border: `${css.link.border} solid ${css.link.borderColor}`,
-                  borderRadius: `${css.link.borderRadius}`,
+                  borderRadius: `${css.link.borderRadius}px`,
                 }}
                 id={i}
               >

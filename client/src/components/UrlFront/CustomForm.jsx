@@ -120,9 +120,64 @@ export default function CustomForm({ setCustom, custom }) {
         />
         <p className="text-red-500 p-2">{errors?.bio?.color?.message}</p>
         <input
+          type="text"
+          placeholder="Link Color"
+          {...register("link.color", {
+            pattern: {
+              value: /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/,
+              message: "Provide A Valid Hex Code",
+            },
+          })}
+        />
+        <input
+          type="text"
+          placeholder="Link Background"
+          className="ml-1"
+          {...register("link.bg", {
+            pattern: {
+              value: /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/,
+              message: "Provide A Valid Hex Code",
+            },
+          })}
+        />
+        <input
+          type="text"
+          placeholder="Link Size"
+          className="ml-1"
+          {...register("link.size")}
+        />
+        <p className="text-red-500 p-2">{errors?.bio?.color?.message}</p>
+        <input
+          type="range"
+          placeholder="borderRadius"
+          min="0"
+          max="50"
+          {...register("link.borderRadius")}
+        />
+        <br /> <br />
+        <input
+          type="text"
+          placeholder="Background Color"
+          {...register("link.borderColor", {
+            pattern: {
+              value: /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/,
+              message: "Provide A Valid Hex Code",
+            },
+          })}
+        />
+        <input
+          type="text"
+          placeholder="Top Padding With Units"
+          className="ml-1"
+          {...register("link.border")}
+        />
+        <p className="text-red-500 p-2">
+          {errors?.link?.borderColor?.message || errors?.link?.border?.message}
+        </p>
+        {/* <input
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
           type="submit"
-        />
+        /> */}
       </form>
     </>
   );
