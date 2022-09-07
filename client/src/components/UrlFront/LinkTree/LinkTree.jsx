@@ -17,7 +17,7 @@ const Preview = ({ data, css }) => {
   return (
     <div className="App">
       <div>
-        <ReactDevicePreview device="iphonex" scale="0.7">
+        <ReactDevicePreview device="iphonex" scale="1">
           <TreePreview data={data} css={css} />
         </ReactDevicePreview>
       </div>
@@ -181,7 +181,7 @@ export default function LinkTree() {
                   for="formFile"
                   class="form-label inline-block mb-2 text-gray-700"
                 >
-                  Choose A Profile Picture:
+                  Choose A Profile Picture
                 </label>
                 <input
                   type="file"

@@ -31,21 +31,21 @@ export default function TreeUrlRedirect() {
       style={{
         backgroundColor: data.css.bg,
         paddingTop: data.css.pt,
-        backgroundImage: `url(${data.backgroundImage})`,
+        backgroundImage: `url(${data.bg})`,
         backgroundPosition: "center",
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
       }}
     >
-      <div className="max-w-[500px] w-full">
+      <div className="max-w-[900px] w-full mx-auto">
         <img
           alt="pfp"
-          src={data?.image}
+          src={data?.dp}
           style={{
             display: "block",
             width: data.css.profile.width,
             height: data.css.profile.height,
-            borderRadius: data.css.profile.borderRadius,
+            borderRadius: `${data.css.profile.borderRadius}%`,
             border: `${data.css.profile.border} solid ${data.css.profile.borderColor}`,
           }}
           className="mx-auto object-cover"
@@ -75,14 +75,14 @@ export default function TreeUrlRedirect() {
           {data?.original?.map((p, i) => {
             return (
               <a
-                href="/"
+                href={p.link}
                 className="w-[80%] p-[20px] mx-auto my-2 text-center"
                 style={{
                   backgroundColor: data.css.link.bg,
                   fontSize: data.css.link.size,
                   color: data.css.link.color,
                   border: `${data.css.link.border} solid ${data.css.link.borderColor}`,
-                  borderRadius: `${data.css.link.borderRadius}`,
+                  borderRadius: `${data.css.link.borderRadius}px`,
                 }}
                 id={i}
               >
