@@ -10,8 +10,12 @@ router
   .post(shareController.share)
 
 router
-  .route('/fb')
+  .route('/fb') 
   .post(shareController.shareFacebook)
   
+router
+  .route('/ig')
+  .post(shareController.shareInstagram);
+
 
 module.exports = router;

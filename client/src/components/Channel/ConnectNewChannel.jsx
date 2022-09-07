@@ -75,8 +75,11 @@ const ConnectNewChannel = () => {
           }
         )
           .then((response) => response.json())
-          .then(async (result) => {
-            res = await axiosPrivate.patch(`/users/${user.id}/subs?f=true`, result.data);
+          .then(async (result) => {            
+            res = await axiosPrivate.patch(
+              `/users/${user.id}/subs?f=true`,
+              result.data
+            );
             console.log(res);
           })
           .catch((error) =>

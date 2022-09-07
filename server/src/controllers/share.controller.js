@@ -9,9 +9,8 @@ const shareImage = async (access_token, author, digitalMediaAsset, caption) => {
     method: 'post',
     url: 'https://api.linkedin.com/v2/ugcPosts',
     headers: {
-      Authorization:
-        `Bearer ${access_token}`,
-      'Content-Type': 'application/json'
+      Authorization: `Bearer ${access_token}`,
+      'Content-Type': 'application/json',
     },
     data: JSON.stringify({
       author: `urn:li:person:${author}`,
@@ -40,7 +39,7 @@ const shareImage = async (access_token, author, digitalMediaAsset, caption) => {
         'com.linkedin.ugc.MemberNetworkVisibility': 'PUBLIC',
       },
     }),
-  }
+  };
 
   axios(config)
     .then(function (response) {
@@ -103,7 +102,7 @@ const registerImage = async (author, access_token, file, caption) => {
       let finalApi = api.split('"')[0];
       finalApi = 'https:' + finalApi;
       console.log(finalApi);
-      const digitalMediaAsset = response.data.value.asset 
+      const digitalMediaAsset = response.data.value.asset;
       uploadImageBinary(access_token, finalApi, digitalMediaAsset, file, caption, author);
     })
     .catch(function (error) {
@@ -153,47 +152,83 @@ const share = catchAsync(async (req, res) => {
     });
 });
 
-
 const shareFacebook = catchAsync(async (req, res) => {
-  let url =  `${process.env.FACEBOOK_GRAPH_API_PREFIX_URL}/${req.body.pageId}/`
+  let url = `${process.env.FACEBOOK_GRAPH_API_PREFIX_URL}/${req.body.pageId}/`;
 
   if (req.body.fileURL) {
-    url += `photos?url=${req.body.fileURL}`
-    if (req.body.caption)
-      url += `&message=${req.body.caption}`
-  }
-  else {
-    url += `feed/?`
-    if (req.body.caption)
-      url += `message=${req.body.caption}`
+    url += `photos?url=${req.body.fileURL}`;
+    if (req.body.caption) url += `&message=${req.body.caption}`;
+  } else {
+    url += `feed/?`;
+    if (req.body.caption) url += `message=${req.body.caption}`;
   }
 
   // todo: add link to feed
   // if (req.body.link)
   //   url += `&link=${req.body.link}`
 
-
-  console.log(url)
+  console.log(url);
 
   var config = {
     method: 'post',
     url: `${url}&access_token=${req.body.pageAccessToken}`,
-    headers: { 
-      'Authorization': `Bearer ${req.body.userAccessToken}`
-    }
+    headers: {
+      Authorization: `Bearer ${req.body.userAccessToken}`,
+    },
   };
-  
+
   axios(config)
-  .then(function (response) {
-    console.log(JSON.stringify(response.data));
-    res.send(response.data);
-  })
-  .catch(function (error) {
-    console.log(error);
-  });
+    .then(function (response) {
+      console.log(JSON.stringify(response.data));
+      res.send(response.data);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+});
+
+class Instagram {
+  constructor() {}
+
+  async singleMediaPosts(req, res) {
+    try {
+      // create container
+      var config = {
+        method: 'post',
+        url: `${process.env.FACEBOOK_GRAPH_API_PREFIX_URL}/${req.body.igPageId}/media?image_url=${req.body.downloadableURLs[0]}&caption=${req.body.caption}`,
+        headers: {
+          Authorization: `Bearer ${req.body.userAccessToken}`,
+        },
+      };
+
+      const createdContainer = await axios(config);
+      console.log(createdContainer);
+
+      // publish container
+      config.url = `${process.env.FACEBOOK_GRAPH_API_PREFIX_URL}/${req.body.igPageId}/media_publish?creation_id=${createdContainer.data.id}`;
+      let publishedContainer = await axios(config);
+      console.log(publishedContainer)
+      // todo: save details in DB
+      res.send(publishedContainer.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+}
+
+const shareInstagram = catchAsync(async (req, res) => {
+  const instagram = new Instagram();
+  console.log(req.body);
+  if (req.body.downloadableURLs.length == 1) {
+    console.log("calling");
+    instagram.singleMediaPosts(req, res);
+    return;
+  }
+
 });
 
 module.exports = {
   share,
-  shareFacebook
+  shareFacebook,
+  shareInstagram,
 };

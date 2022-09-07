@@ -11,16 +11,17 @@ import useAuth from "../../hooks/useAuth";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
-import {
-  Checkbox,
-  notification,
-  TimePicker,
-  Modal as ModalAntD,
-  DatePicker,
-} from "antd";
+import { notification, TimePicker, Modal as ModalAntD, DatePicker } from "antd";
 import moment from "moment";
+import { v4 } from "uuid";
+import { storage } from "../../util/Firebase";
+import { ref, getDownloadURL, uploadBytes, getStorage, uploadBytesResumable } from "firebase/storage";
 
-const { TabPane } = Tabs; 
+import fb1 from "../../assets/images/fb1.png";
+import fb2 from "../../assets/images/fb2.png";
+import Facebook from "@mui/icons-material/Facebook";
+
+const { TabPane } = Tabs;
 const { Search } = Input;
 
 const antIcon = (
@@ -45,6 +46,14 @@ const columnsShare = [
     dataIndex: "platform",
   },
 ];
+
+// notification
+const openNotificationWithIcon = (type, title, content) => {
+  notification[type]({
+    message: title,
+    description: content,
+  });
+};
 
 const shareNowLinkedIn = async (author, caption, access_token, file) => {
   // console.log('access_token', access_token);
@@ -101,6 +110,9 @@ const Share = () => {
   const [caption, setCaption] = useState("");
   const [showPicker, setShowPicker] = useState(false);
   const [file, setFile] = useState("");
+  const [filesPreview, setFilesPreview] = useState([]);
+  const [filesUpload, setFilesUpload] = useState([]);
+  const [downloadableURLs, setDownloadableURLs] = useState([]);
 
   // storing platforms details to perform actions
   const [linkedin, setLinkedin] = useState(null);
@@ -110,6 +122,119 @@ const Share = () => {
     useState(null);
 
   const [checkboxOptions, setCheckboxOptions] = useState([]);
+
+  const uploadFiles = async (f) => {
+    // if (filesUpload == []) return null;
+
+    // .map(async (file) => {
+      let uid = v4();
+
+      // const metadata = {
+      //   contentType: "image/*",
+      // };
+      // const storage = getStorage();
+      const storageRef = ref(storage, `/image/${uid}-${f.name}`);
+      // const uploadTask = uploadBytesResumable(storageRef, file, metadata);
+
+      // // Listen for state changes, errors, and completion of the upload.
+      // uploadTask.on(
+      //   "state_changed",
+      //   (snapshot) => {
+      //     // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+      //     const progress =
+      //       (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+      //     console.log("Upload is " + progress + "% done");
+      //     switch (snapshot.state) {
+      //       case "paused":
+      //         console.log("Upload is paused");
+      //         break;
+      //       case "running":
+      //         console.log("Upload is running");
+      //         break;
+      //     }
+      //   },
+      //   (error) => {
+      //     // A full list of error codes is available at
+      //     // https://firebase.google.com/docs/storage/web/handle-errors
+      //     switch (error.code) {
+      //       case "storage/unauthorized":
+      //         // User doesn't have permission to access the object
+      //         break;
+      //       case "storage/canceled":
+      //         // User canceled the upload
+      //         break;
+
+      //       // ...
+
+      //       case "storage/unknown":
+      //         // Unknown error occurred, inspect error.serverResponse
+      //         break;
+      //     }
+      //   },
+      //   () => {
+      //     // Upload completed successfully, now we can get the download URL
+      //     getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+      //       console.log("File available at", downloadURL);
+      //       setDownloadableURLs([...downloadableURLs, downloadURL]);
+      //     });
+      //   }
+      // );
+
+      // // uploading file
+      // const snapshot = await uploadBytes(storageRef, file);
+      // console.log("Uploaded a blob or file!", snapshot.ref.toString());
+      // const url = await getDownloadURL(
+      //   ref(storage, `image/${uid}-${f.name}`)
+      // );
+      // console.log(url);
+      // setDownloadableURLs([...downloadableURLs, url]);
+    // });
+
+    var formdata = new FormData();
+    formdata.append("image", f, "file");
+
+    var requestOptions = {
+      method: 'POST',
+      body: formdata,
+      redirect: 'follow'
+    };
+
+    fetch("https://api.imgbb.com/1/upload?expiration=600&key=43a9a1e2f210ad2d192a2249474a92cf", requestOptions)
+      .then(response => response.json())
+      .then(result => {
+        console.log(result)
+        setDownloadableURLs([...downloadableURLs, result.data.url])
+      })
+      .catch(error => console.log('error', error));
+  };
+
+  // share now function for instagram
+  const shareNowInstagram = async (
+    igPageId,
+    userAccessToken,
+    caption,
+    filesUpload
+  ) => {
+    if (filesUpload.length == 0) {
+      openNotificationWithIcon("error", "Please upload at least one file.");
+      return;
+    }
+
+    if (filesUpload.length > 10) {
+      openNotificationWithIcon("error", "Can't upload more than 10 files.");
+      return;
+    }
+
+    // await uploadFiles(filesUpload);
+    const res = await axiosPrivate.post(`/share/ig`, {
+      igPageId,
+      userAccessToken,
+      caption,
+      downloadableURLs
+    });
+
+    console.log(res);
+  };
 
   const handleShareNowButton = async () => {
     if (!selectedCustomer)
@@ -149,6 +274,20 @@ const Share = () => {
         }
       });
     } else if (instagram != null) {
+      // find details about the selected subscription
+      const res = await axios.get(`/users/${auth.user.id}`);
+      const searchTarget = res.data.facebookSub;
+      searchTarget.map((found) => {
+        if (found.instagram.id == selectedCustomerDetails.key) {
+          console.log("found");
+          shareNowInstagram(
+            selectedCustomerDetails.key,
+            res.data.facebook,
+            caption,
+            filesUpload
+          );
+        }
+      });
     } else if (linkedin != null) {
     }
 
@@ -164,14 +303,6 @@ const Share = () => {
 
   const handleCloseSearchModal = () => setShowSearchModal(false);
   const handleCloseScheduleModal = () => setScheduleModal(false);
-
-  // notification
-  const openNotificationWithIcon = (type, title, content) => {
-    notification[type]({
-      message: title,
-      description: content,
-    });
-  };
 
   const onEmojiClick = (event, emojiObject) => {
     setCaption((prevInput) => prevInput + emojiObject.emoji);
@@ -200,43 +331,12 @@ const Share = () => {
       setInstagram(selectedCustomerDetails);
     else if (selectedCustomerDetails.platform == "Linkedin")
       setLinkedin(selectedCustomerDetails);
-
-    // !deprecated
-    // if user account is selected, fetch their details
-    /*
-    let array = [];
-    const res = await axios.get(`/client/find?email=${selectedCustomer}`);
-    console.log(res);
-    if (res.data.linkedin) {
-      array.push({
-        label: <LinkedInIcon />,
-        value: "linkedin",
-      });
-      setLinkedin(res.data.linkedin);
-    }
-    if (res.data.facebook) {
-      array.push({
-        label: <FacebookIcon />,
-        value: "facebook",
-      });
-      setFacebook(res.data.facebook);
-    }
-    if (res.data.instagram) {
-      array.push({
-        label: <InstagramIcon />,
-        value: "instagram",
-      });
-      setInstagram(res.data.instagram);
-    }
-
-    setCheckboxOptions(array);
-    */
   };
 
   const rowSelectionShare = {
     onChange: async (selectedRowKeys, selectedRows) => {
       // console.log("selected row keys", selectedRowKeys)
-      // console.log("selected rows", selectedRows)
+      console.log("selected rows", selectedRows[0]);
       setSelectedCustomer(selectedRowKeys);
       setSelectedCustomerDetails(selectedRows[0]);
       setLinkedin(null);
@@ -267,34 +367,20 @@ const Share = () => {
           name: sub.name,
           platform: "Facebook",
         };
-        array.push(details);
-      });
 
-      array.map(async item => {
-        const resFacebook = await axios.get(`https://graph.facebook.com/v14.0/${item.key}/picture`);
-        console.log(resFacebook.request.responseURL);
-        return item.name = `<img src={'${resFacebook.request.responseURL}'}/> ${item.name}`;
-      })
+        array.push(details);
+
+        if (sub.instagram) {
+          array.push({
+            key: sub.instagram.id,
+            name: sub.name,
+            platform: "Instagram",
+          });
+        }
+      });
 
       // todo: map for linkeding and instagram and push it to arrays
-      // ----------------------------------------------------------
 
-      // !deprecated since last requirements
-      /*
-      response.data.customers.map((customer) => {
-        let details = {
-          key: customer.email,
-          name: customer.name,
-          email: customer.email,
-        };
-
-        if (customer.linkedin) details.linkedin = customer.linkedin;
-        if (customer.instagram) details.instagram = customer.instagram;
-        if (customer.facebook) details.facebook = customer.facebook;
-
-        array.push(details);
-      });
-      */
       setLoading(false);
       setCustomers(array);
     } catch (error) {
@@ -329,9 +415,7 @@ const Share = () => {
     console.log(unixTimestamp);
   };
 
-  const onSearchSub = () => {
-
-  }
+  const onSearchSub = () => {};
 
   useEffect(() => {
     fetchCustomers();
@@ -339,7 +423,7 @@ const Share = () => {
   }, []);
 
   return (
-    <Tabs defaultActiveKey="1" centered style={{ height: 'calc(100vh - 64px)', overflowY: 'hidden' }}>
+    <Tabs defaultActiveKey="1" centered>
       <TabPane tab="Publish" key="1">
         <div>
           <Modal show={showSearchModal} onHide={handleCloseSearchModal}>
@@ -435,26 +519,6 @@ const Share = () => {
                   button to share now or you can also schedule the post on a
                   further time.
                 </p>
-                {/* <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <button
-                className="btn btn-share-post"
-                onClick={handleChooseAccountButton}
-              >
-                Choose Account
-              </button>
-              <div>
-                <Checkbox.Group
-                  options={checkboxOptions}
-                  onChange={(e) => checkboxMarked(e)}
-                />
-              </div>
-            </div> */}
                 <br />
                 {selectedCustomer && (
                   <div
@@ -507,27 +571,53 @@ const Share = () => {
                       value={caption}
                       onChange={(e) => setCaption(e.target.value)}
                     />
-                    <div className="flex align-items-center">
-                      <p style={{ fontSize: '18px', fontWeight: 600, marginRight: '10px', cursor: 'pointer', marginBottom: 0 }} onClick={() => {
-                        setCaption(prev => prev + '%23')
-                      }}>
-                        #
-                      </p>
-                      <p
-                        onClick={() => setShowPicker((val) => !val)}
-                        style={{ cursor: "pointer", fontSize: '18px', fontWeight: 600, marginRight: '10px', marginBottom: 0 }}
-
-                      >
-                        😃
-                      </p>
-
-                      {showPicker && (
-                        <Picker
-                          pickerStyle={{ width: "100%", marginTop: "10px" }}
-                          onEmojiClick={onEmojiClick}
-                        />
-                      )}
-                      &nbsp;&nbsp;
+                    <div className="flex align-items-center justify-content-between">
+                      <div className="flex align-items-center">
+                        <p
+                          style={{
+                            fontSize: "18px",
+                            fontWeight: 600,
+                            marginRight: "10px",
+                            cursor: "pointer",
+                            marginBottom: 0,
+                          }}
+                        >
+                          🔗
+                        </p>
+                        <p
+                          style={{
+                            fontSize: "18px",
+                            fontWeight: 600,
+                            marginRight: "10px",
+                            cursor: "pointer",
+                            marginBottom: 0,
+                          }}
+                          onClick={() => {
+                            setCaption((prev) => prev + "%23");
+                          }}
+                        >
+                          #
+                        </p>
+                        <p
+                          onClick={() => setShowPicker((val) => !val)}
+                          style={{
+                            cursor: "pointer",
+                            fontSize: "18px",
+                            fontWeight: 600,
+                            marginRight: "10px",
+                            marginBottom: 0,
+                          }}
+                        >
+                          😃
+                        </p>
+                        {showPicker && (
+                          <Picker
+                            pickerStyle={{ width: "100%", marginTop: "10px" }}
+                            onEmojiClick={onEmojiClick}
+                          />
+                        )}
+                        &nbsp;&nbsp;
+                      </div>
                       <div>
                         <input
                           type="file"
@@ -535,24 +625,53 @@ const Share = () => {
                           id="image"
                           accept="image/*"
                           onChange={async (e) => {
+                            e.preventDefault();
+                            setFilesUpload([...filesUpload, e.target.files[0]]);
                             var reader = new FileReader();
 
                             reader.onload = function (e) {
                               // binary data
-                              setFile(e.target.result);
+                              // setFile(e.target.result);
+                              setFilesPreview([
+                                ...filesPreview,
+                                e.target.result,
+                              ]);
                             };
                             reader.onerror = function (e) {
                               // error occurred
                               console.log("Error : " + e.type);
                             };
 
-                            reader.readAsBinaryString(e.target.files[0]);
+                            reader.readAsDataURL(e.target.files[0]);
+                            uploadFiles(e.target.files[0])
                           }}
                           className="custom-file-input"
+                          style={{ display: "none" }}
                         />
+                        <label htmlFor="image" className="url-submit-btn">
+                          Upload
+                        </label>
                       </div>
+                      {/* <div> */}
+                      {/* </div> */}
                     </div>
                   </form>
+                  <br />
+                  <div className="flex">
+                    {filesPreview.map((preview, i) => {
+                      return (
+                        <div className="flex justify-content-flex-start">
+                          <img
+                            src={preview}
+                            alt=""
+                            key={i}
+                            width="200px"
+                            height="200px"
+                          />
+                        </div>
+                      );
+                    })}
+                  </div>
                   <br />
                   <div className="flex">
                     <button
@@ -568,18 +687,35 @@ const Share = () => {
                       Schedule
                     </button>
                   </div>
+                  <div className="preview">
+                    {facebook && (
+                      <>
+                        <span>
+                          <Facebook />
+                          &nbsp; Facebook
+                        </span>
+                        <br />
+                        <div className="facebookPreview">
+                          <img src={fb1} alt="" className="fb1" />
+                          <p style={{ margin: "10px 0" }}>{caption}</p>
+                          <img src={fb2} alt="" className="fb2" />
+                        </div>
+                      </>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
             <div
+              className="shadow-sm"
               style={{
                 height: "100vh",
                 backgroundColor: "white",
                 float: "right",
                 width: "350px",
-                position: "absolute",
-                padding: "100px 20px",
-                top: 0,
+                position: "fixed",
+                padding: "20px",
+                top: 64,
                 right: 0,
               }}
             >
@@ -597,8 +733,13 @@ const Share = () => {
                 </span>
                 <br />
               </p>
-              <Search placeholder="Search for social accounts" onSearch={onSearchSub} enterButton />
-              <br /><br />
+              <Search
+                placeholder="Search for social accounts"
+                onSearch={onSearchSub}
+                enterButton
+              />
+              <br />
+              <br />
               {loading ? (
                 <>
                   <Spin indicator={antIcon} />
@@ -624,6 +765,9 @@ const Share = () => {
       </TabPane>
       <TabPane tab="Analytics" key="3">
         Content of Tab Pane 3
+      </TabPane>
+      <TabPane tab="Settings" key="3">
+        Settings
       </TabPane>
     </Tabs>
   );

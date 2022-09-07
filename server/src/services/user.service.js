@@ -1,6 +1,35 @@
 const httpStatus = require('http-status');
 const { User } = require('../models');
 const ApiError = require('../utils/ApiError');
+const axios = require('axios');
+
+const checkInstagramBusinessAccount = (pageId, pageToken, userToken) => {
+  let config = {
+    method: 'GET',
+    url: `${process.env.FACEBOOK_GRAPH_API_PREFIX_URL}/${pageId}?fields=instagram_business_account&access_token=${pageToken}`,
+    headers: {
+      Authorization: `Bearer ${userToken}`,
+    },
+  };
+
+  axios(config)
+    .then(function (response) {
+      console.log(response.data);
+      if (response.data.instagram_business_account) {
+        return {
+          found: true,
+          id: response.data.instagram_business_account.id,
+        };
+      } else {
+        return {
+          found: false,
+        };
+      }
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+};
 
 /**
  * Create a user
@@ -86,13 +115,13 @@ const findSubscription = async (userId, subId, platform) => {
     let res = await User.find({
       _id: userId,
       facebookSub: {
-        id: subId
-      }
-    })
+        id: subId,
+      },
+    });
 
     return res;
   }
-}
+};
 
 /**
  * Update user by id and add subscription
@@ -106,18 +135,44 @@ const updateUserByIdAndAddSubscription = async (userId, updateBody, platform) =>
     throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
   }
 
-  if (platform == 'facebook' || platform == 'instagram' || platform == 'linkedin') {
-    updateBody.map(async (data) => {
-      user = await User.findByIdAndUpdate(
-        userId,
-        {
-          $push: { facebookSub: data}
-        },
-        { $new: true }
-      );
-    })
-  }
+  // for facebook
+  let mp = new Map();
+  let index = 0;
+  user.facebookSub.map((sub) => {
+    mp.set(sub.id, index);
+  });
 
+  if (platform == 'facebook' || platform == 'instagram' || platform == 'linkedin') {
+    console.log(updateBody)
+    updateBody.map(async (data) => {
+      var config = {
+        method: 'get',
+        url: `${process.env.FACEBOOK_GRAPH_API_PREFIX_URL}/${data.id}?fields=instagram_business_account&access_token=${data.access_token}`,
+        headers: { 
+          'Authorization': `Bearer ${user.facebook}`
+        }
+      };
+
+      let ig =  await axios(config);
+      if (ig.data.instagram_business_account.id) {
+        data.instagram = ig.data.instagram_business_account;
+      }
+
+      if (!mp.has(`${data.id}`)) {
+        user = await User.findByIdAndUpdate(
+          userId,
+          {
+            $push: { facebookSub: data },
+          },
+          { $new: true }
+        );
+      } else {
+        let idx = mp.get(`${data.id}`);
+        user.facebookSub[idx] = data;
+        user.save();
+      }
+    });
+  }
 
   return user;
 };
@@ -145,5 +200,5 @@ module.exports = {
   deleteUserById,
   getUserByIdPopulatedCustomers,
   updateUserByIdAndAddSubscription,
-  findSubscription
+  findSubscription,
 };
