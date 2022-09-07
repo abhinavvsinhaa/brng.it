@@ -1,19 +1,15 @@
 import React from "react";
 import { useState } from "react";
-import "./UrlFront.css";
-import SingleTreeUrl from "../SingleTreeUrl/SingleTreeUrl";
+import SingleTreeUrl from "../../SingleTreeUrl/SingleTreeUrl";
 import { Divider, notification } from "antd";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { axiosPrivate } from "../../api/axios";
-import defaultThemes from "./defaultThemes";
+import { axiosPrivate } from "../../../api/axios";
+import defaultThemes from "../LinkTree/defaultThemes";
 import ReactDevicePreview from "react-device-preview";
-import TreePreview from "./TreePreview";
-import { storage } from "../../util/Firebase";
+import TreePreview from "../TreePreview";
 import CustomForm from "./CustomForm";
-import FileUpload from "../FileUpload";
-import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
-
-// TODO: create individual folder for each new user, otherwise image name can match, which will replace the previous image with same name or add UUID
+import FileUpload from "../../FileUpload";
+import { Switch } from "antd";
 
 const Preview = ({ data, css }) => {
   return (
@@ -27,20 +23,28 @@ const Preview = ({ data, css }) => {
   );
 };
 
-export default function LinkTree() {
+export default function CustomLinkTree() {
   const [link, setLink] = useState("");
+  const [links, setLinks] = useState([]);
+
   const [linkName, setLinkName] = useState("");
   const [description, setDescription] = useState("Description of your links!");
+  const [iconUrl, setIconUrl] = useState("");
+  const [linkImageUrl, setLinkImageUrl] = useState("");
+  const [linkDescriptionText, setLinkDescriptionText] = useState("");
+
   const [pfp, setPfp] = useState(
     "https://images.unsplash.com/photo-1529665253569-6d01c0eaf7b6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1085&q=80"
   );
   const [bgUrl, setBgUrl] = useState("");
-  const [ColMainUserName, setColMainUserName] = useState("Rhythm Shandlya");
-  const [colMainUrlArr, setColMainUrlArr] = useState([]);
-  const [colMainUrl, setColMainUrl] = useState([]);
+  const [ownerName, setColMainUserName] = useState("Rhythm Shandlya");
   const [treeUrl, setTreeUrl] = useState([]);
-  const [iconUrl, setIconUrl] = useState("");
   const [custom, setCustom] = useState(defaultThemes[0]);
+
+  /* Conditionally Render Components */
+  const [icon, setIcon] = useState(false);
+  const [linkImage, setLinkImage] = useState(false);
+  const [linkDescription, setLinkDescription] = useState(false);
 
   const openNotificationWithIcon = (type) => {
     notification[type]({
@@ -49,23 +53,38 @@ export default function LinkTree() {
     });
   };
 
-  const addMainUrl = () => {
-    setColMainUrlArr((colMainUrlArr) => [
-      ...colMainUrlArr,
-      { link, title: linkName },
+  const addLink = () => {
+    setLinks((links) => [
+      ...links,
+      {
+        link,
+        title: linkName,
+        haveIcon: icon,
+        haveImage: linkImage,
+        haveDescription: linkDescription,
+        icon: iconUrl,
+        image: linkImageUrl,
+        description: linkDescriptionText,
+      },
     ]);
-    console.log(colMainUrlArr);
+
     openNotificationWithIcon("success");
     setLink("");
     setLinkName("");
-    setColMainUrl("");
+    setIconUrl("");
+    setLinkDescriptionText("");
+  };
+
+  const deleteLink = (i) => {
+    const newArr = links.filter((_ele, ind) => ind !== i);
+    setLinks(newArr);
   };
 
   const convertLinkUrl = async () => {
     try {
       const res = await axiosPrivate.post("/tree/combine", {
-        original: colMainUrlArr,
-        name: ColMainUserName,
+        original: links,
+        name: ownerName,
         description,
         dp: pfp,
         css: custom,
@@ -73,9 +92,36 @@ export default function LinkTree() {
       });
       console.log(res);
       setTreeUrl(res.data.data);
-      setColMainUrlArr([]);
+      setLinks([]);
     } catch (e) {
       console.log(e.response);
+    }
+  };
+
+  const iconSwitch = () => {
+    if (!icon) {
+      setIcon(true);
+    } else {
+      setIcon(false);
+      setIconUrl("");
+    }
+  };
+
+  const linkImageSwitch = () => {
+    if (!linkImage) {
+      setLinkImage(true);
+    } else {
+      setLinkImage(false);
+      setLinkImageUrl("");
+    }
+  };
+
+  const linkDescriptionSwitch = () => {
+    if (!linkDescription) {
+      setLinkDescription(true);
+    } else {
+      setLinkDescription(false);
+      setLinkDescriptionText("");
     }
   };
 
@@ -94,7 +140,7 @@ export default function LinkTree() {
               type="text"
               name="colMainUrl"
               placeholder="Tree Name"
-              value={ColMainUserName}
+              value={ownerName}
               onChange={(e) => {
                 setColMainUserName(e.target.value);
               }}
@@ -160,15 +206,61 @@ export default function LinkTree() {
                 aria-describedby="emailHelp"
               />
               <br />
-              <button onClick={addMainUrl} className="btn btn-light px-4 py-2">
+              <span className="text-white">ADD ICON &nbsp;</span>
+              <Switch onChange={iconSwitch} />
+
+              <span className="text-white">&nbsp; &nbsp; ADD IMAGE &nbsp;</span>
+              <Switch onChange={linkImageSwitch} />
+
+              <span className="text-white">&nbsp; &nbsp; ADD DESC &nbsp;</span>
+              <Switch onChange={linkDescriptionSwitch} />
+
+              {!linkDescription && (
+                <>
+                  <br />
+                  <br />
+                </>
+              )}
+              {icon && (
+                <FileUpload
+                  setFileUrl={setIconUrl}
+                  inputLabel="Choose An Icon:"
+                  remove={true}
+                />
+              )}
+              {linkImage && (
+                <FileUpload
+                  setFileUrl={setLinkImage}
+                  inputLabel="Choose An Image:"
+                  remove={true}
+                />
+              )}
+              {linkDescription && (
+                <>
+                  <label
+                    for="formFile"
+                    className={`form-label inline-block mt-2 text-black text-lg`}
+                  >
+                    Choose A Description:
+                  </label>
+                  <input
+                    type="text"
+                    name="n"
+                    value={linkDescriptionText}
+                    placeholder="This is Link  Description"
+                    onChange={(e) => {
+                      setLinkDescriptionText(e.target.value);
+                    }}
+                    className="form-control my-3"
+                    id="urlCol"
+                    aria-describedby="emailHelp"
+                  />
+                </>
+              )}
+
+              <button onClick={addLink} className="btn btn-light px-4 py-2">
                 Add Link
               </button>
-              <FileUpload
-                setFileUrl={setIconUrl}
-                inputLabel="Choose An Icon:"
-                remove={true}
-              />
-              <img src={iconUrl} alt="loading.." />
             </div>
             <button
               onClick={convertLinkUrl}
@@ -180,31 +272,18 @@ export default function LinkTree() {
             <span style={{ fontWeight: 500 }}>My Linktree: </span>
             <SingleTreeUrl treeArr={treeUrl} />
             <Divider />
-            {colMainUrlArr &&
-              colMainUrlArr.map((url, i) => {
+            {links &&
+              links.map((url, i) => {
                 return (
                   <>
                     <div key={i} className="linktreeurl-description shadow-sm">
-                      <div
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                        }}
-                      >
-                        <span
-                          style={{
-                            fontWeight: "500",
-                            fontSize: "14px",
-                          }}
-                        >
-                          {url.title}
+                      <div className="flex align-center">
+                        <span className="font-bold text-[14px]">
+                          <a href={url.link}>{url.title}</a>
                           <button
                             className="delete-button p-1 ml-3"
                             onClick={() => {
-                              const newArr = colMainUrlArr.filter(
-                                (_ele, ind) => ind !== i
-                              );
-                              setColMainUrlArr(newArr);
+                              deleteLink(i);
                             }}
                           >
                             <DeleteIcon
@@ -216,19 +295,9 @@ export default function LinkTree() {
                           </button>
                         </span>
                       </div>
-                      <div
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                        }}
-                      >
-                        <span
-                          style={{
-                            fontSize: "14px",
-                          }}
-                        >
-                          <a href={url.link}>{url.link}</a>
-                        </span>
+                      <div className="flex align-center">
+                        <span className="text-[14px]"></span>
+                        <span className="text-[14px]">{link.description}</span>
                       </div>
                     </div>
                     <br />
@@ -241,9 +310,9 @@ export default function LinkTree() {
       <div>
         <Preview
           data={{
-            original: colMainUrlArr,
-            name: ColMainUserName,
-            description,
+            original: links,
+            name: ownerName,
+            description: linkDescriptionText,
             image: pfp,
             backgroundImage: bgUrl,
           }}

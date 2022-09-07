@@ -9,6 +9,7 @@ import { v4 } from "uuid";
       USAGE:
         <FileUpload setFileUrl={setIconUrl}
                     inputLabel="Choose An Icon:"
+                    inputLabelColor="#000000"
                     remove={true} />
 */
 

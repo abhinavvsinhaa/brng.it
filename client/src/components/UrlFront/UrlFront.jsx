@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import { useState } from "react";
-import "./UrlFront.css";
+import "./urlFront.css";
 import SingleUrl from "../SingleUrl/SingleUrl";
 import { axiosPrivate } from "../../api/axios";
 

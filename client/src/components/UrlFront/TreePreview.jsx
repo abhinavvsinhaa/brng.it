@@ -50,20 +50,24 @@ const TreePreview = ({ data, css }) => {
         <div className="flex flex-col my-3 ">
           {data?.original?.map((p, i) => {
             return (
-              <a
-                href="/"
-                className="w-[80%] p-[20px] mx-auto my-2 text-center"
-                style={{
-                  backgroundColor: css.link.bg,
-                  fontSize: css.link.size,
-                  color: css.link.color,
-                  border: `${css.link.border} solid ${css.link.borderColor}`,
-                  borderRadius: `${css.link.borderRadius}px`,
-                }}
-                id={i}
-              >
-                {p.title}
-              </a>
+              <div>
+                <a
+                  href="/"
+                  className="w-[80%] p-[20px] mx-auto my-2 text-center"
+                  style={{
+                    backgroundColor: css.link.bg,
+                    fontSize: css.link.size,
+                    color: css.link.color,
+                    border: `${css.link.border} solid ${css.link.borderColor}`,
+                    borderRadius: `${css.link.borderRadius}px`,
+                  }}
+                  id={i}
+                >
+                  {p.title}
+                  <br />
+                  <p>{p.description}</p>
+                </a>
+              </div>
             );
           })}
         </div>

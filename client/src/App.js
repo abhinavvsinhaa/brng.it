@@ -20,7 +20,6 @@ import WiseStamp from "./components/WiseStamp/WiseStamp";
 
 import "./App.css";
 import Share from "./components/Share/Share";
-import LinkTree from "./components/UrlFront/LinkTree";
 import WithNav from "./components/WithNav";
 
 function App() {
