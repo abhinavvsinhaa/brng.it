@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import "./UrlFront.css";
+import "../urlFront.css";
 import SingleTreeUrl from "../SingleTreeUrl/SingleTreeUrl";
 import { Divider, notification } from "antd";
 import DeleteIcon from "@mui/icons-material/Delete";

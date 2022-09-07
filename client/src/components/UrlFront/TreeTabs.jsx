@@ -1,7 +1,7 @@
 import { Tabs } from "antd";
 import React from "react";
 import CustomModal from "./CustomModal";
-import LinkTree from "./LinkTree";
+import LinkTree from "./LinkTree/LinkTree";
 import TreeAnalytics from "./TreeAnalytics";
 
 const { TabPane } = Tabs;
