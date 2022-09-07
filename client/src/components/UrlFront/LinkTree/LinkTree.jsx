@@ -1,13 +1,13 @@
 import React from "react";
 import { useState } from "react";
 import "../urlFront.css";
-import SingleTreeUrl from "../SingleTreeUrl/SingleTreeUrl";
+import SingleTreeUrl from "../../SingleTreeUrl/SingleTreeUrl";
 import { Divider, notification } from "antd";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { axiosPrivate } from "../../api/axios";
+import { axiosPrivate } from "../../../api/axios";
 import ReactDevicePreview from "react-device-preview";
-import TreePreview from "./TreePreview";
-import { storage } from "../../util/Firebase";
+import TreePreview from "../TreePreview";
+import { storage } from "../../../util/Firebase";
 import defaultThemes from "./defaultThemes";
 import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
 
