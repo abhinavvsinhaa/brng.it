@@ -42,6 +42,7 @@
     "react-color": "^2.19.3",
     "react-device-preview": "^1.0.6",
     "react-dom": "^18.2.0",
+    "react-facebook-login": "^4.1.1",
     "react-geolocated": "^4.0.3",
     "react-hook-form": "^7.34.2",
     "react-leaflet": "^4.0.2",
