@@ -1,7 +1,7 @@
 import axios from "axios";
 
 
-const BASE_URL = "http://172.105.36.243/v1";
+const BASE_URL = "https://tmq-server.online/v1";
 
 export default axios.create({
   baseURL: BASE_URL,
