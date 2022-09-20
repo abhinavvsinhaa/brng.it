@@ -37,6 +37,10 @@ if (config.env === 'production') {
   app.use('/v1/auth', authLimiter);
 }
 
+app.get('/', (req, res, next) => {
+  res.send('Connection successful!');
+})
+
 app.use('/v1', routes);
 
 app.use((req, res, next) => {
