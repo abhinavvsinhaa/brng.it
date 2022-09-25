@@ -145,7 +145,7 @@ export default function JoinWeb(){
                         <div className="px-[10px] py-[10px]">
                             <div style={{display:'grid',gridAutoFlow:'column',width:'fit-content',gap:'5px'}}>
                                 <div>
-                                    <WebHelper color={buttonColor} type={iconType}/>
+                                    <WebHelper buttonColor={buttonColor} type={iconType}/>
                                 </div>
                                 <div style={{display:'grid',placeSelf:'center',color:fontColor,fontSize:buttonSize,fontWeight:'bold'}}>{title}</div>
                                 <div style={{display:'grid',placeSelf:'center',color:fontColor,fontSize:buttonSize}}><a style={{color:fontColor}} href={buttonUrl}>{buttonText}</a></div>

@@ -1,8 +1,16 @@
 import { Envelope, Globe, Telephone } from "@styled-icons/bootstrap";
 import { FacebookF, Instagram, LinkedinIn, Pinterest, Twitter, Youtube } from "@styled-icons/fa-brands";
 import { MapPin, Smartphone } from "@styled-icons/feather";
+import { useEffect } from "react";
 import defsign from '../../../assets/default-sig-photo.jpg'
-export default function CentralTemplate({variableInput,design}){
+export default function CentralTemplate({variableInput,design, setDesign}){
+    useEffect(()=>{
+        const updatedVariable = {...design , ...{'direction':'row'}};
+        setDesign(updatedVariable)
+        return(()=>{
+            //do nothing
+        })
+    },[])
     return(
         <div style={{fontFamily:design.font,padding: "30px",paddingTop:design.spaceContent*30+'px',display:'grid',gridTemplateColumns:'auto 76px 1fr',gap:design.lineSpacing*20+'px',width:'635px'}}>
                     <div style={{width:'fit-content',borderRight:`${design.lineStyle} ${design.matchLineTemplate?design.templateColor:design.lineColor}`,display:'grid'}}>
@@ -149,7 +157,7 @@ export default function CentralTemplate({variableInput,design}){
                     <div style={{display:'grid',gap:'10px'}}>
                     {variableInput.url===""?<a href={design.imageLink}><img style={{borderRadius: design.imageShape==='rect'?'':design.imageShape==='round'?'10px':'100px'}} src={defsign} alt="User"/></a>:<a href={design.imageLink}><img src={`https://wisestamp-api.herokuapp.com/${variableInput.url}`} style={{width:'125px',borderRadius:'100px'}} alt="User"/></a>}
                     </div>
-                    <p style={{color:'#212121',width:'fit-content',maxWidth:'420px',lineHeight:'20px',display:'grid',gridAutoFlow:design.direction,paddingTop:design.lineSpacing*14+'px',fontSize:(design.fontSize*11)+'px',whiteSpace:'pre-line'}}>
+                    <p style={{color:'#212121',width:'fit-content',maxWidth:'420px',lineHeight:'20px',display:'grid',gridAutoFlow:design.direction,fontSize:(design.fontSize*11)+'px',whiteSpace:'pre-line'}}>
                         {
                             variableInput.phone===""?
                             ''

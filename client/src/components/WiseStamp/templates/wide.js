@@ -2,7 +2,11 @@ import { Envelope, Globe, Telephone } from "@styled-icons/bootstrap";
 import { FacebookF, Instagram, LinkedinIn, Pinterest, Twitter, Youtube } from "@styled-icons/fa-brands";
 import { MapPin, Smartphone } from "@styled-icons/feather";
 import defsign from '../../../assets/default-sig-photo.jpg'
-export default function WideTemplate({variableInput,design}){
+export default function WideTemplate({variableInput,design,setDesign}){
+    useEffect(()=>{
+        const updatedVariable = {...design , ...{'direction':'column'}};
+        setDesign(updatedVariable)
+    },[])
     return(
         <div style={{fontFamily:design.font,padding: "30px",display:'grid',gridTemplateColumns:'1fr 4fr',gap:design.lineSpacing*15+'px',width:'635px'}}>
                     <div>

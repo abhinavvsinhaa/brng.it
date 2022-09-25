@@ -80,8 +80,7 @@ function App() {
 
     return (
         <>
-        <div className="h-screen w-full grid grid-rows-[1fr_25fr]">
-            <h1 className="p-[10px] place-self-center text-4xl font-normal leading-normal mt-0 mb-2 text-black">Email Signature Generator</h1>
+        <div className="h-screen w-full grid">
             <div className="grid grid-cols-[2.5fr_1fr]">
                     <div className="bg-[#F0F2F5] grid content-start justify-center">
                         {/* { */}
@@ -92,10 +91,11 @@ function App() {
                                 selectedTemplate={selectedTemplate}
                                 setisLoading={setisLoading}
                                 design={design}
+                                setDesign={setDesign}
                             />
                         {/* } */}
                     </div>
-                    <div className="relative shadow-[rgba(0,_0,_0,_0.15)_1.95px_1.95px_2.6px] h-[89vh] overflow-y-scroll">
+                    <div className="relative h-[89vh] overflow-y-scroll">
                     <Tabs defaultActiveKey="1" className="">
                         <TabPane className="bg-[#F8F9FB]" tab={<div className="grid grid-flow-row gap-[5px] place-items-center text-center"> <PencilSquare className="w-[28px]"/> Details</div>} key="details">
                             <div className="grid grid-cols-[2fr_1fr] bg-white shadow-md rounded p-[20px]">

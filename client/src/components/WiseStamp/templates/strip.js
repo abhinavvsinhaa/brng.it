@@ -5,7 +5,11 @@ import {EmailOutline} from "@styled-icons/evaicons-outline"
 import {Web} from "@styled-icons/foundation";
 import {Location} from "@styled-icons/evil"
 import defsign from '../../../assets/default-sig-photo.jpg'
-export default function StripTemplate({variableInput}){
+export default function StripTemplate({variableInput,design,setDesign}){
+    useEffect(()=>{
+        const updatedVariable = {...design , ...{'direction':'column'}};
+        setDesign(updatedVariable)
+    },[])
     return(
         <div style={{padding:"30px"}}>
         <div style={{display:'grid',gridTemplateColumns:'1fr 4fr',gap:'15px',width:'635px'}}>

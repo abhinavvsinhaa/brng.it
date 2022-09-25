@@ -150,7 +150,7 @@ export default function SalesEvent(){
                         <div className="px-[10px] py-[10px]">
                             <div style={{display:'grid',gridAutoFlow:'column',width:'fit-content',gap:'5px'}}>
                                 <div>
-                                    <SalesHelper color={buttonColor} type={iconType}/>
+                                    <SalesHelper buttonColor={buttonColor} type={iconType}/>
                                 </div>
                                 <div style={{display:'grid',placeSelf:'center',color:fontColor,fontSize:buttonSize}}>{title}</div>
                                 <div style={{display:'grid',placeSelf:'center',color:fontColor,fontWeight:'bold',fontSize:buttonSize}}><a style={{color:fontColor}} href={buttonUrl}>{buttonText}</a></div>

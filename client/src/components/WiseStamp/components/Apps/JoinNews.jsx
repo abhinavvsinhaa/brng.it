@@ -147,7 +147,7 @@ export default function JoinNews(){
                         <div className="px-[10px] py-[10px]">
                             <div style={{display:'grid',gridAutoFlow:'column',width:'fit-content',gap:'5px'}}>
                                 <div>
-                                    <NewsHelper color={buttonColor} type={iconType}/>
+                                    <NewsHelper buttonColor={buttonColor} type={iconType}/>
                                 </div>
                                 <div style={{display:'grid',placeSelf:'center',color:fontColor,fontSize:buttonSize,fontWeight:'bold'}}>{title}</div>
                                 <div style={{display:'grid',placeSelf:'center',color:fontColor,fontSize:buttonSize}}><a style={{color:fontColor}} href={buttonUrl}>{buttonText}</a></div>

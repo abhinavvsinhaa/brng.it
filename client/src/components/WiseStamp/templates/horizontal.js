@@ -1,6 +1,10 @@
 import { FacebookF, Instagram, LinkedinIn, Pinterest, Twitter, Youtube } from "@styled-icons/fa-brands";
 import defsign from '../../../assets/default-sig-photo.jpg'
-export default function HorizontalTemplate({variableInput}){
+export default function HorizontalTemplate({variableInput,design,setDesign}){
+    useEffect(()=>{
+        const updatedVariable = {...design , ...{'direction':'column'}};
+        setDesign(updatedVariable)
+    },[])
     return(
         <div style={{padding: "30px",display:'grid',gridTemplateColumns:'1fr 4fr',gap:'15px',width:'635px'}}>
                     <div>

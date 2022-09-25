@@ -1,8 +1,13 @@
 import { Envelope, Globe, Telephone } from "@styled-icons/bootstrap";
 import { FacebookF, Instagram, LinkedinIn, Pinterest, Twitter, Youtube } from "@styled-icons/fa-brands";
 import { MapPin, Smartphone } from "@styled-icons/feather";
+import { useEffect } from "react";
 import defsign from '../../../assets/default-sig-photo.jpg'
-export default function CompactTemplate({variableInput,design}){
+export default function CompactTemplate({variableInput,design,setDesign}){
+    useEffect(()=>{
+        const updatedVariable = {...design , ...{'direction':'column'}};
+        setDesign(updatedVariable)
+    },[])
     return(
         <div style={{fontFamily:design.font,padding: "30px",display:'grid',gridTemplateRows:'auto auto',width:'635px'}}>
                     <div style={{display:'grid',gap:design.lineSpacing*10+'px',gridTemplateColumns:'auto 1fr'}}>

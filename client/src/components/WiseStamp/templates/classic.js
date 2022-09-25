@@ -1,6 +1,11 @@
 import { FacebookF, Instagram, LinkedinIn, Pinterest, Twitter, Youtube } from "@styled-icons/fa-brands";
+import { useEffect } from "react";
 import defsign from '../../../assets/default-sig-photo.jpg'
-export default function ClassicTemplate({variableInput,design}){
+export default function ClassicTemplate({variableInput,design,setDesign}){
+    useEffect(()=>{
+        const updatedVariable = {...design , ...{'direction':'column'}};
+        setDesign(updatedVariable)
+    },[])
     return(
         <div style={{fontFamily:design.font,padding: "30px",paddingTop:design.spaceContent*30+'px',display:'grid',gridTemplateColumns:'1fr 4fr',gap:design.lineSpacing*15+'px',width:'635px'}}>
                     <div style={{borderRight:`${design.lineStyle} ${design.matchLineTemplate?design.templateColor:design.lineColor}`,display:'grid'}}>

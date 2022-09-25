@@ -1,15 +1,24 @@
 import { Droplet } from "@styled-icons/boxicons-solid"
 import { AlignCenter, AlignLeft, AlignRight } from "@styled-icons/feather"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { ChromePicker } from "react-color"
 
 export default function Quote(){
     const [quoteType,setquoteType] = useState('success')
+    const [quoteText, setquoteText] = useState('');
     const [fontColor,setfontColor] = useState('#fff')
     const [fontcolorDiv,setfontcolorDiv] = useState(false)
     const [alignment,setalignment] = useState('l')
     const [fontSize,setfontSize] = useState('10')
+    async function getQuote(){
+        const response = await fetch("https://zenquotes.io/api/quotes/*keyword="+quoteType);
+        var data = await response.json();
+        console.log(data);
+        setquoteText(data)
+    }
+    useEffect((quoteType)=>{
 
+    },[quoteType])
     return(
         <div className="grid grid-cols-[1fr_1.5fr] gap-[10px] h-full pl-[30px]">
             <div className="grid grid-rows-[1fr_2fr_7fr]">

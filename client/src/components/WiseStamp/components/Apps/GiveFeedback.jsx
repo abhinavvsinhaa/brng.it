@@ -24,7 +24,7 @@ export default function GiveFeedback(){
         <div className="grid grid-cols-[1fr_1.5fr] gap-[10px] h-full pl-[30px]">
             <div className="grid grid-rows-[1fr_3fr_5.5fr]">
                 <div className="grid">
-                    <div className="font-bold pl-[5px] text-[30px] tracking-wide grid content-center">Join our Webinar</div>
+                    <div className="font-bold pl-[5px] text-[30px] tracking-wide grid content-center">Give you feedback</div>
                 </div>
                 <div className="grid grid-rows-[40px_auto] gap-[10px] pl-[10px]">
                     <div className="font-bold text-[18px]">Enter your feedback details</div>
@@ -147,7 +147,7 @@ export default function GiveFeedback(){
                         <div className="px-[10px] py-[10px]">
                             <div style={{display:'grid',gridAutoFlow:'column',width:'fit-content',gap:'5px'}}>
                                 <div>
-                                    <FeedbackHelper color={buttonColor} type={iconType}/>
+                                    <FeedbackHelper buttonColor={buttonColor} type={iconType}/>
                                 </div>
                                 <div style={{display:'grid',placeSelf:'center',color:fontColor,fontSize:buttonSize,fontWeight:'bold'}}>{title}</div>
                                 <div style={{display:'grid',placeSelf:'center',color:fontColor,fontSize:buttonSize}}><a style={{color:fontColor}} href={buttonUrl}>{buttonText}</a></div>
