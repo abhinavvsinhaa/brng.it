@@ -12,11 +12,11 @@ export default function CorporateTemplate({variableInput,design,setDesign}){
         setDesign(updatedVariable)
     },[])
     return(
-        <div style={{padding:"30px"}}>
-        <div style={{display:'grid',gridTemplateRows:'auto 1fr',gap:'15px',width:'fit-content'}}>
+        <div style={{fontFamily:design.font,padding:"30px"}}>
+        <div style={{display:'grid',gridTemplateRows:'auto 1fr',gap:design.lineSpacing*15+'px',width:'fit-content'}}>
                     <div>
                     <div style={{display:'grid',alignContent:'center',paddingRight:'10px'}}>
-                    {variableInput.url===""?<img style={{borderRadius:'100px'}} src={defsign} alt="User"/>:<img src={`https://wisestamp-api.herokuapp.com/${variableInput.url}`} style={{width:'125px',borderRadius:'100px'}} alt="User"/>}
+                    {variableInput.url===""?<img style={{borderRadius:'100px'}} src={defsign} alt="User"/>:<a href={design.imageLink}><img src={`https://wisestamp-api.herokuapp.com/${variableInput.url}`} style={{width:'125px',borderRadius:'100px'}} alt="User"/></a>}
                     </div>
                     </div>
                     <div style={{width:'fit-content'}}>
@@ -26,7 +26,7 @@ export default function CorporateTemplate({variableInput,design,setDesign}){
                         </div>
                     </div>
         </div>
-        <div style={{display:'grid',gap:'10px','gridTemplateRows':'auto 1fr','width':'fit-content','paddingLeft':'20px','paddingTop':'20px','paddingBottom':'20px','paddingRight':'80px','background':'#45668E'}}>
+        <div style={{display:'grid',gap:'10px','gridTemplateRows':'auto 1fr','width':'fit-content','paddingLeft':'20px','paddingTop':'20px','paddingBottom':'20px','paddingRight':'80px','background':design.templateColor}}>
             <div>
             <p style={{fontSize:'11px',color:'white',whiteSpace:'nowrap'}}>
                         {

@@ -1,9 +1,16 @@
 import { Clipboard } from "@styled-icons/feather";
 import { message } from "antd";
-import React from "react";
+import React, { useEffect } from "react";
 import VariousTemplates from '../templates/index'
 import CreateAndServeHTML from "../utils/createHTML";
-function Display ({variableInput,selectedTemplate,setisLoading,design, setDesign}) {
+function Display ({variableInput,selectedTemplate,setisLoading,design, setDesign,extraFields}) {
+    useEffect(()=>{
+        var value = "";
+        for(var i=0 ; i<extraFields.length;i++){
+            value+=extraFields[i];
+        }
+        document.getElementById('extra-field-div').innerHTML = value;
+    },[extraFields])
     return(
         <div className="w-[695px]">
             <div style={{marginTop: "50px",height: "fit-content",backgroundColor: "white",borderRadius : "10px"}} className="shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] overflow-hidden">
@@ -23,6 +30,7 @@ function Display ({variableInput,selectedTemplate,setisLoading,design, setDesign
                 </div>
                 <div id="main-editor">
                 <VariousTemplates design={design} setDesign={setDesign} selectedTemplate={selectedTemplate} variableInput={variableInput}/>
+                <div id="extra-field-div" style={{'margin-left': '30px','margin-right':'10px'}}></div>
                 </div>
                 </div>
             </div>

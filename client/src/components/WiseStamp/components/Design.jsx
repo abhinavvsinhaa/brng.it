@@ -23,7 +23,7 @@ export default function Design({design,setDesign}){
                     </div>
                     <div className="grid grid-cols-[1fr_1fr]">
                         <div className="grid align-content-center text-gray-600">Font Size</div>
-                        <div className="grid place-self-center w-[80%]">
+                        <div className="grid place-self-start w-full">
                             <input type="number" step="0.25" name="size" id="size" onChange={(e)=>{updateDesign({'fontSize':e.target.value})}} value={design.fontSize} min='0.75' max='1.5' />
                         </div>
                     </div>
@@ -37,7 +37,7 @@ export default function Design({design,setDesign}){
                     </div>
                     <div className="grid grid-cols-[1fr_1fr]">
                         <div className="grid align-content-center text-gray-600">Space from content</div>
-                        <div className="grid place-self-center w-[80%]">
+                        <div className="grid place-self-start w-full">
                             <input type="number" step="0.25" name="size" id="size" onChange={(e)=>{updateDesign({'spaceContent':e.target.value})}} value={design.spaceContent} min='0.5' max='2' />
                         </div>
                     </div>
@@ -205,19 +205,19 @@ export default function Design({design,setDesign}){
                     </div>
                     <div className="grid grid-cols-[1fr_1fr]">
                         <div className="grid align-content-center text-gray-600">Size</div>
-                        <div className="grid place-self-center w-[80%]">
+                        <div className="grid place-self-start w-full">
                             <input type="range" name="size" step='0.25' id="size" onChange={(e)=>{updateDesign({'socialSize':e.target.value})}} value={design.socialSize} min='0.5' max='1.5' />
                         </div>
                     </div>
                     <div className="grid grid-cols-[1fr_1fr]">
                         <div className="grid align-content-center text-gray-600">Space between</div>
-                        <div className="grid place-self-center w-[80%]">
+                        <div className="grid place-self-start w-full">
                             <input type="range" name="size" step='0.25' id="size" onChange={(e)=>{updateDesign({'socialSpace':e.target.value})}} value={design.socialSpace} min='1' max='2.5' />
                         </div>
                     </div>
                     <div className="grid grid-cols-[1fr_1fr]">
                         <div className="grid align-content-center text-gray-600">Match with template color</div>
-                        <div className="grid place-self-center w-[80%] h-[90%]">
+                        <div className="grid place-self-start w-full h-[90%]">
                             <input type="checkbox" checked={design.matchTemplate} onClick={()=>{updateDesign({'matchTemplate':!design.matchTemplate})}} id="checked-checkbox" className="place-self-center w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-800 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
                         </div>
                     </div>
@@ -253,7 +253,7 @@ export default function Design({design,setDesign}){
                     </div>
                     <div className="grid grid-cols-[1fr_1fr]">
                         <div className="grid align-content-center text-gray-600 gap-[10px]">Match with template color</div>
-                        <div className="grid place-self-center w-[80%] h-[90%]">
+                        <div className="grid place-self-start w-full h-[90%]">
                             <input type="checkbox" checked={design.matchLineTemplate} onClick={()=>{updateDesign({'matchLineTemplate':!design.matchLineTemplate})}} id="checked-checkbox" className="place-self-center w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-800 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
                         </div>
                     </div>

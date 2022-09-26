@@ -8,7 +8,7 @@ import { ChromePicker } from "react-color"
 import FeedbackHelper from "./FeedbackHelper"
 import WebHelper from "./WebHelper"
 
-export default function GiveFeedback(){
+export default function GiveFeedback({extraFields,onClose}){
     const [title,settitle] = useState('Rate my services:')
     const [buttonText,setbuttonText] = useState('How was your overall experience with me?')
     const [buttonUrl,setbuttonUrl] = useState('https://')
@@ -144,8 +144,8 @@ export default function GiveFeedback(){
                 <div className="">
                     <div className="overflow-hidden rounded-lg w-[695px] grid grid-rows-[26px_1fr] h-[200px] shadow-[rgba(0,_0,_0,_0.02)_0px_1px_3px_0px,_rgba(27,_31,_35,_0.15)_0px_0px_0px_1px] bg-[#f8f9fb]">
                         <div className="bg-[#292c33] text-white pl-[8px] py-[3px]">New Message</div>
-                        <div className="px-[10px] py-[10px]">
-                            <div style={{display:'grid',gridAutoFlow:'column',width:'fit-content',gap:'5px'}}>
+                        <div id="custom-button" className="pt-[10px]">
+                            <div style={{marginLeft:'10px',marginBottom:'10px',display:'grid',gridAutoFlow:'column',width:'fit-content',gap:'5px'}}>
                                 <div>
                                     <FeedbackHelper buttonColor={buttonColor} type={iconType}/>
                                 </div>
@@ -155,7 +155,11 @@ export default function GiveFeedback(){
                         </div>
                     </div>
                 </div>
-                <div></div>
+                <div onClick={()=>{
+                    extraFields(document.getElementById('custom-button').innerHTML); onClose();
+                }} className="w-[100px] h-[50px] bottom-[20px] grid cursor-pointer place-self-end hover:bg-blue-600 rounded-md place-content-center text-lg bg-blue-500 text-white">
+                        Add
+                </div>
             </div>
         </div>
     )

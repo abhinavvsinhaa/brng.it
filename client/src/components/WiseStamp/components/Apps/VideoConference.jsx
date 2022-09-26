@@ -4,7 +4,7 @@ import appstore from '../../../../assets/icons/app-store-badge.png';
 import { Droplet } from "@styled-icons/boxicons-solid";
 import { AlignCenter, AlignLeft, AlignRight } from "@styled-icons/feather";
 import { Zoom } from "@styled-icons/boxicons-logos";
-export default function VideoConference(){
+export default function VideoConference({extraFields,onClose}){
     const [buttonSize,setbuttonSize] = useState(1)
     const [fontColor,setfontColor] = useState('#000')
     const [fontSize,setfontSize] = useState('10')
@@ -57,10 +57,10 @@ export default function VideoConference(){
                 <div className="">
                     <div className="overflow-hidden rounded-lg w-[695px] grid grid-rows-[26px_1fr] h-[200px] shadow-[rgba(0,_0,_0,_0.02)_0px_1px_3px_0px,_rgba(27,_31,_35,_0.15)_0px_0px_0px_1px] bg-[#f8f9fb]">
                         <div className="bg-[#292c33] text-white pl-[8px] py-[3px]">New Message</div>
-                        <div className="pl-[10px] pt-[10px]">
-                            <div className="w-fit h-fit bg-[#2D8CFF]">
-                                <a href={zoomLink} className="grid grid-cols-[auto_1fr] gap-[7px] px-[10px] py-[6px]">
-                                    <div className="grid p-[4px] h-fit place-self-center rounded-full bg-white">
+                        <div id="custom-button" className="pt-[10px]">
+                            <div style={{width:'fit-content',height: 'fit-content',background:'#2D8CFF',marginLeft:'10px',marginBottom:'10px'}}>
+                                <a href={zoomLink} style={{display:'grid','gridTemplateColumns':'auto 1fr','gap':'7px','padding':'6px 10px'}}>
+                                    <div style={{display:'grid','padding':'4px',height:'fit-content','placeSelf':'center','borderRadius':'999px','background':'white'}}>
                                         <Zoom width={buttonSize*24+'px'} className="text-[#2D8CFF]"/>
                                     </div>
                                     <div className={`grid place-content-center text-[${buttonSize*15+'px'}] text-white font-bold font-[Lato]`}>
@@ -71,7 +71,11 @@ export default function VideoConference(){
                         </div>
                     </div>
                 </div>
-                <div></div>
+                <div onClick={()=>{
+                    extraFields(document.getElementById('custom-button').innerHTML); onClose();
+                }} className="w-[100px] h-[50px] bottom-[20px] grid cursor-pointer place-self-end hover:bg-blue-600 rounded-md place-content-center text-lg bg-blue-500 text-white">
+                        Add
+                </div>
             </div>
         </div>
     )

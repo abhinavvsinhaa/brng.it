@@ -4,7 +4,7 @@ import appstore from '../../../../assets/icons/app-store-badge.png';
 import { ChromePicker } from "react-color";
 import { Droplet } from "@styled-icons/boxicons-solid";
 import { AlignCenter, AlignLeft, AlignRight } from "@styled-icons/feather";
-export default function DownloadApp(){
+export default function DownloadApp({extraFields,onClose}){
     const [buttonSize,setbuttonSize] = useState('20px')
     const [fontColor,setfontColor] = useState('#000')
     const [fontSize,setfontSize] = useState('10')
@@ -92,9 +92,9 @@ export default function DownloadApp(){
                 <div className="">
                     <div className="overflow-hidden rounded-lg w-[695px] grid grid-rows-[26px_1fr] h-[200px] shadow-[rgba(0,_0,_0,_0.02)_0px_1px_3px_0px,_rgba(27,_31,_35,_0.15)_0px_0px_0px_1px] bg-[#f8f9fb]">
                         <div className="bg-[#292c33] text-white pl-[8px] py-[3px]">New Message</div>
-                        <div className="pl-[10px] pt-[10px]">
-                            <div style={{'fontSize':`${fontSize}px`,'letterSpacing':'1.5px','color':fontColor,'textAlign':`${alignment==='l'?'left':alignment==='m'?'center':'right'}`}}>{title}</div>
-                            <div style={{padding:'10px 0px','display':'grid','gridAutoFlow':'column','gap':'10px','width':'fit-content'}}>
+                        <div id="custom-button" className="pt-[10px]">
+                            <div style={{marginLeft:'10px',marginBottom:'10px','fontSize':`${fontSize}px`,'letterSpacing':'1.5px','color':fontColor,'textAlign':`${alignment==='l'?'left':alignment==='m'?'center':'right'}`}}>{title}</div>
+                            <div style={{marginLeft:'10px',marginBottom:'10px',padding:'10px 0px','display':'grid','gridAutoFlow':'column','gap':'10px','width':'fit-content'}}>
                                 <a href={playLink}>
                                     <img src={googleplay} width="120px"/>
                                 </a>
@@ -105,7 +105,11 @@ export default function DownloadApp(){
                         </div>
                     </div>
                 </div>
-                <div></div>
+                <div onClick={()=>{
+                    extraFields(document.getElementById('custom-button').innerHTML); onClose();
+                }} className="w-[100px] h-[50px] bottom-[20px] grid cursor-pointer place-self-end hover:bg-blue-600 rounded-md place-content-center text-lg bg-blue-500 text-white">
+                        Add
+                </div>
             </div>
         </div>
     )

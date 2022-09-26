@@ -8,7 +8,7 @@ import { Gavel } from "@styled-icons/material-rounded";
 import { useState } from "react";
 import AppDrawer from "./Apps/AppDrawer";
 
-export default function Apps(){
+export default function Apps({extraFields}){
     const [whichDrawer,setwhichDrawer] = useState('');
     const [visible, setVisible] = useState(false);
     return(
@@ -115,7 +115,7 @@ export default function Apps(){
                 </div>
             </div>
         </div>
-        <AppDrawer visible={visible} setVisible={setVisible} whichApp={whichDrawer} />
+        <AppDrawer visible={visible} setVisible={setVisible} whichApp={whichDrawer} extraFields={extraFields} />
         </>
     )
 }

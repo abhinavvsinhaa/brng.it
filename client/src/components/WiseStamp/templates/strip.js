@@ -3,6 +3,8 @@ import {Mobile} from "@styled-icons/entypo";
 import {Telephone} from "@styled-icons/bootstrap";
 import {EmailOutline} from "@styled-icons/evaicons-outline"
 import {Web} from "@styled-icons/foundation";
+import { useEffect } from "react";
+
 import {Location} from "@styled-icons/evil"
 import defsign from '../../../assets/default-sig-photo.jpg'
 export default function StripTemplate({variableInput,design,setDesign}){

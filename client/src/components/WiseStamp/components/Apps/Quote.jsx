@@ -1,24 +1,24 @@
 import { Droplet } from "@styled-icons/boxicons-solid"
 import { AlignCenter, AlignLeft, AlignRight } from "@styled-icons/feather"
+import axios from "axios"
 import { useEffect, useState } from "react"
 import { ChromePicker } from "react-color"
 
-export default function Quote(){
+export default function Quote({extraFields,onClose}){
     const [quoteType,setquoteType] = useState('success')
     const [quoteText, setquoteText] = useState('');
     const [fontColor,setfontColor] = useState('#fff')
     const [fontcolorDiv,setfontcolorDiv] = useState(false)
     const [alignment,setalignment] = useState('l')
     const [fontSize,setfontSize] = useState('10')
-    async function getQuote(){
-        const response = await fetch("https://zenquotes.io/api/quotes/*keyword="+quoteType);
-        var data = await response.json();
-        console.log(data);
-        setquoteText(data)
-    }
-    useEffect((quoteType)=>{
-
-    },[quoteType])
+    // async function getQuote(){
+    //     const response = await fetch("https://zenquotes.io/api/quotes/",{mode: 'no-cors'});
+    //     var data = response.json();
+    //     axios.get("https://zenquotes.io/api/quotes/",{})
+    // }
+    // useEffect((quoteType)=>{
+    //     getQuote()
+    // },[quoteType])
     return(
         <div className="grid grid-cols-[1fr_1.5fr] gap-[10px] h-full pl-[30px]">
             <div className="grid grid-rows-[1fr_2fr_7fr]">
@@ -81,14 +81,18 @@ export default function Quote(){
                 </div>
             </div>
             <div className="grid grid-rows-[1fr_100px]">
-                <div className="">
+                <div className="relative grid gap-[30px]">
                     <div className="overflow-hidden rounded-lg w-[695px] grid grid-rows-[26px_1fr] h-[200px] shadow-[rgba(0,_0,_0,_0.02)_0px_1px_3px_0px,_rgba(27,_31,_35,_0.15)_0px_0px_0px_1px] bg-[#f8f9fb]">
                         <div className="bg-[#292c33] text-white pl-[8px] py-[3px]">New Message</div>
-                        <div className="px-[10px] py-[10px]">
+                        <div id="custom-button" className="px-[10px] py-[10px]">
                         </div>
                     </div>
                 </div>
-                <div></div>
+                <div onClick={()=>{
+                    extraFields(document.getElementById('custom-button').innerHTML); onClose();
+                }} className="w-[100px] h-[50px] bottom-[20px] grid cursor-pointer place-self-end hover:bg-blue-600 rounded-md place-content-center text-lg bg-blue-500 text-white">
+                        Add
+                </div>
             </div>
         </div>
     )

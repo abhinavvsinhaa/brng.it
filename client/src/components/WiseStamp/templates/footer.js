@@ -5,6 +5,7 @@ import {EmailOutline} from "@styled-icons/evaicons-outline"
 import {Web} from "@styled-icons/foundation";
 import {Location} from "@styled-icons/evil"
 import defsign from '../../../assets/default-sig-photo.jpg'
+import { useEffect } from "react";
 export default function FooterTemplate({variableInput,design,setDesign}){
     useEffect(()=>{
         const updatedVariable = {...design , ...{'direction':'column'}};

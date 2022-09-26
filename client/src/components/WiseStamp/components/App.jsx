@@ -36,7 +36,7 @@ function App() {
     const [fontSize , setFontSize] = useState(1.0);
     const [lineSpacing , setlineSpacing] = useState(1.0);
     const [spaceContent , setspaceContent] = useState(1);
-    const [templateColor , settemplateColor] = useState('#646464');
+    const [templateColor , settemplateColor] = useState('#45668E');
     const [imageShape , setImageShape] = useState('rect');
     const [imageSize , setimageSize] = useState(14);
     const [imagePosition , setimagePosition] = useState('baseline');
@@ -53,7 +53,7 @@ function App() {
     const [lineStyle , setlineStyle] = useState('1px solid');
     const [matchLineTemplate , setmatchLineTemplate] = useState(false);
     const [lineColor , setlineColor] = useState('#BDBDBD');
-    const [extraFields] = useState([]);
+    const [extraFields, setExtraFields] = useState([]);
     const [selectedTemplate , setSelectedTemplate] = useState(1);
     const [variableInput , setVariableInput] = useState({name:name,url:url,titleSign:titleSign,company:company,phone:phone,mobile:mobile,website:website,email:email,address:address,fb:fb,insta:insta,linkedin:linkedin,twitter:twitter,yt:yt,pinterest:pinterest,extraFields:extraFields});
     const [design,setDesign] = useState({font : font , fontSize,lineSpacing,spaceContent,templateColor,imageShape,imageSize,imagePosition,
@@ -68,7 +68,9 @@ function App() {
         const updatedVariable = {...variableInput , ...obj};
         setVariableInput(updatedVariable)
     }
-
+    const setExtraFieldsHelper = (added) => {
+        setExtraFields(current => [...current, added]);
+    }
     const submitPhoto = (e) =>{
         setFile()
         const data = new FormData();
@@ -92,6 +94,7 @@ function App() {
                                 setisLoading={setisLoading}
                                 design={design}
                                 setDesign={setDesign}
+                                extraFields={extraFields}
                             />
                         {/* } */}
                     </div>
@@ -203,7 +206,7 @@ function App() {
                             <Design design={design} setDesign={setDesign}/>    
                         </TabPane>
                         <TabPane tab={<div className="grid grid-flow-row gap-[5px] place-items-center text-center"> <AppsAddIn className="w-[28px]"/> Apps</div>} key="apps">
-                            <Apps/>
+                            <Apps extraFields={setExtraFieldsHelper}/>
                         </TabPane>
                     </Tabs>
                     </div>

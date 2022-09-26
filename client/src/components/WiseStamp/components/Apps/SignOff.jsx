@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import generateImage from "../../utils/getSignImage";
 import optionsParameter from './signParameters'
-export default function SignOff(){
+export default function SignOff({extraFields,onClose}){
     const [optionParams,setoptionParams] = useState(optionsParameter);
     const [signatureText,setsignatureText] = useState('John Cena');
     const [signatureSize,setsignatureSize] = useState('20px');
@@ -67,10 +67,16 @@ export default function SignOff(){
                 <div className="">
                     <div className="overflow-hidden rounded-lg w-[695px] grid grid-rows-[26px_1fr] h-[200px] shadow-[rgba(0,_0,_0,_0.02)_0px_1px_3px_0px,_rgba(27,_31,_35,_0.15)_0px_0px_0px_1px] bg-[#f8f9fb]">
                     <div className="bg-[#292c33] text-white pl-[8px] py-[3px]">New Message</div>
-                        <img src={generatedImage} id='signatureimg' alt="" />
+                    <div id="custom-button">
+                        <img style={{marginLeft:'10px',marginBottom:'10px'}} src={generatedImage} id='signatureimg' alt="" />
+                    </div>
                     </div>
                 </div>
-                <div></div>
+                <div onClick={()=>{
+                    extraFields(document.getElementById('custom-button').innerHTML); onClose();
+                }} className="w-[100px] h-[50px] bottom-[20px] grid cursor-pointer place-self-end hover:bg-blue-600 rounded-md place-content-center text-lg bg-blue-500 text-white">
+                        Add
+                </div>
             </div>
         </div>
     )

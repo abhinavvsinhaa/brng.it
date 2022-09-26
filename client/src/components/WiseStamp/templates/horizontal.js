@@ -1,5 +1,7 @@
 import { FacebookF, Instagram, LinkedinIn, Pinterest, Twitter, Youtube } from "@styled-icons/fa-brands";
 import defsign from '../../../assets/default-sig-photo.jpg'
+import { useEffect } from "react";
+
 export default function HorizontalTemplate({variableInput,design,setDesign}){
     useEffect(()=>{
         const updatedVariable = {...design , ...{'direction':'column'}};

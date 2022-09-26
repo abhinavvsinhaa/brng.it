@@ -5,7 +5,7 @@ import { Trees } from "@styled-icons/foundation"
 import { useState } from "react"
 import { ChromePicker } from "react-color"
 
-export default function GreenFooter(){
+export default function GreenFooter({extraFields,onClose}){
     const [fontColor,setfontColor] = useState('#53B700')
     const [fontSize,setfontSize] = useState('10')
     const [alignment,setalignment] = useState('l')
@@ -116,8 +116,8 @@ export default function GreenFooter(){
                 <div className="">
                     <div className="overflow-hidden rounded-lg w-[695px] grid grid-rows-[26px_1fr] h-[200px] shadow-[rgba(0,_0,_0,_0.02)_0px_1px_3px_0px,_rgba(27,_31,_35,_0.15)_0px_0px_0px_1px] bg-[#f8f9fb]">
                         <div className="bg-[#292c33] text-white pl-[8px] py-[3px]">New Message</div>
-                        <div className="pl-[10px] pt-[10px]">
-                            <div style={{display:'grid','gridTemplateColumns':'auto 1fr','width':'fit-content'}}>
+                        <div id="custom-button" className="pt-[10px]">
+                            <div style={{marginLeft:'10px',marginBottom:'10px',display:'grid','gridTemplateColumns':'auto 1fr','width':'fit-content'}}>
                                     <div style={{'borderRight':'1px solid lightgray'}}>
                                         {
                                             icon==='tree'?(<Trees width={'40px'} color='#53B700'/>):icon==='leaf'?(<Leaf width={'40px'} color='#53B700'/>):('')
@@ -130,7 +130,11 @@ export default function GreenFooter(){
                         </div>
                     </div>
                 </div>
-                <div></div>
+                <div onClick={()=>{
+                    extraFields(document.getElementById('custom-button').innerHTML); onClose();
+                }} className="w-[100px] h-[50px] bottom-[20px] grid cursor-pointer place-self-end hover:bg-blue-600 rounded-md place-content-center text-lg bg-blue-500 text-white">
+                        Add
+                </div>
             </div>
         </div>
     )

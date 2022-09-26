@@ -3,7 +3,7 @@ import { Handshake } from "@styled-icons/fluentui-system-regular"
 import { useState } from "react"
 import { ChromePicker } from "react-color"
 
-export default function OnlineScheduler(){
+export default function OnlineScheduler({extraFields,onClose}){
     const [url,setUrl]=useState('')
     const [buttonText,setbuttonText] = useState('Book a meeting')
     const [buttonShape,setbuttonShape] = useState('10px')
@@ -137,8 +137,8 @@ export default function OnlineScheduler(){
                 <div className="">
                     <div className="overflow-hidden rounded-lg w-[695px] grid grid-rows-[26px_1fr] h-[200px] shadow-[rgba(0,_0,_0,_0.02)_0px_1px_3px_0px,_rgba(27,_31,_35,_0.15)_0px_0px_0px_1px] bg-[#f8f9fb]">
                         <div className="bg-[#292c33] text-white pl-[8px] py-[3px]">New Message</div>
-                        <div className="px-[10px] py-[10px]">
-                            <a href={url} style={{'fontSize':`${buttonSize}`,'display':'grid','gridTemplateColumns':'auto 1fr','gap':'5px','fontWeight':'bold','padding':'10px','color':`white`,'width':'fit-content','height':'fit-content','borderRadius':buttonShape,'backgroundColor':`${buttonType==='full'?buttonColor:'transparent'}`,'border':`${buttonType==='light'?`2px solid ${buttonColor}`:''}`}}>
+                        <div id="custom-button" className="pt-[10px]">
+                            <a href={url} style={{marginLeft:'10px',marginBottom:'10px','fontSize':`${buttonSize}`,'display':'grid','gridTemplateColumns':'auto 1fr','gap':'5px','fontWeight':'bold','padding':'10px','color':`white`,'width':'fit-content','height':'fit-content','borderRadius':buttonShape,'backgroundColor':`${buttonType==='full'?buttonColor:'transparent'}`,'border':`${buttonType==='light'?`2px solid ${buttonColor}`:''}`}}>
                                 {
                                     selectedIcon==='star'?(<CalendarStar width={'20px'}/>):selectedIcon==='norm'?(<Calendar width={'20px'}/>):selectedIcon==='hand'?(<Handshake width={'20px'}/>):''
                                 }
@@ -147,7 +147,11 @@ export default function OnlineScheduler(){
                         </div>
                     </div>
                 </div>
-                <div></div>
+                <div onClick={()=>{
+                    extraFields(document.getElementById('custom-button').innerHTML); onClose();
+                }} className="w-[100px] h-[50px] bottom-[20px] grid cursor-pointer place-self-end hover:bg-blue-600 rounded-md place-content-center text-lg bg-blue-500 text-white">
+                        Add
+                </div>
             </div>
         </div>
     )
