@@ -31,6 +31,14 @@ class Instagram {
       console.error(error);
     }
   }
+
+  async carouselPosts() {
+    try {
+      
+    } catch (error) {
+      
+    }
+  }
 }
 
 module.exports = { Instagram }

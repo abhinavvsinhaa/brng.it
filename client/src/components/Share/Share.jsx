@@ -18,6 +18,7 @@ import { storage } from "../../util/Firebase";
 import { ref, getDownloadURL, uploadBytes, getStorage, uploadBytesResumable } from "firebase/storage";
 import shareFacebook from "./shareFacebook"
 import storeDetails from './storeDetails'
+import shareInstagram from "./shareInstagram";
 
 import fb1 from "../../assets/images/fb1.png";
 import fb2 from "../../assets/images/fb2.png";
@@ -254,13 +255,9 @@ const Share = () => {
       const searchTarget = res.data.facebookSub;
       searchTarget.map((found) => {
         if (found.instagram.id == selectedCustomerDetails.key) {
-          console.log("found");
-          shareNowInstagram(
-            selectedCustomerDetails.key,
-            res.data.facebook,
-            caption,
-            filesUpload
-          );
+
+          const ig = new shareInstagram(selectedCustomerDetails.key, res.data.facebook)
+          ig.shareNow(caption, filesUpload, downloadableURLs);
         }
       });
     } else if (linkedin != null) {
