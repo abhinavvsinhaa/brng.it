@@ -150,7 +150,7 @@ const ConnectNewChannel = () => {
       </div>
       <br /> */}
       <div className="row justify-content-center gy-5">
-        <div className="col-xl-2 col-lg-4 col-md-4 col-sm-6 col-6">
+        {/* <div className="col-xl-2 col-lg-4 col-md-4 col-sm-6 col-6">
           <Card
             className="shadow-md"
             style={{
@@ -178,8 +178,8 @@ const ConnectNewChannel = () => {
             <p className="social-media-subgroup">Business account</p>
             <p className="social-media-connect">Connect</p>
           </Card>
-        </div>
-        <div className="col-xl-2 col-lg-4 col-md-4 col-sm-6 col-6">
+        </div> */}
+        <div className="col-xl-3 col-lg-5 col-md-5 col-sm-12 col-12">
           {/* <FacebookLogin
           appId={process.env.REACT_APP_FACEBOOK_APP_ID}
           autoLoad={true}
@@ -206,9 +206,12 @@ const ConnectNewChannel = () => {
               }}
             >
               <img src={FB} alt="" width="50px" />
+              &nbsp;&nbsp;
+              <img src={IG} alt="" width="50px" />
             </div>
-            <p className="social-media-subgroup">Page or Group</p>
-            <p className="social-media-name">Facebook</p>
+            <br />
+            <p className="social-media-subgroup">Page or Business account</p>
+            <p className="social-media-name">Facebook & Instagram</p>
             <p className="social-media-connect">Connect</p>
             <FacebookLogin
               appId={process.env.REACT_APP_FACEBOOK_APP_ID}
@@ -220,7 +223,7 @@ const ConnectNewChannel = () => {
           {/* )} */}
           {/* /> */}
         </div>
-        <div className="col-xl-2 col-lg-4 col-md-4 col-sm-6 col-6">
+        <div className="col-xl-3 col-lg-5 col-md-5 col-sm-12 col-12">
           <Card
             className="shadow-md"
             style={{

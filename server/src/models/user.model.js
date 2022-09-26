@@ -35,12 +35,6 @@ const userSchema = mongoose.Schema(
       type: Object,
       default: {}
     },
-    // customers: [
-    //   {
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: 'Client',
-    //   },
-    // ],
     facebookSub: [Object],
     instagramSub: [Object],
     linkedinSub: [Object],
@@ -79,6 +73,11 @@ const userSchema = mongoose.Schema(
       type: [mongoose.Schema.Types.ObjectId],
       ref: 'User',
       default: [],
+    }, 
+    history: {
+      type: [mongoose.Schema.Types.ObjectId],
+      ref: 'History',
+      default: []
     }
   },
   {

@@ -16,6 +16,8 @@ import moment from "moment";
 import { v4 } from "uuid";
 import { storage } from "../../util/Firebase";
 import { ref, getDownloadURL, uploadBytes, getStorage, uploadBytesResumable } from "firebase/storage";
+import shareFacebook from "./shareFacebook"
+import storeDetails from './storeDetails'
 
 import fb1 from "../../assets/images/fb1.png";
 import fb2 from "../../assets/images/fb2.png";
@@ -72,27 +74,6 @@ const shareNowLinkedIn = async (author, caption, access_token, file) => {
     author,
     file,
   });
-  console.log(res);
-};
-
-const shareNowFacebook = async (
-  pageId,
-  pageAccessToken,
-  userAccessToken,
-  caption,
-  file,
-  link
-) => {
-  const res = await axiosPrivate.post(`/share/fb`, {
-    pageId,
-    pageAccessToken,
-    userAccessToken,
-    caption,
-    fileURL:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/800px-Image_created_with_a_mobile_phone.png",
-    link: "https://facebook.com",
-  });
-
   console.log(res);
 };
 
@@ -254,9 +235,6 @@ const Share = () => {
     else if (!caption)
       openNotificationWithIcon("warning", "No caption entered");
 
-    // console.log(linkedin);
-    // console.log(caption);
-
     // * check which platform to post on or schedule posts
     if (facebook != null) {
       // find details about the selected subscription
@@ -264,13 +242,10 @@ const Share = () => {
       const searchTarget = res.data.facebookSub;
       searchTarget.map((found) => {
         if (found.id == selectedCustomerDetails.key) {
-          shareNowFacebook(
-            selectedCustomerDetails.key,
-            found.access_token,
-            res.data.facebook,
-            caption,
-            file
-          );
+          const fb = new shareFacebook(selectedCustomerDetails.key, res.data.facebook, found.access_token);
+          let fileURL;
+          let link;
+          fb.shareNow(caption, fileURL, link, auth.user.id)
         }
       });
     } else if (instagram != null) {
@@ -290,15 +265,6 @@ const Share = () => {
       });
     } else if (linkedin != null) {
     }
-
-    // * multiple platform posts on single click
-    /*
-    selectedPlatformsToPostOn.map((platform) => {
-      if (platform === "linkedin") {
-        shareNowLinkedIn(linkedin.user.id, caption, linkedin.access_token, file);
-      }
-    });
-    */
   };
 
   const handleCloseSearchModal = () => setShowSearchModal(false);
@@ -393,7 +359,44 @@ const Share = () => {
     fetchCustomers();
   };
 
-  const handleCloseScheduleModalOKClick = () => {
+  // const shareScheduled = async (unixTimeStamp) => {
+  //   // * check which platform to post on or schedule posts
+  //   if (facebook != null) {
+  //     // find details about the selected subscription
+  //     const res = await axios.get(`/users/${auth.user.id}`);
+  //     const searchTarget = res.data.facebookSub;
+  //     searchTarget.map((found) => {
+  //       if (found.id == selectedCustomerDetails.key) {
+  //         shareNowFacebook(
+  //           selectedCustomerDetails.key,
+  //           found.access_token,
+  //           res.data.facebook,
+  //           caption,
+  //           file,
+  //           unixTimeStamp
+  //         );
+  //       }
+  //     });
+  //   } else if (instagram != null) {
+  //     // find details about the selected subscription
+  //     const res = await axios.get(`/users/${auth.user.id}`);
+  //     const searchTarget = res.data.facebookSub;
+  //     searchTarget.map((found) => {
+  //       if (found.instagram.id == selectedCustomerDetails.key) {
+  //         console.log("found");
+  //         shareNowInstagram(
+  //           selectedCustomerDetails.key,
+  //           res.data.facebook,
+  //           caption,
+  //           filesUpload
+  //         );
+  //       }
+  //     });
+  //   } else if (linkedin != null) {
+  //   }
+  // }
+
+  const handleCloseScheduleModalOKClick = async () => {
     if (scheduledTime == "" || scheduledDate == "")
       return openNotificationWithIcon("error", "Please select time and date");
 
@@ -411,14 +414,29 @@ const Share = () => {
     console.log(date); // 👉️ Sat Sep 24 2022 09:25:32
 
     // ✅ Get Unix timestamp
-    const unixTimestamp = Math.floor(date.getTime() / 1000);
-    console.log(unixTimestamp);
+    const unixTimeStamp = Math.floor(date.getTime() / 1000);
+    // console.log(unixTimeStamp);
+
+    if (facebook != null) {
+      // find details about the selected subscription
+      const res = await axios.get(`/users/${auth.user.id}`);
+      const searchTarget = res.data.facebookSub;
+      searchTarget.map((found) => {
+        if (found.id == selectedCustomerDetails.key) {
+          const fb = new shareFacebook(selectedCustomerDetails.key, res.data.facebook, found.access_token);
+          let fileURL;
+          let link;
+          fb.scheduleForLater(caption, fileURL, link, unixTimeStamp, auth.user.id)
+        }
+      });
+    }
   };
 
   const onSearchSub = () => {};
 
   useEffect(() => {
     fetchCustomers();
+    console.log(auth)
     setScheduledDate(moment().format("MM/DD/YYYY"));
   }, []);
 
