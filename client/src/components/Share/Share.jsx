@@ -257,7 +257,7 @@ const Share = () => {
         if (found.instagram.id == selectedCustomerDetails.key) {
 
           const ig = new shareInstagram(selectedCustomerDetails.key, res.data.facebook)
-          ig.shareNow(caption, filesUpload, downloadableURLs);
+          ig.shareNow(caption, filesUpload, downloadableURLs, auth.user.id);
         }
       });
     } else if (linkedin != null) {

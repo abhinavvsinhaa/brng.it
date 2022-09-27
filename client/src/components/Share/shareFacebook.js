@@ -24,18 +24,20 @@ class shareFacebook {
     // once successfully posted, store it in DB
     console.log(res);
 
-    let dt = new Date();
-    dt =
-      dt.getDate() +
-      "/" +
-      (dt.getMonth() + 1) +
-      "/" +
-      dt.getFullYear() +
-      " @ " +
-      dt.getHours() +
-      ":" +
-      dt.getMinutes();
-    storeDetails(this.pageId, res.data.id, "normal", dt, "facebook", userId);
+    if (res.data.id) {
+      let dt = new Date();
+      dt =
+        dt.getDate() +
+        "/" +
+        (dt.getMonth() + 1) +
+        "/" +
+        dt.getFullYear() +
+        " @ " +
+        dt.getHours() +
+        ":" +
+        dt.getMinutes();
+      storeDetails(this.pageId, res.data.id, "normal", dt, "facebook", userId);
+    }
   }
 
   async scheduleForLater(caption, fileURL, link, unixTimeStamp, userId) {
@@ -50,18 +52,20 @@ class shareFacebook {
     });
 
     console.log(res);
-    let dt = new Date(unixTimeStamp*1000)
-    dt =
-      dt.getDate() +
-      "/" +
-      (dt.getMonth() + 1) +
-      "/" +
-      dt.getFullYear() +
-      " @ " +
-      dt.getHours() +
-      ":" +
-      dt.getMinutes();
-    storeDetails(this.pageId, res.data.id, "normal", dt, "facebook", userId);
+    if (res.data.id) {
+      let dt = new Date(unixTimeStamp*1000)
+      dt =
+        dt.getDate() +
+        "/" +
+        (dt.getMonth() + 1) +
+        "/" +
+        dt.getFullYear() +
+        " @ " +
+        dt.getHours() +
+        ":" +
+        dt.getMinutes();
+      storeDetails(this.pageId, res.data.id, "schedule", dt, "facebook", userId);
+    }
   }
 }
 
