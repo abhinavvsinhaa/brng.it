@@ -3,16 +3,15 @@ const { toJSON, paginate } = require('../plugins');
 
 const scheduleApiSchema = mongoose.Schema(
   {
-    headers: [Object],
-    url: {
+    accessToken: {
         type: String,
         required: true
     },
-    // single posts or carousel post
-    method: {
+    pageId: {
         type: String,
         required: true
     },
+    assetURL: [String],
     // fulfilled or suspended or unfulfilled
     status: {
         type: String,

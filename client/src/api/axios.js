@@ -1,6 +1,9 @@
 import axios from "axios";
 
-const BASE_URL = "http://localhost:8000/v1";
+const BASE_URL =
+  process.env.REACT_APP_MODE == "dev"
+    ? "http://localhost:8000/v1"
+    : "https://tmq-server.online/v1";
 
 export default axios.create({
   baseURL: BASE_URL,

@@ -200,13 +200,19 @@ const shareFacebook = catchAsync(async (req, res) => {
 });
 
 const shareInstagram = catchAsync(async (req, res) => {
-  const instagram = new Instagram(req, res);
+  const  { igPageId, downloadableURLs, userAccessToken, caption } = req.body;
+
+  const instagram = new Instagram(igPageId, downloadableURLs, userAccessToken, caption);
 
   console.log(req.body);
 
   if (req.body.downloadableURLs.length == 1) {
-    instagram.singleMediaPosts();
-    return;
+    const id = instagram.singleMediaPosts();
+    
+    if (id != null)
+      res.send(id);
+    
+      return;
   }
 });
 

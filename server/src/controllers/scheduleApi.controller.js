@@ -50,7 +50,7 @@ const deleteApi = catchAsync(async (req, res) => {
     if (!api)
         return res.send(`No api details exists with given id ${req.params.id}`)
 
-    api.deleteOne(req.body)
+    api.deleteOne()
     return res.send('API deleted')
 })
 

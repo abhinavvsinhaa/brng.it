@@ -1,11 +1,16 @@
 const axios = require('axios')
 
 class Instagram {
-  req;
-  res;
-  constructor(request, response) {
-    this.req = request;
-    this.res = response;
+  pageId;
+  assetURL;
+  caption;
+  userAccessToken;
+  
+  constructor(pageId, assetURL, caption, userAccessToken) {
+    this.pageId = pageId;
+    this.assetURL = assetURL;
+    this.caption = caption;
+    this.userAccessToken = userAccessToken;
   }
 
   async singleMediaPosts() {
@@ -13,22 +18,28 @@ class Instagram {
       // create container
       var config = {
         method: 'post',
-        url: `${process.env.FACEBOOK_GRAPH_API_PREFIX_URL}/${this.req.body.igPageId}/media?image_url=${this.req.body.downloadableURLs[0]}&caption=${this.req.body.caption}`,
+        url: `${process.env.FACEBOOK_GRAPH_API_PREFIX_URL}/${this.pageId}/media?image_url=${this.assetURL[0]}&caption=${this.caption}`,
         headers: {
-          Authorization: `Bearer ${this.req.body.userAccessToken}`,
+          Authorization: `Bearer ${this.userAccessToken}`,
         },
       };
 
       const createdContainer = await axios(config);
-      // console.log(createdContainer);
 
       // publish container
-      config.url = `${process.env.FACEBOOK_GRAPH_API_PREFIX_URL}/${this.req.body.igPageId}/media_publish?creation_id=${createdContainer.data.id}`;
+      config.url = `${process.env.FACEBOOK_GRAPH_API_PREFIX_URL}/${this.pageId}/media_publish?creation_id=${createdContainer.data.id}`;
+    
       let publishedContainer = await axios(config);
+      
       console.log(publishedContainer.data);
 
+      
+      
+      if (publishedContainer.data.id)
+        return publishedContainer.data.id;
+      
       // todo: save details in DB
-      this.res.send(publishedContainer.data);
+      
     } catch (error) {
       console.error(error);
     }
