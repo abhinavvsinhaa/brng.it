@@ -10,7 +10,6 @@ const historySchema = mongoose.Schema(
     },
     postId: {
         type: String,
-        required: true
     },
     type: {
         type: String,

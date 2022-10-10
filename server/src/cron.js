@@ -1,34 +1,41 @@
 const CronJob = require('cron').CronJob
 const Fulfilled = require('./models/schedule-model/fulfilled.model')
 const UnFulfilled = require('./models/schedule-model/unfulfilled.model')
+const ScheduleApi = require('./models/schedule-model/scheduleApi.model')
 const Suspended = require('./models/schedule-model/suspended.model')
-const axios = require('axios');
-const Instagram = require('./utils/Instagram');
+const { Instagram } = require('./utils/Instagram')
 
 const getUnFulfilledRequests = async () => {
 	console.log(`running search at ${new Date().getTime()}`)
-	const requests = await UnFulfilled.find({})
+	const requests = await UnFulfilled.find({}).populate("apiId")
 	requests.map(async request => {
-		if (request.date <= Math.floor(new Date()/1000)) {
-			const instagram = new Instagram(request.pageId, request.assetURL, request.caption, request.userAccessToken);
+		if (request.apiId.date <= Math.floor(new Date()/1000)) {
+			const { pageId, assetURL, caption, accessToken } = request.apiId
+			const instagram = new Instagram(pageId, assetURL, caption, accessToken);
 
 			// single media posts
-			if (request.assetURL.length == 1) {
+			if (assetURL.length == 1) {
 				const id = await instagram.singleMediaPosts();
 				if (id) {
 					// add into fulfilled
 					const fulfilled = new Fulfilled({
-						apiId: request._id
+						apiId: request.apiId
 					})
 					await fulfilled.save();
+					await ScheduleApi.findByIdAndUpdate(request.apiId, {
+						status: 'fulfilled'
+					})
 				}
 	
 				else {
 					// add into suspended 
 					const suspended = new Suspended({
-						apiId: request._id
+						apiId: request.apiId
 					})
 					await suspended.save();
+					await ScheduleApi.findByIdAndUpdate(request.apiId, {
+						status: 'suspended'
+					})
 				}
 	
 				// remove from unfulfilled

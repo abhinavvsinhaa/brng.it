@@ -255,7 +255,6 @@ const Share = () => {
       const searchTarget = res.data.facebookSub;
       searchTarget.map((found) => {
         if (found.instagram.id == selectedCustomerDetails.key) {
-
           const ig = new shareInstagram(selectedCustomerDetails.key, res.data.facebook)
           ig.shareNow(caption, filesUpload, downloadableURLs, auth.user.id);
         }
@@ -356,43 +355,6 @@ const Share = () => {
     fetchCustomers();
   };
 
-  // const shareScheduled = async (unixTimeStamp) => {
-  //   // * check which platform to post on or schedule posts
-  //   if (facebook != null) {
-  //     // find details about the selected subscription
-  //     const res = await axios.get(`/users/${auth.user.id}`);
-  //     const searchTarget = res.data.facebookSub;
-  //     searchTarget.map((found) => {
-  //       if (found.id == selectedCustomerDetails.key) {
-  //         shareNowFacebook(
-  //           selectedCustomerDetails.key,
-  //           found.access_token,
-  //           res.data.facebook,
-  //           caption,
-  //           file,
-  //           unixTimeStamp
-  //         );
-  //       }
-  //     });
-  //   } else if (instagram != null) {
-  //     // find details about the selected subscription
-  //     const res = await axios.get(`/users/${auth.user.id}`);
-  //     const searchTarget = res.data.facebookSub;
-  //     searchTarget.map((found) => {
-  //       if (found.instagram.id == selectedCustomerDetails.key) {
-  //         console.log("found");
-  //         shareNowInstagram(
-  //           selectedCustomerDetails.key,
-  //           res.data.facebook,
-  //           caption,
-  //           filesUpload
-  //         );
-  //       }
-  //     });
-  //   } else if (linkedin != null) {
-  //   }
-  // }
-
   const handleCloseScheduleModalOKClick = async () => {
     if (scheduledTime == "" || scheduledDate == "")
       return openNotificationWithIcon("error", "Please select time and date");
@@ -424,6 +386,19 @@ const Share = () => {
           let fileURL;
           let link;
           fb.scheduleForLater(caption, fileURL, link, unixTimeStamp, auth.user.id)
+        }
+      });
+    }
+
+    else if (instagram != null) {
+      // find details about the selected subscription
+      const res = await axios.get(`/users/${auth.user.id}`);
+      const searchTarget = res.data.facebookSub;
+      searchTarget.map((found) => {
+        if (found.instagram.id == selectedCustomerDetails.key) {
+          const ig = new shareInstagram(selectedCustomerDetails.key, res.data.facebook)
+
+          ig.schedule(caption, filesUpload, downloadableURLs, auth.user.id, unixTimeStamp);
         }
       });
     }

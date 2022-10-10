@@ -1,4 +1,5 @@
 const axios = require('axios')
+const History = require('../models/history.model')
 
 class Instagram {
   pageId;
@@ -32,14 +33,10 @@ class Instagram {
       let publishedContainer = await axios(config);
       
       console.log(publishedContainer.data);
-
       
-      
-      if (publishedContainer.data.id)
+      if (publishedContainer.data.id) {
         return publishedContainer.data.id;
-      
-      // todo: save details in DB
-      
+      }      
     } catch (error) {
       console.error(error);
     }

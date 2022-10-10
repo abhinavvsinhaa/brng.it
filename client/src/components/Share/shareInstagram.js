@@ -48,6 +48,32 @@ class shareInstagram {
       storeDetails(this.pageId, res.data.id, "normal", dt, "instagram", userId);
     }
   }
+
+  async schedule(caption, filesUploaded, downloadableURLs, userId, unixTimeStamp) {
+    if (filesUploaded.length == 0) {
+      openNotificationWithIcon("error", "Please upload at least one file.");
+      return;
+    }
+
+    if (filesUploaded.length > 10) {
+      openNotificationWithIcon("error", "Can't upload more than 10 files.");
+      return;
+    }
+
+    console.log('calling this function')
+
+    const res = await axiosPrivate.post('/schedule', {
+      accessToken: this.userAccessToken,
+      pageId: this.pageId,
+      assetURL: downloadableURLs,
+      userId,
+      date: unixTimeStamp,
+      caption,
+      link: []
+    })
+
+    console.log(res.data)
+  }
 }
 
 export default shareInstagram;

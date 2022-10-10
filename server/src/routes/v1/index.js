@@ -8,6 +8,7 @@ const callbackRoute = require('./callback.route');
 const docsRoute = require('./docs.route');
 const shareRoute = require('./share.route')
 const historyRoute = require('./history.route')
+const scheduleRoute = require('./schedule.route')
 const config = require('../../config/config');
 
 const router = express.Router();
@@ -45,6 +46,10 @@ const defaultRoutes = [
   {
     path: '/history',
     route: historyRoute
+  },
+  {
+    path: '/schedule',
+    route: scheduleRoute
   }
 ];
 

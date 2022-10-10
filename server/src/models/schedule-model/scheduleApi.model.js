@@ -33,7 +33,6 @@ const scheduleApiSchema = mongoose.Schema(
         type: String
     },
     link: [String],
-    files: [String]
   },
   {
     timestamps: true,

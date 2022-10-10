@@ -3,26 +3,28 @@ const ScheduleApi = require('../models/schedule-model/scheduleApi.model')
 const Unfulfilled = require('../models/schedule-model/unfulfilled.model')
 
 const createApi = catchAsync(async (req, res) => {
-    const { headers, url, method, userId, date } = req.body;
+    const { accessToken, pageId, assetURL, date, caption, link, userId } = req.body;
 
-    if (headers.length != 0 && url && method && userId && date) {
+    // if (headers.length != 0 && url && method && userId && date) {
         const api = new ScheduleApi({
-            headers,
-            url,
-            method,
+            accessToken,
+            pageId,
+            assetURL,
             userId,
-            date
+            date,
+            caption,
+            link,
         })
 
         await api.save();
         
-        const unfulfilled = new Unfulfilled({ id: api._id })
+        const unfulfilled = new Unfulfilled({ apiId: api._id })
         unfulfilled.save()
 
         return res.send(api);
-    }
+    // }
 
-    else 
+    // else 
         return res.send('Some parameter is missing in creating scheduled API')
 
 })

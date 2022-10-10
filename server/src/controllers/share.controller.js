@@ -161,39 +161,6 @@ const shareFacebook = catchAsync(async (req, res) => {
     return;
   }
 
-  // let url = `${process.env.FACEBOOK_GRAPH_API_PREFIX_URL}/${req.body.pageId}/`;
-
-  // if (req.body.fileURL) {
-  //   url += `photos?url=${req.body.fileURL}`;
-  //   if (req.body.caption) url += `&message=${req.body.caption}`;
-  // } else {
-  //   url += `feed/?`;
-  //   if (req.body.caption) url += `message=${req.body.caption}`;
-  // }
-
-  // // todo: add link to feed
-  // // if (req.body.link)
-  // //   url += `&link=${req.body.link}`
-
-  // console.log(url);
-
-  // var config = {
-  //   method: 'post',
-  //   url: `${url}&access_token=${req.body.pageAccessToken}`,
-  //   headers: {
-  //     Authorization: `Bearer ${req.body.userAccessToken}`,
-  //   },
-  // };
-
-  // axios(config)
-  //   .then(function (response) {
-  //     console.log(JSON.stringify(response.data));
-  //     res.send(response.data);
-  //   })
-  //   .catch(function (error) {
-  //     console.log(error);
-  //   });
-
   const facebook = new Facebook(req, res);
   if (req.body.unixTimeStamp) facebook.schedule();
   else facebook.publish();
@@ -202,7 +169,7 @@ const shareFacebook = catchAsync(async (req, res) => {
 const shareInstagram = catchAsync(async (req, res) => {
   const  { igPageId, downloadableURLs, userAccessToken, caption } = req.body;
 
-  const instagram = new Instagram(igPageId, downloadableURLs, userAccessToken, caption);
+  const instagram = new Instagram(igPageId, downloadableURLs, caption, userAccessToken);
 
   console.log(req.body);
 
