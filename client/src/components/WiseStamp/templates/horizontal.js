@@ -8,17 +8,24 @@ export default function HorizontalTemplate({variableInput,design,setDesign}){
         setDesign(updatedVariable)
     },[])
     return(
-        <div style={{padding: "30px",display:'grid',gridTemplateColumns:'1fr 4fr',gap:'15px',width:'635px'}}>
-                    <div>
+        <table style={{padding: "30px",display:'grid',gridTemplateColumns:'1fr 4fr',gap:'15px',width:'635px'}}>
+            <tbody>
+                <tr>
+                    <td style={{width:'85px',display:'grid'}}>
                     <div style={{display:'grid',placeContent:'center',paddingRight:'10px'}}>
                     {variableInput.url===""?<img src={defsign} alt="User"/>:<img src={`https://wisestamp-api.herokuapp.com/${variableInput.url}`} style={{width:'125px'}} alt="User"/>}
                     </div>
-                    </div>
-                    <div style={{width:'fit-content'}}>
+                    </td>
+                    <td style={{width:'fit-content'}}>
+                        <table>
+                            <tbody>
+                                <tr>
                         <div style={{borderBottom:'solid 2px #BDBDBD'}}>
                             <div style={{color:'#45668E',fontSize:'16px',lineHeight:'1.2',fontWeight:'bold',textTransform:'initial',letterSpacing:'0px'}}>{variableInput.name}</div>
                             <p style={{marginBottom:'10px',color:'#646464',fontSize:'13px',lineHeight:'1.2',fontWeight:'bold',textTransform:'initial'}}>{variableInput.titleSign}{ (variableInput.company === "") ? <>Hello</> : <>, &nbsp;</>}{variableInput.company}</p>
                         </div>
+                        </tr>
+                        <tr>
                     <p style={{paddingTop:'14px',fontSize:'11px',color:'#212121',whiteSpace:'nowrap'}}>
                     {
                             variableInput.phone===""?
@@ -47,6 +54,8 @@ export default function HorizontalTemplate({variableInput,design,setDesign}){
                         <br/>
                         <div style={{paddingTop:'10px',paddingBottom:'10px',fontSize:'11px'}}>{variableInput.address}</div>
                         </p>
+                        </tr>
+                        <tr>
                         <div style={{display:'grid','gridAutoFlow':'column','width':'fit-content','gridGap':'10px'}}>
                         {
                            variableInput.fb === ""?'':<a href={`https://www.facebook.com/${variableInput.fb}`}>
@@ -91,7 +100,12 @@ export default function HorizontalTemplate({variableInput,design,setDesign}){
                             </a>
                         }
                     </div>
-                    </div>
-                </div>
+                    </tr>
+                    </tbody>
+                    </table>
+                    </td>
+                    </tr>
+                    </tbody>
+                </table>
     )
 }

@@ -76,7 +76,7 @@ export default function Disclaimer({extraFields,onClose}){
                         <div className="bg-[#292c33] text-white pl-[8px] py-[3px]">New Message</div>
                         <div id="custom-button">
                             <div style={{'margin-left':'10px','margin-top':'10px','display':'grid','height':'1px','borderTop':'1px solid black'}}></div>
-                            <div style={{'margin-left':'10px','fontSize':`${fontSize}px`,'color':fontColor,'paddingTop':'10px','textAlign':`${alignment==='l'?'left':alignment==='m'?'center':'right'}`}}>
+                            <div style={{'margin-left':'10px','marginBottom':'10px','fontSize':`${fontSize}px`,'color':fontColor,'paddingTop':'10px','textAlign':`${alignment==='l'?'left':alignment==='m'?'center':'right'}`}}>
                                 {disclaimerarr[disclaimer]}
                             </div>
                             

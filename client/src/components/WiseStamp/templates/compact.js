@@ -9,15 +9,28 @@ export default function CompactTemplate({variableInput,design,setDesign}){
         setDesign(updatedVariable)
     },[])
     return(
-        <div style={{fontFamily:design.font,padding: "30px",display:'grid',gridTemplateRows:'auto auto',width:'635px'}}>
-                    <div style={{display:'grid',gap:design.lineSpacing*10+'px',gridTemplateColumns:'auto 1fr'}}>
+        <table style={{fontFamily:design.font,margin: "30px"}}>
+            <tbody>
+                <tr>
+                    <td style={{display:'grid',width:'65px',marginRight:'20px'}}>
+                    <div style={{display:'grid',gap:design.lineSpacing*10+'px'}}>
                     {variableInput.url===""?<a href={design.imageLink}><img style={{borderRadius: design.imageShape==='rect'?'':design.imageShape==='round'?'10px':'100px'}} src={defsign} alt="User"/></a>:<img src={`https://wisestamp-api.herokuapp.com/${variableInput.url}`} style={{width:'125px',borderRadius:'100%'}} alt="User"/>}
-                    <div style={{display:'grid',alignContent:'center'}}>
+                    </div>
+                    </td>
+                    <td>
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                    <div style={{display:'grid',alignContent:'center'}}>
                             <div style={{color:design.templateColor,fontSize:(design.fontSize*16)+'px',lineHeight:'1.2',fontWeight:'bold',textTransform:'initial',letterSpacing:'0px'}}>{variableInput.name}</div>
                             <p style={{marginBottom:'10px',color:'#45668E',fontSize:(design.fontSize*14),lineHeight:'1.2',fontWeight:'bold',textTransform:'initial'}}>{variableInput.titleSign}{ (variableInput.company === "") ? <></> : <>, &nbsp;</>}<div>{variableInput.company}</div></p>
                     </div>
-                    </div>
-                    <div style={{paddingLeft:'90px',width:'fit-content',display:'grid',gridTemplateRows:'1fr auto'}}>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                    <div style={{width:'fit-content',display:'grid',gridTemplateRows:'1fr auto'}}>
                     <p style={{display:'grid',gap:'5px',fontSize:'11px',color:'#212121',whiteSpace:'pre-line',width:'fit-content',maxWidth:'420px',lineHeight:'20px'}}>
                         {
                             variableInput.phone===""?
@@ -183,6 +196,13 @@ export default function CompactTemplate({variableInput,design,setDesign}){
                         }
                     </div>
                     </div>
-                </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                    </tr>
+                    </tbody>
+                </table>
     )
 }

@@ -10,13 +10,24 @@ export default function WideTemplate({variableInput,design,setDesign}){
         setDesign(updatedVariable)
     },[])
     return(
-        <div style={{fontFamily:design.font,padding: "30px",display:'grid',gridTemplateColumns:'1fr 4fr',gap:design.lineSpacing*15+'px',width:'635px'}}>
-                    <div>
+        <table style={{fontFamily:design.font,padding: "30px",display:'grid',gap:design.lineSpacing*15+'px',width:'635px'}}>
+            <tbody>
+                <tr>
+                    <td style={{display:'grid',"placeContent":'baseline'}}>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>
                     <div style={{display:'grid',placeContent:'center',alignSelf:design.imagePosition,paddingRight:design.lineSpacing*10+'px'}}>
                     {/* <div style={{display:'grid',placeContent:'center',alignSelf:design.imagePosition,paddingRight:design.lineSpacing*10+'px'}}> */}
                     {variableInput.url===""?<img src={defsign} alt="User"/>:<img src={`https://wisestamp-api.herokuapp.com/${variableInput.url}`} style={{width:'125px'}} alt="User"/>}
                     </div>
-                    </div>
+                    </td>
+                    </tr>
+                    </tbody>
+                    </table>
+                    </td>
+                    <td>
                     <div style={{width:'fit-content'}}>
                         <div style={{borderBottom:'solid 2px #BDBDBD',display:'grid',gridTemplateColumns:'auto 1fr',gap:'20px'}}>
                             <div>
@@ -97,6 +108,9 @@ export default function WideTemplate({variableInput,design,setDesign}){
                         <div style={{paddingTop:'10px',paddingBottom:'10px',fontSize:'11px'}}>{variableInput.address}</div>
                         </p>
                     </div>
-                </div>
+                    </td>
+                    </tr>
+                    </tbody>
+                </table>
     )
 }
