@@ -5,6 +5,7 @@ const catchAsync = require('../utils/catchAsync');
 const axios = require('axios');
 const { Instagram } = require('../utils/Instagram');
 const { Facebook } = require('../utils/Facebook');
+const { Linkedin } = require('../utils/Linkedin')
 
 const shareImage = async (access_token, author, digitalMediaAsset, caption) => {
   var config = {
@@ -119,6 +120,9 @@ const share = catchAsync(async (req, res) => {
     registerImage(req.body.author, req.body.access_token, req.body.file, req.body.caption);
     return res.send('got your file');
   }
+
+  const linkedin = new Linkedin('hey', 'authr', 'wq', '')
+  // linkedin.
 
   let config = {
     method: 'post',
