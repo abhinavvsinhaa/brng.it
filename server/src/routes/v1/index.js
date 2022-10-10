@@ -7,6 +7,7 @@ const urlCollectionRoute = require('./url-collection.route');
 const callbackRoute = require('./callback.route');
 const docsRoute = require('./docs.route');
 const shareRoute = require('./share.route')
+const historyRoute = require('./history.route')
 const config = require('../../config/config');
 
 const router = express.Router();
@@ -40,6 +41,10 @@ const defaultRoutes = [
   {
     path: '/share',
     route: shareRoute
+  },
+  {
+    path: '/history',
+    route: historyRoute
   }
 ];
 

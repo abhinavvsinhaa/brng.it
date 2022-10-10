@@ -25,7 +25,7 @@ const Login = () => {
       const res = await axiosIgnoreInterceptor.post("/auth/login", {
         email,
         password,
-      });
+      }); 
       setError("");
       setAuth({ ...res?.data, isAuthenticated: true });
       setLoading(false);
