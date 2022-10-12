@@ -62,6 +62,7 @@ const ConnectNewChannel = () => {
     )
       .then((response) => response.json())
       .then(async (result) => {
+        console.log(result)
         console.log(result.access_token);
         res = await axios.patch(`/users/${user.id}`, {
           facebook: result.access_token,
@@ -75,7 +76,8 @@ const ConnectNewChannel = () => {
           }
         )
           .then((response) => response.json())
-          .then(async (result) => {            
+          .then(async (result) => {  
+            console.log(result)          
             res = await axiosPrivate.patch(
               `/users/${user.id}/subs?f=true`,
               result.data
