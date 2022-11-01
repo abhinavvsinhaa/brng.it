@@ -1,4 +1,6 @@
 import { axiosPrivate } from "../../api/axios";
+import dateToStoreInDb from "../../util/dateToStoreInDb";
+import openNotificationWithIcon from "../../util/openNotificationWithIcon";
 import storeDetails from "./storeDetails";
 
 class shareFacebook {
@@ -12,12 +14,13 @@ class shareFacebook {
   }
 
   async shareNow(caption, fileURL, link, userId) {
+    console.log('downloadableURLs', fileURL);
     const res = await axiosPrivate.post(`/share/fb`, {
       pageId: this.pageId,
       pageAccessToken: this.pageAccessToken,
       userAccessToken: this.userAccessToken,
       caption,
-      fileURL,
+      downloadableURLs: fileURL,
       link,
     });
 
@@ -25,18 +28,12 @@ class shareFacebook {
     console.log(res);
 
     if (res.data.id) {
-      let dt = new Date();
-      dt =
-        dt.getDate() +
-        "/" +
-        (dt.getMonth() + 1) +
-        "/" +
-        dt.getFullYear() +
-        " @ " +
-        dt.getHours() +
-        ":" +
-        dt.getMinutes();
-      storeDetails(this.pageId, res.data.id, "normal", dt, "facebook", userId);
+      storeDetails(this.pageId, res.data.id, "normal", dateToStoreInDb(null), "facebook", userId);
+      openNotificationWithIcon("Post shared")
+    }
+
+    else {
+      openNotificationWithIcon("error", "Post could not be shared", "Please refresh the page and try again.")
     }
   }
 
@@ -53,18 +50,7 @@ class shareFacebook {
 
     console.log(res);
     if (res.data.id) {
-      let dt = new Date(unixTimeStamp*1000)
-      dt =
-        dt.getDate() +
-        "/" +
-        (dt.getMonth() + 1) +
-        "/" +
-        dt.getFullYear() +
-        " @ " +
-        dt.getHours() +
-        ":" +
-        dt.getMinutes();
-      storeDetails(this.pageId, res.data.id, "schedule", dt, "facebook", userId);
+      storeDetails(this.pageId, res.data.id, "schedule", dateToStoreInDb(unixTimeStamp), "facebook", userId);
     }
   }
 }

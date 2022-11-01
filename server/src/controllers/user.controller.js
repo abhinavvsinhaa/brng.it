@@ -40,10 +40,15 @@ const updateUser = catchAsync(async (req, res) => {
 const addSubscription = catchAsync(async (req, res) => {
   if (req.query.f === 'true') {
     const user = await userService.updateUserByIdAndAddSubscription(req.params.userId, req.body, 'facebook')
-    res.send('user');
+    res.send(user);
   }
 
-  // todo: for instagram and linkedin
+  // todo: for linkedin
+  if (req.query.linkedin === 'true') {
+    console.log('calling linkedin subs add');
+    const user = await userService.updateUserByIdAndAddSubscription(req.params.userId, req.body, 'linkedin')
+    res.send(user)
+  }
 })
 
 const searchSubscriptionData = catchAsync(async (req, res) => {

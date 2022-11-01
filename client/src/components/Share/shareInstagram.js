@@ -1,4 +1,5 @@
 import { axiosPrivate } from "../../api/axios";
+import dateToStoreInDb from "../../util/dateToStoreInDb";
 import openNotificationWithIcon from "../../util/openNotificationWithIcon";
 import storeDetails from "./storeDetails";
 
@@ -34,18 +35,12 @@ class shareInstagram {
     console.log(res);
     // successfuly posted
     if (res.data.id) {
-      let dt = new Date();
-      dt =
-        dt.getDate() +
-        "/" +
-        (dt.getMonth() + 1) +
-        "/" +
-        dt.getFullYear() +
-        " @ " +
-        dt.getHours() +
-        ":" +
-        dt.getMinutes();
-      storeDetails(this.pageId, res.data.id, "normal", dt, "instagram", userId);
+      storeDetails(this.pageId, res.data.id, "normal", dateToStoreInDb(null), "instagram", userId);
+      openNotificationWithIcon("Post shared")
+    }
+
+    else {
+      openNotificationWithIcon("error", "Post could not be shared", "Please refresh the page and try again.")
     }
   }
 

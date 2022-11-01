@@ -10,6 +10,8 @@ const shareRoute = require('./share.route')
 const historyRoute = require('./history.route')
 const scheduleRoute = require('./schedule.route')
 const config = require('../../config/config');
+const addTeamMemberRoute = require('./addTeamMember.route')
+const getUploadUrlRoute = require('./getUploadUrl.route')
 
 const router = express.Router();
 
@@ -50,6 +52,14 @@ const defaultRoutes = [
   {
     path: '/schedule',
     route: scheduleRoute
+  },
+  {
+    path: '/addteammember',
+    route: addTeamMemberRoute
+  },
+  {
+    path: '/uploadurl',
+    route: getUploadUrlRoute
   }
 ];
 

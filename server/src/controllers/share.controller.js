@@ -116,46 +116,16 @@ const registerImage = async (author, access_token, file, caption) => {
 const share = catchAsync(async (req, res) => {
   // if (req.query.linkedin == true) {
 
-  if (req.body.file != '') {
-    registerImage(req.body.author, req.body.access_token, req.body.file, req.body.caption);
-    return res.send('got your file');
-  }
+  // if (req.body.file != '') {
+  //   registerImage(req.body.author, req.body.access_token, req.body.file, req.body.caption);
+  //   return res.send('got your file');
+  // }
 
-  const linkedin = new Linkedin('hey', 'authr', 'wq', '')
-  // linkedin.
+  const linkedin = new Linkedin(req.body.access_token, req.body.author, req.body.caption, req.body.file)
 
-  let config = {
-    method: 'post',
-    url: 'https://api.linkedin.com/v2/ugcPosts',
-    headers: {
-      Authorization: `Bearer ${req.body.access_token}`,
-      'Content-Type': 'application/json',
-    },
-    data: JSON.stringify({
-      author: `urn:li:person:${req.body.author}`,
-      lifecycleState: 'PUBLISHED',
-      specificContent: {
-        'com.linkedin.ugc.ShareContent': {
-          shareCommentary: {
-            text: `${req.body.caption}`,
-          },
-          shareMediaCategory: 'NONE',
-        },
-      },
-      visibility: {
-        'com.linkedin.ugc.MemberNetworkVisibility': 'PUBLIC',
-      },
-    }),
-  };
-
-  axios(config)
-    .then(function (response) {
-      res.send(response);
-    })
-    .catch(function (error) {
-      console.log(error);
-      res.send(error);
-    });
+  const response = await linkedin.postWithoutPhoto();
+  console.log(response);
+  return res.send(response);
 });
 
 const shareFacebook = catchAsync(async (req, res) => {
@@ -166,8 +136,23 @@ const shareFacebook = catchAsync(async (req, res) => {
   }
 
   const facebook = new Facebook(req, res);
-  if (req.body.unixTimeStamp) facebook.schedule();
-  else facebook.publish();
+  console.log(req.body)
+  if (req.body.downloadableURLs.length > 1) {
+    console.log('calling upload multiple photos');
+    facebook.uploadMultiplePhotos();
+    return;
+  }
+
+  // single photo post and share now
+  else if (req.body.downloadableURLs.length <= 1 && !req.body.unixTimeStamp) {
+    console.log('calling single photo post share now');
+    facebook.publish();
+  }
+
+  // single photo post publish
+  else if (req.body.downloadableURLs.length <= 1 && req.body.unixTimeStamp) {
+    facebook.schedule();
+  } 
 });
 
 const shareInstagram = catchAsync(async (req, res) => {
@@ -184,6 +169,11 @@ const shareInstagram = catchAsync(async (req, res) => {
       res.send(id);
     
       return;
+  }
+
+  else if (req.body.downloadableURLs.length > 1 && req.body.downloadableURLs.length <= 10) {
+    const id = instagram.uploadPhotosCarousel();
+    res.send(id);
   }
 });
 

@@ -142,7 +142,7 @@ const updateUserByIdAndAddSubscription = async (userId, updateBody, platform) =>
     mp.set(sub.id, index);
   });
 
-  if (platform == 'facebook' || platform == 'instagram' || platform == 'linkedin') {
+  if (platform == 'facebook') {
     console.log(updateBody)
     updateBody.map(async (data) => {
       var config = {
@@ -164,7 +164,7 @@ const updateUserByIdAndAddSubscription = async (userId, updateBody, platform) =>
           {
             $push: { facebookSub: data },
           },
-          { $new: true }
+          { new: true }
         );
       } else {
         let idx = mp.get(`${data.id}`);
@@ -172,6 +172,33 @@ const updateUserByIdAndAddSubscription = async (userId, updateBody, platform) =>
         user.save();
       }
     });
+  }
+
+  else if (platform == 'linkedin') {
+    let m = new Map();
+    user.linkedinSub.map((account, i) => {
+      m.set(account.id, i);
+    })
+
+    // for single personal account
+    // user already exists
+    if (!m.has(updateBody.id)) {
+      console.log('didnt found user');
+      user = await User.findByIdAndUpdate(
+        userId,
+        {
+          $push: { linkedinSub: updateBody }
+        },
+        {
+          new: true
+        }
+      )
+    } else {
+      console.log('found user');
+      const i = m.get(updateBody.id)
+      user.linkedinSub[i] = updateBody
+      user.save()
+    }
   }
 
   return user;

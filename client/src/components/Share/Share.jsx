@@ -17,12 +17,13 @@ import { v4 } from "uuid";
 import { storage } from "../../util/Firebase";
 import { ref, getDownloadURL, uploadBytes, getStorage, uploadBytesResumable } from "firebase/storage";
 import shareFacebook from "./shareFacebook"
-import storeDetails from './storeDetails'
 import shareInstagram from "./shareInstagram";
+import shareLinkedIn from "./shareLinkedin";
 
 import fb1 from "../../assets/images/fb1.png";
 import fb2 from "../../assets/images/fb2.png";
 import Facebook from "@mui/icons-material/Facebook";
+import CircularProgress from '@mui/material/CircularProgress';
 
 const { TabPane } = Tabs;
 const { Search } = Input;
@@ -94,6 +95,8 @@ const Share = () => {
   const [file, setFile] = useState("");
   const [filesPreview, setFilesPreview] = useState([]);
   const [filesUpload, setFilesUpload] = useState([]);
+
+  // store links of file after uploading
   const [downloadableURLs, setDownloadableURLs] = useState([]);
 
   // storing platforms details to perform actions
@@ -104,72 +107,73 @@ const Share = () => {
     useState(null);
 
   const [checkboxOptions, setCheckboxOptions] = useState([]);
+  const [loadWhilePosting, setLoadWhilePosting] = useState(false)
 
   const uploadFiles = async (f) => {
     // if (filesUpload == []) return null;
 
     // .map(async (file) => {
-      let uid = v4();
+    let uid = v4();
 
-      // const metadata = {
-      //   contentType: "image/*",
-      // };
-      // const storage = getStorage();
-      const storageRef = ref(storage, `/image/${uid}-${f.name}`);
-      // const uploadTask = uploadBytesResumable(storageRef, file, metadata);
+    // const metadata = {
+    //   contentType: "image/*",
+    // };
+    // const storage = getStorage();
+    const storageRef = ref(storage, `/image/${uid}-${f.name}`);
+    // const uploadTask = uploadBytesResumable(storageRef, file, metadata);
 
-      // // Listen for state changes, errors, and completion of the upload.
-      // uploadTask.on(
-      //   "state_changed",
-      //   (snapshot) => {
-      //     // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-      //     const progress =
-      //       (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-      //     console.log("Upload is " + progress + "% done");
-      //     switch (snapshot.state) {
-      //       case "paused":
-      //         console.log("Upload is paused");
-      //         break;
-      //       case "running":
-      //         console.log("Upload is running");
-      //         break;
-      //     }
-      //   },
-      //   (error) => {
-      //     // A full list of error codes is available at
-      //     // https://firebase.google.com/docs/storage/web/handle-errors
-      //     switch (error.code) {
-      //       case "storage/unauthorized":
-      //         // User doesn't have permission to access the object
-      //         break;
-      //       case "storage/canceled":
-      //         // User canceled the upload
-      //         break;
+    // // Listen for state changes, errors, and completion of the upload.
+    // uploadTask.on(
+    //   "state_changed",
+    //   (snapshot) => {
+    //     // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+    //     const progress =
+    //       (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+    //     console.log("Upload is " + progress + "% done");
+    //     switch (snapshot.state) {
+    //       case "paused":
+    //         console.log("Upload is paused");
+    //         break;
+    //       case "running":
+    //         console.log("Upload is running");
+    //         break;
+    //     }
+    //   },
+    //   (error) => {
+    //     // A full list of error codes is available at
+    //     // https://firebase.google.com/docs/storage/web/handle-errors
+    //     switch (error.code) {
+    //       case "storage/unauthorized":
+    //         // User doesn't have permission to access the object
+    //         break;
+    //       case "storage/canceled":
+    //         // User canceled the upload
+    //         break;
 
-      //       // ...
+    //       // ...
 
-      //       case "storage/unknown":
-      //         // Unknown error occurred, inspect error.serverResponse
-      //         break;
-      //     }
-      //   },
-      //   () => {
-      //     // Upload completed successfully, now we can get the download URL
-      //     getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-      //       console.log("File available at", downloadURL);
-      //       setDownloadableURLs([...downloadableURLs, downloadURL]);
-      //     });
-      //   }
-      // );
+    //       case "storage/unknown":
+    //         // Unknown error occurred, inspect error.serverResponse
+    //         break;
+    //     }
+    //   },
+    //   () => {
+    //     // Upload completed successfully, now we can get the download URL
+    //     getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+    //       console.log("File available at", downloadURL);
+    //       setDownloadableURLs([...downloadableURLs, downloadURL]);
+    //     });
+    //   }
+    // );
 
-      // // uploading file
-      // const snapshot = await uploadBytes(storageRef, file);
-      // console.log("Uploaded a blob or file!", snapshot.ref.toString());
-      // const url = await getDownloadURL(
-      //   ref(storage, `image/${uid}-${f.name}`)
-      // );
-      // console.log(url);
-      // setDownloadableURLs([...downloadableURLs, url]);
+    // // uploading file
+    // const snapshot = await uploadBytes(storageRef, file);
+    // console.log("Uploaded a blob or file!", snapshot.ref.toString());
+    // const url = await getDownloadURL(
+    //   ref(storage, `image/${uid}-${f.name}`)
+    // );
+    // console.log(url);
+    // setDownloadableURLs([...downloadableURLs, url]);
     // });
 
     var formdata = new FormData();
@@ -188,34 +192,6 @@ const Share = () => {
         setDownloadableURLs([...downloadableURLs, result.data.url])
       })
       .catch(error => console.log('error', error));
-  };
-
-  // share now function for instagram
-  const shareNowInstagram = async (
-    igPageId,
-    userAccessToken,
-    caption,
-    filesUpload
-  ) => {
-    if (filesUpload.length == 0) {
-      openNotificationWithIcon("error", "Please upload at least one file.");
-      return;
-    }
-
-    if (filesUpload.length > 10) {
-      openNotificationWithIcon("error", "Can't upload more than 10 files.");
-      return;
-    }
-
-    // await uploadFiles(filesUpload);
-    const res = await axiosPrivate.post(`/share/ig`, {
-      igPageId,
-      userAccessToken,
-      caption,
-      downloadableURLs
-    });
-
-    console.log(res);
   };
 
   const handleShareNowButton = async () => {
@@ -244,9 +220,9 @@ const Share = () => {
       searchTarget.map((found) => {
         if (found.id == selectedCustomerDetails.key) {
           const fb = new shareFacebook(selectedCustomerDetails.key, res.data.facebook, found.access_token);
-          let fileURL;
+          // let fileURL;
           let link;
-          fb.shareNow(caption, fileURL, link, auth.user.id)
+          fb.shareNow(caption, downloadableURLs, link, auth.user.id)
         }
       });
     } else if (instagram != null) {
@@ -260,6 +236,38 @@ const Share = () => {
         }
       });
     } else if (linkedin != null) {
+      setLoadWhilePosting(true);
+
+      const res = await axiosPrivate.get(`/users/${auth.user.id}`)
+      const searchTarget = res.data.linkedinSub
+
+      searchTarget.map(async found => {
+        if (found.id == selectedCustomerDetails.key) {
+          const promises = filesUpload.map(async f => {
+            const binaries = new Promise((resolve, reject) => {
+              let reader = new FileReader();
+
+              reader.onload = function (e) {
+                resolve(e.target.result);
+              }
+
+              reader.onerror = function (e) {
+                console.log('error in reading file: ', e.type);
+              }
+
+              reader.readAsBinaryString(f);
+            })
+
+            return binaries;
+          })
+
+          const binaryFiles = await Promise.all(promises);
+
+          const linkedin = new shareLinkedIn(selectedCustomerDetails.key, caption, found.access_token, binaryFiles);
+
+          linkedin.shareNowLinkedIn(auth.user.id);
+        }
+      })
     }
   };
 
@@ -291,7 +299,7 @@ const Share = () => {
       setFacebook(selectedCustomerDetails);
     else if (selectedCustomerDetails.platform == "Instagram")
       setInstagram(selectedCustomerDetails);
-    else if (selectedCustomerDetails.platform == "Linkedin")
+    else if (selectedCustomerDetails.platform == "LinkedIn")
       setLinkedin(selectedCustomerDetails);
   };
 
@@ -310,12 +318,6 @@ const Share = () => {
       disabled: record.name === "Disabled User",
       name: record.name,
     }),
-  };
-
-  const checkboxMarked = (e) => {
-    // e -> will return an array of checked lists in sorted manner
-    console.log(e);
-    setSelectedPlatformsToPostOn(e);
   };
 
   // todo: make share now working
@@ -341,18 +343,21 @@ const Share = () => {
         }
       });
 
-      // todo: map for linkeding and instagram and push it to arrays
+      response.data.linkedinSub.map(async (sub) => {
+        let details = {
+          key: sub.id,
+          name: sub.localizedFirstName + " " + sub.localizedLastName,
+          platform: "LinkedIn"
+        }
+
+        array.push(details)
+      })
 
       setLoading(false);
       setCustomers(array);
     } catch (error) {
       console.log(error);
     }
-  };
-
-  const handleChooseAccountButton = () => {
-    setShowSearchModal(true);
-    fetchCustomers();
   };
 
   const handleCloseScheduleModalOKClick = async () => {
@@ -404,7 +409,7 @@ const Share = () => {
     }
   };
 
-  const onSearchSub = () => {};
+  const onSearchSub = () => { };
 
   useEffect(() => {
     fetchCustomers();
@@ -504,6 +509,9 @@ const Share = () => {
                 >
                   Share Post
                 </p>
+                {
+                  loadWhilePosting == true ? <CircularProgress /> : <></>
+                }
                 <p style={{ fontSize: "14px", opacity: 0.8 }}>
                   To share a post you see on your Feed, click or tap on Share
                   button to share now or you can also schedule the post on a
@@ -638,9 +646,12 @@ const Share = () => {
                           className="custom-file-input"
                           style={{ display: "none" }}
                         />
-                        <label htmlFor="image" className="url-submit-btn">
-                          Upload
-                        </label>
+                        {
+                          selectedCustomerDetails &&
+                          <label htmlFor="image" className="url-submit-btn">
+                            Upload
+                          </label>
+                        }
                       </div>
                       {/* <div> */}
                       {/* </div> */}

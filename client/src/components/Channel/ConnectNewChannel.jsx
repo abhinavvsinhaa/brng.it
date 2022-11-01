@@ -36,11 +36,19 @@ const ConnectNewChannel = () => {
       setCode(arr[1]);
       console.log("code: " + arr[1]);
 
-      const res = await axios.get(`/authorization/callback?code=${arr[1]}`);
-      const response = await JSON.parse(res.data);
-      console.log(response);
-      const user = await axios.post("/authorization/user", response);
-      console.log(JSON.parse(user.data));
+      const res = await axiosPrivate.get(`/authorization/callback?code=${arr[1]}`);
+
+      console.log(res.data);
+
+      const user = await axiosPrivate.post("/authorization/user", res.data);
+      console.log(user.data);
+      
+      user.data.access_token = res.data.access_token
+      user.data.expires_in = res.data.expires_in
+
+      // Add user to db
+      const addUserToDb = await axiosPrivate.patch(`/users/${auth.user.id}/subs?linkedin=true`, user.data)
+      console.log(addUserToDb.data)
     }
   }
 
@@ -96,7 +104,7 @@ const ConnectNewChannel = () => {
   }
 
   React.useEffect(() => {
-    // loadData();
+    loadData();
   }, []);
 
   return (

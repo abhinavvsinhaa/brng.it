@@ -22,8 +22,7 @@ const callbackLinkedIn = catchAsync(async (req, res) => {
     request(options, function (error, response) {
       if (error) throw new Error(error);
       
-      console.log(response.body)
-      res.json(response.body)
+      res.send(response.body)
     });
 })
 
@@ -39,7 +38,7 @@ const getUserId = catchAsync(async (req, res) => {
 
   request(options, function (error, response) {
     if (error) throw new Error(error);
-    res.json(response.body);
+    res.send(response.body);
   });
   
 })

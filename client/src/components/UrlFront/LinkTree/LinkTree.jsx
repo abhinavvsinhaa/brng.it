@@ -17,7 +17,7 @@ const Preview = ({ data, css }) => {
   return (
     <div className="App">
       <div>
-        <ReactDevicePreview device="iphonex" scale="1">
+        <ReactDevicePreview device="iphonex" scale="0.75">
           <TreePreview data={data} css={css} />
         </ReactDevicePreview>
       </div>
@@ -28,14 +28,14 @@ const Preview = ({ data, css }) => {
 export default function LinkTree() {
   const [link, setLink] = useState("");
   const [linkName, setLinkName] = useState("");
-  const [description, setDescription] = useState("Description of your links!");
+  const [description, setDescription] = useState("Description of your links.");
   const [pfp, setPfp] = useState(
     "https://images.unsplash.com/photo-1529665253569-6d01c0eaf7b6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1085&q=80"
   );
   const [bgUrl, setBgUrl] = useState("");
   const [bg, setBG] = useState(null);
   const [dp, setDP] = useState(null);
-  const [ColMainUserName, setColMainUserName] = useState("Rhythm Shandlya");
+  const [ColMainUserName, setColMainUserName] = useState("Samuel Jones");
   const [colMainUrlArr, setColMainUrlArr] = useState([]);
   const [colMainUrl, setColMainUrl] = useState([]);
   const [treeUrl, setTreeUrl] = useState([]);
@@ -142,7 +142,7 @@ export default function LinkTree() {
 
   return (
     <div className="flex">
-      <div className="mx-20 my-10">
+      <div className="mx-10">
         <div className="row justify-content-center">
           <div>
             <div className="form-label urlHead">Linktree</div>
