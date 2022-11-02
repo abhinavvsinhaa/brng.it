@@ -10,6 +10,7 @@ import TreePreview from "../TreePreview";
 import { storage } from "../../../util/Firebase";
 import defaultThemes from "./defaultThemes";
 import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
+import uploadImageToS3 from "../../../util/uploadImageToS3";
 
 // TODO: create individual folder for each new user, otherwise image name can match, which will replace the previous image with same name or add UUID
 
@@ -51,30 +52,15 @@ export default function LinkTree() {
     "https://mfe-appearance.production.linktr.ee/images/selector-air-grey.4d1b030e5fd825ab08ecc1efe0e33a3a.png",
   ];
 
-  const handleLinkTreeProfilePictureImageUpload = () => {
+  const handleLinkTreeProfilePictureImageUpload = async () => {
     if (!dp) {
-      alert("Please choose a file");
+      openNotificationWithIcon("error", "Please select a file")
       return;
     }
 
-    // creating a reference inside bucket with file name
-    const storageRef = ref(storage, `/image/${dp.name}`);
-
-    // uploading file
-    uploadBytes(storageRef, dp)
-      .then((snapshot) => {
-        console.log("Uploaded a blob or file!", snapshot.ref.toString());
-        getDownloadURL(ref(storage, `image/${dp.name}`))
-          .then((url) => {
-            setPfp(url);
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    const url = await uploadImageToS3(dp);
+    // console.log(dp);
+    console.log(url)
   };
 
   const handleLinkTreeBackground = () => {
