@@ -13,7 +13,7 @@ const shortenSingleUrl = async (req, res, next) => {
     if (nameInDb) return next(new ApiError('Already Taken', 204, true));
     const newUrl = await Url.create({
       original: req.body.original,
-      short: process.env.SHORT_BASE + req.body.name,
+      short: "brng.it/" + req.body.name,
       uid: req.body.name,
     });
     return newUrl;
@@ -27,10 +27,10 @@ const shortenSingleUrl = async (req, res, next) => {
 
   //Check if the uid is already in use!
   let uuid = '';
-  let url = process.env.SHORT_BASE + (uuid = uid());
+  let url = "brng.it/" + (uuid = uid());
   let count = 0;
   while (await Url.findOne({ short: url })) {
-    url = process.env.SHORT_BASE + (uuid = uid());
+    url = "brng.it/" + (uuid = uid());
     if (count++ == 20) {
       return next(new ApiError('Try again later, or with a different length!', 204, true));
     }
@@ -57,10 +57,10 @@ const shortenMultipleUrlAsync = async (req, _res, next) => {
       multipleShortUrl.push(urlInDb);
     } else {
       let uuid = '';
-      let url = process.env.SHORT_BASE + (uuid = uid());
+      let url = "brng.it/" + (uuid = uid());
       let count = 0;
       while (await Url.findOne({ short: url })) {
-        url = process.env.SHORT_BASE + (uuid = uid());
+        url = "brng.it/" + (uuid = uid());
         if (count++ == 20) {
           return next(new ApiError('Try again later, or with a different length!', 204, true));
         }

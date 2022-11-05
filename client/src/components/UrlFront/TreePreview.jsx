@@ -50,10 +50,10 @@ const TreePreview = ({ data, css }) => {
         <div className="flex flex-col my-3 ">
           {data?.original?.map((p, i) => {
             return (
-              <div>
+              // <div>
                 <a
                   href="/"
-                  className="w-[80%] p-[20px] mx-auto my-2 text-center"
+                  className="w-[80%] mx-auto my-2 text-center py-3"
                   style={{
                     backgroundColor: css.link.bg,
                     fontSize: css.link.size,
@@ -65,9 +65,9 @@ const TreePreview = ({ data, css }) => {
                 >
                   {p.title}
                   <br />
-                  <p>{p.description}</p>
+                  <p style={{ margin: 0 }}>{p.description}</p>
                 </a>
-              </div>
+              // </div>
             );
           })}
         </div>

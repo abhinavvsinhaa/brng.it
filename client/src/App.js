@@ -22,6 +22,7 @@ import "./App.css";
 import Share from "./components/Share/Share";
 import WithNav from "./components/WithNav";
 import Team from "./components/Team/Team";
+import PrivacyPolicy from "./components/PrivacyPolicy/PrivacyPolicy";
 
 function App() {
   useEffect(() => {}, []);
@@ -33,6 +34,7 @@ function App() {
           <Route element={<WithNav />}>
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
+            <Route path="/termsofservice" element={<PrivacyPolicy />} />
           </Route>
           <Route path="/tree/:uid" element={<TreeUrlRedirect />} />
           <Route path="url/:uid" element={<UrlRedirect />} />
@@ -48,7 +50,7 @@ function App() {
             <Route path="/url" element={<UrlTabs />} />
             <Route path="/share" element={<Share />} />
             <Route path="/wisestamp" element={<WiseStamp />} />
-            <Route path='/team' element={<Team />} />
+            <Route path="/team" element={<Team />} />
             <Route path="*" element={<Error />} />
           </Route>
         </Routes>
