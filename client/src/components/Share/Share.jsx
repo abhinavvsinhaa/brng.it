@@ -24,6 +24,7 @@ import fb1 from "../../assets/images/fb1.png";
 import fb2 from "../../assets/images/fb2.png";
 import Facebook from "@mui/icons-material/Facebook";
 import CircularProgress from '@mui/material/CircularProgress';
+import uploadImageToS3 from "../../util/uploadImageToS3"
 
 const { TabPane } = Tabs;
 const { Search } = Input;
@@ -107,19 +108,18 @@ const Share = () => {
     useState(null);
 
   const [checkboxOptions, setCheckboxOptions] = useState([]);
-  const [loadWhilePosting, setLoadWhilePosting] = useState(false)
 
   const uploadFiles = async (f) => {
     // if (filesUpload == []) return null;
 
     // .map(async (file) => {
-    let uid = v4();
+    // let uid = v4();
 
     // const metadata = {
     //   contentType: "image/*",
     // };
     // const storage = getStorage();
-    const storageRef = ref(storage, `/image/${uid}-${f.name}`);
+    // const storageRef = ref(storage, `/image/${uid}-${f.name}`);
     // const uploadTask = uploadBytesResumable(storageRef, file, metadata);
 
     // // Listen for state changes, errors, and completion of the upload.
@@ -176,22 +176,25 @@ const Share = () => {
     // setDownloadableURLs([...downloadableURLs, url]);
     // });
 
-    var formdata = new FormData();
-    formdata.append("image", f, "file");
+    // var formdata = new FormData();
+    // formdata.append("image", f, "file");
 
-    var requestOptions = {
-      method: 'POST',
-      body: formdata,
-      redirect: 'follow'
-    };
+    // var requestOptions = {
+    //   method: 'POST',
+    //   body: formdata,
+    //   redirect: 'follow'
+    // };
 
-    fetch("https://api.imgbb.com/1/upload?expiration=600&key=43a9a1e2f210ad2d192a2249474a92cf", requestOptions)
-      .then(response => response.json())
-      .then(result => {
-        console.log(result)
-        setDownloadableURLs([...downloadableURLs, result.data.url])
-      })
-      .catch(error => console.log('error', error));
+    // fetch("https://api.imgbb.com/1/upload?expiration=600&key=43a9a1e2f210ad2d192a2249474a92cf", requestOptions)
+    //   .then(response => response.json())
+    //   .then(result => {
+    //     console.log(result)
+    //     setDownloadableURLs([...downloadableURLs, result.data.url])
+    //   })
+    //   .catch(error => console.log('error', error));
+
+    const url = await uploadImageToS3(f);
+    setDownloadableURLs([...downloadableURLs, url]);
   };
 
   const handleShareNowButton = async () => {
@@ -236,7 +239,6 @@ const Share = () => {
         }
       });
     } else if (linkedin != null) {
-      setLoadWhilePosting(true);
 
       const res = await axiosPrivate.get(`/users/${auth.user.id}`)
       const searchTarget = res.data.linkedinSub
@@ -509,9 +511,6 @@ const Share = () => {
                 >
                   Share Post
                 </p>
-                {
-                  loadWhilePosting == true ? <CircularProgress /> : <></>
-                }
                 <p style={{ fontSize: "14px", opacity: 0.8 }}>
                   To share a post you see on your Feed, click or tap on Share
                   button to share now or you can also schedule the post on a
