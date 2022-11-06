@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const BASE_URL =
-  process.env.REACT_APP_MODE == "dev"
+  process.env.REACT_APP_MODE === "dev"
     ? "http://localhost:8000/v1"
     : "https://tmq-server.online/v1";
 

@@ -25,27 +25,17 @@ export default function CustomForm({ setCustom, custom }) {
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <input
-          type="text"
-          placeholder="Background Color"
-          {...register("bg", {
-            pattern: {
-              value: /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/,
-              message: "Provide A Valid Hex Code",
-            },
-          })}
-        />
+        <p>Background Color</p>
+        <input type="color" placeholder="#ffffff" {...register("bg")} />
         <p className="text-red-500 p-2">{errors?.bg?.message}</p>
-        <input
-          type="text"
-          placeholder="Top Padding With Units"
-          {...register("pt")}
-        />
+        <p>Top Padding With Units</p>
+        <input type="text" placeholder="40px" {...register("pt")} />
         <br />
         <br />
+        <p>Border Radius</p>
         <input
           type="range"
-          placeholder="borderRadius"
+          placeholder="5px"
           min="0"
           max="50"
           {...register("profile.borderRadius")}
@@ -53,31 +43,31 @@ export default function CustomForm({ setCustom, custom }) {
         <p className="text-red-500 p-2">
           {errors?.profile?.borderRadius?.message}
         </p>
+        <p>Profile Picture Height And Width With Units</p>
         <input
           type="text"
-          placeholder="Top Padding With Units"
+          placeholder="100px"
           className="mr-1"
           {...register("profile.width")}
         />
         <input
           type="text"
-          placeholder="Top Padding With Units"
+          placeholder="100px"
           {...register("profile.height")}
         />
         <br /> <br />
+        <p>Border Color</p>
         <input
-          type="text"
-          placeholder="Background Color"
-          {...register("profile.borderColor", {
-            pattern: {
-              value: /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/,
-              message: "Provide A Valid Hex Code",
-            },
-          })}
+          type="color"
+          placeholder="#ffffff"
+          {...register("profile.borderColor")}
         />
+        <br />
+        <br />
+        <p>Border Width</p>
         <input
           type="text"
-          placeholder="Top Padding With Units"
+          placeholder="Profile Border Width"
           className="ml-1"
           {...register("profile.border")}
         />
@@ -86,14 +76,9 @@ export default function CustomForm({ setCustom, custom }) {
             errors?.profile?.border?.message}
         </p>
         <input
-          type="text"
-          placeholder="Background Color"
-          {...register("title.color", {
-            pattern: {
-              value: /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/,
-              message: "Provide A Valid Hex Code",
-            },
-          })}
+          type="color"
+          placeholder="Title Color"
+          {...register("title.color")}
         />
         <input
           type="text"
