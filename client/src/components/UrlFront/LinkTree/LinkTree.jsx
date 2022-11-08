@@ -29,14 +29,14 @@ const Preview = ({ data, css }) => {
 export default function LinkTree() {
   const [link, setLink] = useState("");
   const [linkName, setLinkName] = useState("");
-  const [description, setDescription] = useState("Description of your links.");
+  const [description, setDescription] = useState("Short description.");
   const [pfp, setPfp] = useState(
     "https://images.unsplash.com/photo-1529665253569-6d01c0eaf7b6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1085&q=80"
   );
   const [bgUrl, setBgUrl] = useState("");
   const [bg, setBG] = useState(null);
   const [dp, setDP] = useState(null);
-  const [ColMainUserName, setColMainUserName] = useState("Samuel Jones");
+  const [ColMainUserName, setColMainUserName] = useState("John Doe");
   const [colMainUrlArr, setColMainUrlArr] = useState([]);
   const [colMainUrl, setColMainUrl] = useState([]);
   const [treeUrl, setTreeUrl] = useState([]);
@@ -61,39 +61,17 @@ export default function LinkTree() {
     const url = await uploadImageToS3(dp);
     // console.log(dp);
     console.log(url)
+    setPfp(url)
   };
 
-  const handleLinkTreeBackground = () => {
+  const handleLinkTreeBackground = async () => {
     if (!bg) {
-      alert("Please choose a file");
+      openNotificationWithIcon("error", "Please select a file")
       return;
     }
 
-    // creating a reference inside bucket with file name
-    const storageRef = ref(storage, `/image/${bg.name}`);
-
-    // uploading file
-    uploadBytes(storageRef, bg)
-      .then((snapshot) => {
-        console.log("Uploaded a blob or file!", snapshot.ref.toString());
-        getDownloadURL(ref(storage, `image/${bg.name}`))
-          .then((url) => {
-            setBgUrl(url);
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
-  const openNotificationWithIcon = (type) => {
-    notification[type]({
-      message: "Link added",
-      description: link,
-    });
+    const url = await uploadImageToS3(bg)
+    setBgUrl(url)
   };
 
   const addMainUrl = () => {
@@ -140,7 +118,7 @@ export default function LinkTree() {
             <input
               type="text"
               name="colMainUrl"
-              placeholder="Tree Name"
+              placeholder="Rishabh Singh"
               value={ColMainUserName}
               onChange={(e) => {
                 setColMainUserName(e.target.value);
@@ -151,7 +129,7 @@ export default function LinkTree() {
             <textarea
               type="text"
               name="colMainUrl"
-              placeholder="Tree Description"
+              placeholder="Short description or bio"
               value={description}
               onChange={(e) => {
                 setDescription(e.target.value);
