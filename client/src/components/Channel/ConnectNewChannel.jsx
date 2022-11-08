@@ -22,9 +22,11 @@ const ConnectNewChannel = () => {
   const { auth, setAuth } = useAuth();
   const navigate = useNavigate();
 
+  // https://www.brng.it/app/channels/connect
+  // http://localhost:3000/app/channels/connect
   async function linkedinCardClickValidate() {
     window.location.replace(
-      `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${process.env.REACT_APP_CLIENT_ID}&redirect_uri=https://brng.it/app/channels/connect&scope=${process.env.REACT_APP_SCOPES}`
+      `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${process.env.REACT_APP_CLIENT_ID}&redirect_uri=https://www.brng.it/app/channels/connect&scope=${process.env.REACT_APP_SCOPES}`
     );
   }
 

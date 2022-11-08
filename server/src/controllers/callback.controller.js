@@ -13,7 +13,7 @@ const callbackLinkedIn = catchAsync(async (req, res) => {
       form: {
         'grant_type': 'authorization_code',
         'code': code,
-        'redirect_uri': 'https://brng.it/app/channels/connect',
+        'redirect_uri': 'https://www.brng.it/app/channels/connect',
         'client_id': '77wv1vw4mpixlq',
         'client_secret': 'oeUtKB4fRr6hU7hK' 
       }
