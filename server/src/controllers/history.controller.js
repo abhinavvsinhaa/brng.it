@@ -44,4 +44,10 @@ const deleteHistory = catchAsync(async (req, res) => {
     return res.send(`History deleted with id: ${req.params.historyId}`)
 })
 
-module.exports = { createHistory, getHistory, deleteHistory }
+const getAllHistoryFromAccount = catchAsync(async (req, res) => {
+    const history = await History.find({ accountId: req.params.historyId })
+    console.log(history);
+    return history;
+})
+
+module.exports = { createHistory, getHistory, deleteHistory, getAllHistoryFromAccount }

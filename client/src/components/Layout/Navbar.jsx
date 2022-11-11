@@ -51,6 +51,7 @@ export default function Navbar() {
           position: "sticky",
           top: 0,
           zIndex: 100,
+          backgroundColor: '#211522'
         }}
       >
         {({ open }) => (

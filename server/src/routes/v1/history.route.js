@@ -8,8 +8,11 @@ router
   .post(historyController.createHistory)
 
 router
+
+router
     .route('/:historyId')
     .get(historyController.getHistory)
+    .post(historyController.getAllHistoryFromAccount)
     .delete(historyController.deleteHistory)
 
 module.exports = router;

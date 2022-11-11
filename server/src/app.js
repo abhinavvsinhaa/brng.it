@@ -13,7 +13,9 @@ const { authLimiter } = require('./middlewares/rateLimiter');
 const routes = require('./routes/v1');
 const { errorConverter, errorHandler } = require('./middlewares/error');
 const ApiError = require('./utils/ApiError');
-const job = require('./cron')
+const job = require('./cron');
+const https = require('https');
+const fs = require('fs');
 
 const app = express();
 
@@ -40,7 +42,7 @@ if (config.env === 'production') {
 
 app.get('/', (req, res, next) => {
   res.send('Connection successful!');
-})
+});
 
 app.use('/v1', routes);
 
@@ -52,5 +54,21 @@ app.use(errorConverter);
 app.use(errorHandler);
 
 job.start();
+// function saveFileIntoLocalFromUrl(url) {
+//   // https://brngit-upload-images.s3.ap-south-1.amazonaws.com/3869c43ebca7df7e3993c0600ea1778c
+//   https.get(url, (res) => {
+//     // Image will be stored at this path
+//     const imageName = url.split('.com/')[1]
+//     const path = `${__dirname}/utils/files/${imageName}.png`;
+//     const filePath = fs.createWriteStream(path);
+//     res.pipe(filePath);
+//     filePath.on('finish', () => {
+//       filePath.close();
+//       console.log(`Download completed for ${imageName}`);
+//     });
+//   });
+// }
 
-module.exports = app
+// saveFileIntoLocalFromUrl('https://brngit-upload-images.s3.ap-south-1.amazonaws.com/3869c43ebca7df7e3993c0600ea1778c');
+
+module.exports = app;

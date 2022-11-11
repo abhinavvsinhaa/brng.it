@@ -123,9 +123,17 @@ const share = catchAsync(async (req, res) => {
 
   const linkedin = new Linkedin(req.body.access_token, req.body.author, req.body.caption, req.body.file)
 
-  const response = await linkedin.postWithoutPhoto();
-  console.log(response);
-  return res.send(response);
+  // post without image
+  if (req.body.file == null) {
+    const response = await linkedin.postWithoutPhoto();
+    console.log(response);
+    return res.send(response);
+  } else {
+    console.log('image post');
+    const response = await linkedin.registerImage();
+    console.log(response);
+    res.send(response)
+  }
 });
 
 const shareFacebook = catchAsync(async (req, res) => {
@@ -180,5 +188,5 @@ const shareInstagram = catchAsync(async (req, res) => {
 module.exports = {
   share,
   shareFacebook,
-  shareInstagram,
+  shareInstagram
 };
