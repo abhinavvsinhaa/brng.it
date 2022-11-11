@@ -9,7 +9,7 @@ import IGConnectModal from "./IGConnectModal";
 import useAuth from "../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 // import useSearchCustomers from "./useSearchCustomers";
-import FacebookLogin from "react-facebook-login";
+import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 
 const ConnectNewChannel = () => {
   // const { selectedProfile, render } = useSearchCustomers();
@@ -38,19 +38,24 @@ const ConnectNewChannel = () => {
       setCode(arr[1]);
       console.log("code: " + arr[1]);
 
-      const res = await axiosPrivate.get(`/authorization/callback?code=${arr[1]}`);
+      const res = await axiosPrivate.get(
+        `/authorization/callback?code=${arr[1]}`
+      );
 
       console.log(res.data);
 
       const user = await axiosPrivate.post("/authorization/user", res.data);
       console.log(user.data);
-      
-      user.data.access_token = res.data.access_token
-      user.data.expires_in = res.data.expires_in
+
+      user.data.access_token = res.data.access_token;
+      user.data.expires_in = res.data.expires_in;
 
       // Add user to db
-      const addUserToDb = await axiosPrivate.patch(`/users/${auth.user.id}/subs?linkedin=true`, user.data)
-      console.log(addUserToDb.data)
+      const addUserToDb = await axiosPrivate.patch(
+        `/users/${auth.user.id}/subs?linkedin=true`,
+        user.data
+      );
+      console.log(addUserToDb.data);
     }
   }
 
@@ -72,7 +77,7 @@ const ConnectNewChannel = () => {
     )
       .then((response) => response.json())
       .then(async (result) => {
-        console.log("long lived access token response", result)
+        console.log("long lived access token response", result);
         res = await axios.patch(`/users/${user.id}`, {
           facebook: result.access_token,
         });
@@ -85,8 +90,8 @@ const ConnectNewChannel = () => {
           }
         )
           .then((response) => response.json())
-          .then(async (result) => {  
-            console.log("page details", result)          
+          .then(async (result) => {
+            console.log("page details", result);
             res = await axiosPrivate.patch(
               `/users/${user.id}/subs?f=true`,
               result.data
@@ -191,48 +196,52 @@ const ConnectNewChannel = () => {
           </Card>
         </div> */}
         <div className="col-xl-3 col-lg-5 col-md-5 col-sm-12 col-12">
-          {/* <FacebookLogin
-          appId={process.env.REACT_APP_FACEBOOK_APP_ID}
-          autoLoad={true}
-          callback={responseFacebookLogin}
-          render={renderProps => ( */}
-          <Card
-            className="shadow-md"
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              backgroundColor: "white",
-              height: 350,
-              alignItems: "center",
-              textAlign: "center",
-              borderRadius: "5px",
-              cursor: "pointer",
-            }}
-          >
-            <div
-              style={{
-                width: "100%",
-                display: "flex",
-                justifyContent: "center",
-              }}
-            >
-              <img src={FB} alt="" width="50px" />
-              &nbsp;&nbsp;
-              <img src={IG} alt="" width="50px" />
-            </div>
-            <br />
-            <p className="social-media-subgroup">Page or Business account</p>
-            <p className="social-media-name">Facebook & Instagram</p>
-            <p className="social-media-connect">Connect</p>
-            <FacebookLogin
+          <FacebookLogin
+            appId={process.env.REACT_APP_FACEBOOK_APP_ID}
+            autoLoad={false}
+            callback={responseFacebookLogin}
+            scope="public_profile,pages_show_list,pages_read_engagement,pages_manage_posts"
+            render={(renderProps) => (
+              <Card
+                className="shadow-md"
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  backgroundColor: "white",
+                  height: 350,
+                  alignItems: "center",
+                  textAlign: "center",
+                  borderRadius: "5px",
+                  cursor: "pointer",
+                }}
+                onClick={renderProps.onClick}
+              >
+                <div
+                  style={{
+                    width: "100%",
+                    display: "flex",
+                    justifyContent: "center",
+                  }}
+                >
+                  <img src={FB} alt="" width="50px" />
+                  &nbsp;&nbsp;
+                  <img src={IG} alt="" width="50px" />
+                </div>
+                <br />
+                <p className="social-media-subgroup">
+                  Page or Business account
+                </p>
+                <p className="social-media-name">Facebook & Instagram</p>
+                <p className="social-media-connect">Connect</p>
+                {/* <FacebookLogin
               appId={process.env.REACT_APP_FACEBOOK_APP_ID}
               autoLoad={false}
               callback={responseFacebookLogin}
               scope="public_profile,pages_show_list,pages_read_engagement,pages_manage_posts"
-            />
-          </Card>
-          {/* )} */}
-          {/* /> */}
+            /> */}
+              </Card>
+            )}
+          />
         </div>
         <div className="col-xl-3 col-lg-5 col-md-5 col-sm-12 col-12">
           <Card
@@ -258,8 +267,9 @@ const ConnectNewChannel = () => {
             >
               <img src={LinkedIn} alt="" width="50px" />
             </div>
-            <p className="social-media-name">LinkedIn</p>
+            <br />
             <p className="social-media-subgroup">Page or Profile</p>
+            <p className="social-media-name">LinkedIn</p>
             <p className="social-media-connect">Connect</p>
           </Card>
         </div>

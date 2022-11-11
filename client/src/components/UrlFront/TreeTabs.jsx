@@ -13,13 +13,13 @@ const onChange = (key) => {
 const TabPanel = () => (
   <div className="lg:ml-[260px]">
     <Tabs defaultActiveKey="1" onChange={onChange}>
-      <TabPane tab="Shortener" key="1">
+      <TabPane tab="Linktree" key="1">
         <LinkTree />
       </TabPane>
-      <TabPane tab="Custom" key="2">
+      {/* <TabPane tab="Custom" key="2">
         <Custom />
-      </TabPane>
-      <TabPane tab="Analytics" key="3">
+      </TabPane> */}
+      <TabPane tab="Analytics" key="2">
         <TreeAnalytics />
       </TabPane>
     </Tabs>

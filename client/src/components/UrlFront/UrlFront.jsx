@@ -3,6 +3,7 @@ import { useState } from "react";
 import "./urlFront.css";
 import SingleUrl from "../SingleUrl/SingleUrl";
 import { axiosPrivate } from "../../api/axios";
+import openNotificationWithIcon from "../../util/openNotificationWithIcon";
 
 export default function UrlFront() {
   const [mainUrl, setMainUrl] = useState("");
@@ -16,7 +17,7 @@ export default function UrlFront() {
 
   const convertCustomUrl = async () => {
     if (mainName.length < 7 || isNaN(mainName.split("-")[1])) {
-      alert("Must have digits at the end and len greater than 7 characters");
+      openNotificationWithIcon("error", "Must have digits at the end and len greater than 7 characters");
       return;
     }
     try {
@@ -74,11 +75,11 @@ export default function UrlFront() {
                   Custom
                 </button>
               </div>
-
               <p
                 style={{
                   fontSize: "14px",
                   opacity: 0.8,
+                  margin: 0
                 }}
               >
                 Free URL shortener to create perfect URLs for your business. Use

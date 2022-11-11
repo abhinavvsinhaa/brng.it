@@ -9,6 +9,7 @@ import { GoogleAuth } from "../../util/Firebase";
 // Assets
 import bannerBg from "../../assets/images/sp-login-image.png";
 import { Divider } from "antd";
+import openNotificationWithIcon from "../../util/openNotificationWithIcon";
 
 const Login = () => {
   const { setAuth } = useAuth();
@@ -33,9 +34,10 @@ const Login = () => {
       axiosPrivate.defaults.headers.common[
         "Authorization"
       ] = `Bearer ${res?.data?.tokens?.access?.token}`;
-      navigate("/");
+      navigate("/share");
     } catch (err) {
       console.log(err?.response);
+      openNotificationWithIcon('error', err?.response?.data?.message)
       setError(err?.response?.data?.message);
     }
   };
@@ -68,7 +70,7 @@ const Login = () => {
                 onChange={(e) => setPassword(e.target.value)}
               />
               <br />
-              <p className="password-requirements">{error}</p>
+              {/* <p className="password-requirements">{error}</p> */}
               <br />
               <button
                 className="flex content-center justify-center btn form-submit-btn"
@@ -88,7 +90,7 @@ const Login = () => {
               }}
             >
               <div>
-                <a href="/signup">Create account</a>
+                <a href="/app/signup">Create account</a>
               </div>
               <div>
                 <a href="">Forgot password?</a>

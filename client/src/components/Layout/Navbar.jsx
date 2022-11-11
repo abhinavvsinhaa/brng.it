@@ -5,9 +5,10 @@ import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
 import useAuth from "../../hooks/useAuth";
 import React, { useState } from "react";
 import ResponsiveDrawer from "../Navigation/ResponsiveDrawer";
-import bringIt from '../../assets/images/brngit logo.png';
-import userIcon from '../../assets/icons/user.png'
-import { Cookies } from 'react-cookie'
+import bringIt from "../../assets/images/brngit logo.png";
+import userIcon from "../../assets/icons/user.png";
+import { Cookies } from "react-cookie";
+import { axiosPrivate } from "../../api/axios";
 
 const navigation = [
   { name: "About", href: "#", current: false },
@@ -20,13 +21,17 @@ function classNames(...classes) {
 }
 
 function deleteAllCookies() {
+  // const response = await
+  var cookies = document.cookie.split(";");
+  console.log(document.cookie);
 
-  // for (var i = 0; i < cookies.length; i++) {
-  //     var cookie = cookies[i];
-  //     var eqPos = cookie.indexOf("=");
-  //     var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
-  //     document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
-  // }
+    for (var i = 0; i < cookies.length; i++) {
+        var cookie = cookies[i];
+        console.log(cookie);
+        var eqPos = cookie.indexOf("=");
+        var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+        document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    }
 }
 
 export default function Navbar() {
@@ -40,6 +45,14 @@ export default function Navbar() {
     }
   }, [auth]);
 
+  const signOut = async () => {
+    await axiosPrivate.post('/auth/logout', {
+      refreshToken: auth.tokens.refresh.token
+    })
+
+    window.location.replace('/app/login')
+  }
+
   return (
     <>
       {auth.user && <ResponsiveDrawer />}
@@ -51,7 +64,7 @@ export default function Navbar() {
           position: "sticky",
           top: 0,
           zIndex: 100,
-          backgroundColor: '#211522'
+          backgroundColor: "#211522",
         }}
       >
         {({ open }) => (
@@ -123,11 +136,7 @@ export default function Navbar() {
                     <div>
                       <Menu.Button className="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
                         <span className="sr-only">Open user menu</span>
-                        <img
-                          className="h-8 w-8"
-                          src={userIcon}
-                          alt=""
-                        />
+                        <img className="h-8 w-8" src={userIcon} alt="" />
                       </Menu.Button>
                     </div>
                     <Transition
@@ -143,17 +152,16 @@ export default function Navbar() {
                         className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
                         style={{ zIndex: 10 }}
                       >
-                        <Menu.Item onClick={deleteAllCookies}>
+                        <Menu.Item onClick={signOut}>
                           {({ active }) => (
-                            <a
-                              href="#"
+                            <span
                               className={classNames(
                                 active ? "bg-gray-100" : "",
                                 "block px-4 py-2 text-sm text-gray-700"
                               )}
                             >
                               Sign out
-                            </a>
+                            </span>
                           )}
                         </Menu.Item>
                       </Menu.Items>
