@@ -1,9 +1,15 @@
 import { Clipboard } from "@styled-icons/feather";
 import { message } from "antd";
 import React, { useEffect } from "react";
-import VariousTemplates from '../templates/index'
+import VariousTemplates from '../templates/index';
+import { axiosIgnoreInterceptor } from "../../../api/axios";
 import CreateAndServeHTML from "../utils/createHTML";
+import { getAliases, putAliases } from "../../../util/gapi";
 function Display ({variableInput,selectedTemplate,setisLoading,design, setDesign,extraFields}) {
+    const setSignature = () => {
+      getAliases()
+    }
+    
     useEffect(()=>{
         var value = "";
         for(var i=0 ; i<extraFields.length;i++){
@@ -41,9 +47,7 @@ function Display ({variableInput,selectedTemplate,setisLoading,design, setDesign
 </button>
                 <div className="grid justify-items-end">
                 <button onClick={()=> {
-                    navigator.clipboard.writeText
-                    (document.getElementById('main-editor').innerHTML);
-                    message.success({content:"Great Choice! Copied content to clipboard",style:{bottom:'10px'}})
+                  setSignature();  
                 }} className="w-fit inline-block px-6 py-2.5 bg-blue-400 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-500 hover:shadow-lg focus:bg-blue-500 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-600 active:shadow-lg transition duration-150 ease-in-out self-end"> <Clipboard className="w-[25px] pr-[5px]"/> Copy to clipboard</button>
                 </div>
             </div>

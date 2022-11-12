@@ -5,10 +5,13 @@ import { axiosPrivate, axiosIgnoreInterceptor } from "../../api/axios";
 import Loading from "../Loading/Loading";
 import { useNavigate } from "react-router-dom";
 import { GoogleAuth } from "../../util/Firebase";
-
+// import {GoogleLogin, hasGrantedAllScopesGoogle, useGoogleLogin} from '@react-oauth/google';
+import getPkce from 'oauth-pkce';
+import {GoogleLogin} from 'react-google-login';
 // Assets
 import bannerBg from "../../assets/images/sp-login-image.png";
 import { Divider } from "antd";
+import axios from "axios";
 
 const Login = () => {
   const { setAuth } = useAuth();
@@ -17,7 +20,30 @@ const Login = () => {
   const [password, setPassword] = useState();
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const onSuccessLogin = (res) => {
+    // console.log(res);
+    // const hasAccess = hasGrantedAllScopesGoogle(res,'https://www.googleapis.com/auth/gmail.settings.basic');
+    // console.log("I got: ",hasAccess);
+    // var code = res.code;
+    // getPkce(43,async(error,{verifier,challenge})=>{
+    //   if(!error){
+    //     const code_res = await axios.post("https://oauth2.googleapis.com/token",{client_id:"222485917665-4ma4th0jf3188rs0kr590va1a0395qtb.apps.googleusercontent.com",client_secret:"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",code,grant_type:"authorization_code",redirect_uri:"http://localhost:3000",scope:"email profile https://www.googleapis.com/auth/gmail.settings.basic"})
+    //     const refToken = code_res.data.refresh_token
+    //     const finalCall = await axiosIgnoreInterceptor.post("/wisestamp", {
+    //       refToken
+    //     }); 
+    //   }
+    // })
+  }
 
+  const onFailureLogin = (res) => {
+    console.log(res);
+  }
+  // const googleLogin = useGoogleLogin({
+  //   onSuccess: codeRes => onSuccessLogin(codeRes),
+  //   onError: err => console.log(err),
+  //   flow: 'auth-code'
+  // })
   const handleClick = async (e) => {
     e.preventDefault();
     try {
@@ -96,13 +122,21 @@ const Login = () => {
             </div>
 
             <Divider/>
-            <div class="google-btn" onClick={GoogleAuth}>
-              <div class="google-icon-wrapper">
+            <div class="google-btn" >
+              {/* <div class="google-icon-wrapper">
                 <img class="google-icon" src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"/>
               </div>
               <div>
                 <p class="btn-text">Sign in with Google</p>
-              </div>
+              </div> */}
+              <GoogleLogin
+                clientId="222485917665-4ma4th0jf3188rs0kr590va1a0395qtb.apps.googleusercontent.com"
+                buttonText="Sign in with Google"
+                onSuccess={onSuccessLogin}
+                onFailure={onFailureLogin}
+                cookiePolicy={'single_host_origin'}
+                isSignedIn={true}
+              />
             </div>
           </div>
         </div>
