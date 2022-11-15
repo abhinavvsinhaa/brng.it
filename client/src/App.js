@@ -25,8 +25,6 @@ import Team from "./components/Team/Team";
 import PrivacyPolicy from "./components/PrivacyPolicy/PrivacyPolicy";
 
 function App() {
-  useEffect(() => {}, []);
-
   return (
     <CalenderProvider>
       <div className="app">
@@ -48,7 +46,7 @@ function App() {
             />
             <Route path="/linktree" element={<TreeTabs />} />
             <Route path="/url" element={<UrlTabs />} />
-            <Route path="/share" element={<Private Component={Share} />} />
+            <Route path="/" element={<Private Component={Share} />} />
             <Route path="/wisestamp" element={<WiseStamp />} />
             <Route path="/team" element={<Team />} />
             <Route path="*" element={<Error />} />

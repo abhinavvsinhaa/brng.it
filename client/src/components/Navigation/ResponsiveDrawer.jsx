@@ -45,7 +45,7 @@ function ResponsiveDrawer(props) {
             </ListItemButton>
           </ListItem>
         </Link> */}
-        <Link to="/share" style={{ color: "inherit" }}>
+        <Link to="/" style={{ color: "inherit" }}>
           <ListItem disablePadding>
             <ListItemButton>
               <ListItemIcon>
