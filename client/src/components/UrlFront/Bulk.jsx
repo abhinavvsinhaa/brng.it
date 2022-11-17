@@ -82,7 +82,11 @@ const App = () => {
   return (
     <div>
       <div class="flex justify-center">
-        <div class="mb-3 w-96">
+        <div class="mb-3 w-1/2">
+          <p className="text-xl font-semibold my-1">Bulk URL Shortener</p>
+          <p className="text-slate-600">Upload a CSV file with several links present in it, to shorten all at a time.
+          <a href="https://brngit-upload-images.s3.ap-south-1.amazonaws.com/sample_bulk_shortener.csv" download="file"> Download sample file from here.</a>
+          </p>
           <label
             for="formFile"
             class="form-label inline-block mb-2 text-gray-700"
@@ -99,19 +103,21 @@ const App = () => {
       </div>
       <div className="w-fit mx-auto">
         <button
-          className="text-center text-white font-bold rounded py-2 m-2 w-[80px] focus:outline-none bg-blue-700 border-2 border-indigo-400"
+          className="btn url-success-btn"
           onClick={handleParse}
         >
           Upload
         </button>
+        &nbsp;
         <button
-          className="text-center text-white font-bold rounded py-2 m-2 w-[80px] focus:outline-none bg-blue-700 border-2 border-indigo-400"
+          className="btn url-success-btn"
           onClick={handleSubmit}
         >
-          Covert
+          Convert
         </button>
+        &nbsp;
         <button
-          className="text-center text-white font-bold rounded py-2 m-2 w-[80px] focus:outline-none bg-blue-700 border-2 border-indigo-400"
+          className="btn url-success-btn"
           onClick={handleDownload}
         >
           Download
@@ -119,22 +125,24 @@ const App = () => {
       </div>
       <div className="flex flex-row justify-center">
         {shortData.length >= 1 ? (
-          <div className="m-3 h-[500px] border-2 w-full max-w-[800px] overflow-auto">
-            <p className="text-center font-bold p-1">SHORT LINKS </p>
+          <div className="m-3 w-1/2 overflow-auto">
+            <p className="font-bold p-1 text-lg my-0 mt-2">SHORTENED LINKS </p>
             {shortData.map((element, idx) => (
               <div className="p-1" key={idx}>
-                {idx}. {element.short}
+                {idx}. 
+                <a href={element.short}> {element.short}</a>
               </div>
             ))}
           </div>
         ) : data.length > 1 ? (
-          <div className="m-3 h-[500px] border-2 w-full max-w-[800px] overflow-auto">
-            <p className="text-center font-bold p-1">LINKS </p>
+          <div className="m-3 w-1/2 overflow-auto">
+            <p className="font-bold p-1 text-lg my-0 mt-2">LINKS </p>
             {error
               ? error
               : data.map((element, idx) => (
                   <div className="p-1" key={idx}>
-                    {element.index}. {element.link}
+                    {element.index}.
+                    <a href={element.link}> {element.link}</a>
                   </div>
                 ))}
           </div>

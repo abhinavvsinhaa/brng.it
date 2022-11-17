@@ -19,7 +19,7 @@ class Facebook {
     } else {
       this.url = `${this.url}feed/?`;
 
-      if (request.body.caption) this.url = `${this.url}message=${request.body.caption}&link=https://google.com`;
+      if (request.body.caption) this.url = `${this.url}message=${request.body.caption}`;
     }
   }
 

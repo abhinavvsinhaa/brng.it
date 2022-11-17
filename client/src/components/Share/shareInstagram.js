@@ -35,7 +35,7 @@ class shareInstagram {
     console.log(res);
     // successfuly posted
     if (res.data.id) {
-      storeDetails(this.pageId, res.data.id, "normal", dateToStoreInDb(null), "instagram", userId);
+      storeDetails(this.pageId, res.data.id, "normal", dateToStoreInDb(null), "instagram", userId, caption, downloadableURLs, [], []);
       openNotificationWithIcon("Post shared")
     }
 

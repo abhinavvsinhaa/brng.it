@@ -16,6 +16,11 @@ const historySchema = mongoose.Schema(
       required: true,
       default: 'normal', // other option 'scheduled'
     },
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: true
+    },
     date: {
       type: String,
       required: true,

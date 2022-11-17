@@ -3,7 +3,7 @@ const History = require('../models/history.model')
 const User = require('../models/user.model');
 
 const createHistory = catchAsync(async (req, res) => {
-    const { accountId, postId, type, date, platform, userId } = req.body;
+    const { accountId, postId, type, date, platform, userId, caption, images, videos, links } = req.body;
     const user = await User.findById(userId)
     if (!user)
         return res.send('Cant find user with the user id given')
@@ -12,9 +12,14 @@ const createHistory = catchAsync(async (req, res) => {
         const history = new History({
             accountId,
             postId,
+            userId,
             type,
             date,
-            platform
+            platform,
+            caption,
+            images,
+            videos,
+            links
         })
         await history.save()
         

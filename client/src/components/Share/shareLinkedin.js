@@ -32,7 +32,7 @@ class shareLinkedIn {
     // on successful post -> store details
     if (res.data.id) {
       const dt = dateToStoreInDb(null);
-      storeDetails(author, res.data.id, "normal", dt, "linkedin", userId);
+      storeDetails(author, res.data.id, "normal", dt, "linkedin", userId, caption, file, [], []);
       openNotificationWithIcon("success", "Post shared");
     } else {
       openNotificationWithIcon(

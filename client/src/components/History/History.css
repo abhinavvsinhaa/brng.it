@@ -33,7 +33,7 @@
 }
 
 .history-image {
-    width: 20% !important;
+    width: 80px !important;
 }
 
 .history-box-footer-div {
@@ -46,4 +46,14 @@
     font-size: 0.75rem;
     opacity: 0.8;
     text-transform: capitalize;
+}
+
+.no-image-attached-div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.no-image-attached-div > p {
+    font-size: 12px;
 }

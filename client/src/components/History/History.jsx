@@ -58,20 +58,22 @@ const History = () => {
                     </div>
                     <div className="post-history-box shadow-sm">
                       <div className="history-box-post-details">
-                        <p>🗒 Lorem ipsum dolor sit amet consectetur, adipisicing elit. Earum molestias qui expedita adipisci quis quam voluptate impedit assumenda doloremque atque iusto, ad nam quae fuga molestiae, optio vero labore quod.</p>
+                        <p>🗒 {post.caption}</p>
                         {post.images.length == 0 ? (
-                            <>
+                            <div className="no-image-attached-div">
                                 <img
                                 src={imageIcon}
                                 alt=""
                                 className="history-image"
                                 />
-                            </>
+                                <p>No image attached</p>
+                            </div>
                         ) : (
                           <img
                             src={post.images[0]}
                             alt=""
                             className="history-image"
+                            width="100px"
                           />
                         )}
                       </div>
