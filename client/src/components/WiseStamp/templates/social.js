@@ -12,7 +12,7 @@ export default function SocialTemplate({variableInput,design,setDesign}){
     return(
         <div style={{padding: "30px",display:'grid',gridTemplateRows:'auto auto',gap:'15px',width:'635px'}}>
                     <div style={{display:'grid',gap:'10px'}}>
-                    {variableInput.url===""?<img src={defsign} alt="User"/>:<img src={`https://wisestamp-api.herokuapp.com/${variableInput.url}`} style={{width:'125px'}} alt="User"/>}
+                    {variableInput.url===""?<img src={defsign} alt="User"/>:<img src={`${variableInput.url}`} style={{width:'80px'}} alt="User"/>}
                     <div>
                             <div style={{color:'#646464',fontSize:'16px',lineHeight:'1.2',fontWeight:'bold',textTransform:'initial',letterSpacing:'0px'}}>{variableInput.name}</div>
                             <p style={{marginBottom:'10px',color:'#45668E',fontSize:'14px',lineHeight:'1.2',fontWeight:'bold',textTransform:'initial'}}>{variableInput.titleSign}{ (variableInput.company === "") ? <>Hello</> : <>, &nbsp;</>}{variableInput.company}</p>

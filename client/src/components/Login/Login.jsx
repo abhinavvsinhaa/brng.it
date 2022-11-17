@@ -4,14 +4,10 @@ import useAuth from "../../hooks/useAuth";
 import { axiosPrivate, axiosIgnoreInterceptor } from "../../api/axios";
 import Loading from "../Loading/Loading";
 import { useNavigate } from "react-router-dom";
-import { GoogleAuth } from "../../util/Firebase";
-// import {GoogleLogin, hasGrantedAllScopesGoogle, useGoogleLogin} from '@react-oauth/google';
-import getPkce from 'oauth-pkce';
 import {GoogleLogin} from 'react-google-login';
 // Assets
 import bannerBg from "../../assets/images/sp-login-image.png";
 import { Divider } from "antd";
-import axios from "axios";
 
 const Login = () => {
   const { setAuth } = useAuth();

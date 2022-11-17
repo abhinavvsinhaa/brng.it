@@ -12,7 +12,7 @@ export default function ClassicTemplate({ variableInput, design, setDesign }) {
                 <tr>
                     <td style={{ width: '85px', borderRight: `${design.lineStyle} ${design.matchLineTemplate ? design.templateColor : design.lineColor}`, display: 'grid' }}>
                         <div style={{ display: 'grid', placeContent: 'center', alignSelf: design.imagePosition, paddingRight: design.lineSpacing * 10 + 'px' }}>
-                            {variableInput.url === "" ? <a href={design.imageLink}><img src={defsign} style={{ borderRadius: design.imageShape === 'rect' ? '' : design.imageShape === 'round' ? '10px' : '100px' }} alt="User" /></a> : <a href={design.imageLink}><img src={`https://wisestamp-api.herokuapp.com/${variableInput.url}`} style={{ width: '125px' }} alt="User" /></a>}
+                            {variableInput.url === "" ? <a href={design.imageLink}><img src={defsign} style={{ borderRadius: design.imageShape === 'rect' ? '' : design.imageShape === 'round' ? '10px' : '100px' }} alt="User" /></a> : <a href={design.imageLink}><img src={`${variableInput.url}`} style={{ width: '125px' }} alt="User Image" /></a>}
                         </div>
                     </td>
                     <td>

@@ -22,7 +22,7 @@ export default function FooterTemplate({variableInput,design,setDesign}){
                     </div>
                     <div>
                     <div style={{display:'grid',placeContent:'center',paddingRight:'10px'}}>
-                    {variableInput.url===""?<img style={{borderRadius:'100px'}} src={defsign} alt="User"/>:<img src={`https://wisestamp-api.herokuapp.com/${variableInput.url}`} style={{width:'125px',borderRadius:'100px'}} alt="User"/>}
+                    {variableInput.url===""?<img style={{borderRadius:'100px'}} src={defsign} alt="User"/>:<img src={`${variableInput.url}`} style={{width:'80px',borderRadius:'100px'}} alt="User"/>}
                     </div>
                     </div>
         </div>

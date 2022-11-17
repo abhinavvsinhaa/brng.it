@@ -11,10 +11,11 @@ import Apps from "./Apps";
 import { CreditCard2Front, PaintBucket, PencilSquare } from "@styled-icons/bootstrap";
 import { Share } from "@styled-icons/entypo";
 import { AppsAddIn } from "@styled-icons/fluentui-system-regular";
+import uploadImageToS3 from "../../../util/uploadImageToS3";
 
 const { TabPane } = Tabs;
 
-function App() {
+function App(getAliases,putAliases) {
     const [file,setFile] = useState();
     const [isLoading,setisLoading] = useState(false);
     const [name , setName] = useState("John Cena");
@@ -71,13 +72,12 @@ function App() {
     const setExtraFieldsHelper = (added) => {
         setExtraFields(current => [...current, added]);
     }
-    const submitPhoto = (e) =>{
-        setFile()
-        const data = new FormData();
-        data.append('file',e.target.files[0])
-        console.log(file)
+    const submitPhoto = async (e) =>{
         setisLoading(true);
-        axios.post("https://wisestamp-api.herokuapp.com/getPath",data).then(res => {console.log(res.data.path);setURL(res.data.path);updateVariableInput({'url':res.data.path}); setisLoading(false)})
+        const imageUrl = await uploadImageToS3(e.target.files[0]);
+        setURL(imageUrl);
+        updateVariableInput({'url':imageUrl});
+        setisLoading(false)
     }
 
     return (
@@ -95,6 +95,8 @@ function App() {
                                 design={design}
                                 setDesign={setDesign}
                                 extraFields={extraFields}
+                                getAliases={getAliases}
+                                putAliases={putAliases}
                             />
                         {/* } */}
                     </div>
@@ -151,7 +153,7 @@ function App() {
     </div>
     :
     <div className="grid gap-[10px]">
-    <img src={`https://wisestamp-api.herokuapp.com/${url}`} alt="User"/>
+    <img src={`${url}`} alt="User"/>
     <button onClick={() => {setURL(""); updateVariableInput({'url':''})}} className="inline-block px-6 py-2.5 bg-red-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out">Delete</button>
     </div>
 }

@@ -20,7 +20,7 @@ export default function WideTemplate({variableInput,design,setDesign}){
                                 <td>
                     <div style={{display:'grid',placeContent:'center',alignSelf:design.imagePosition,paddingRight:design.lineSpacing*10+'px'}}>
                     {/* <div style={{display:'grid',placeContent:'center',alignSelf:design.imagePosition,paddingRight:design.lineSpacing*10+'px'}}> */}
-                    {variableInput.url===""?<img src={defsign} alt="User"/>:<img src={`https://wisestamp-api.herokuapp.com/${variableInput.url}`} style={{width:'125px'}} alt="User"/>}
+                    {variableInput.url===""?<img src={defsign} alt="User"/>:<img src={`${variableInput.url}`} style={{width:'80px'}} alt="User"/>}
                     </div>
                     </td>
                     </tr>

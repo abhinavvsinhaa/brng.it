@@ -155,7 +155,7 @@ export default function CentralTemplate({variableInput,design, setDesign}){
                     
                     </div>
                     <div style={{display:'grid',gap:'10px'}}>
-                    {variableInput.url===""?<a href={design.imageLink}><img style={{borderRadius: design.imageShape==='rect'?'':design.imageShape==='round'?'10px':'100px'}} src={defsign} alt="User"/></a>:<a href={design.imageLink}><img src={`https://wisestamp-api.herokuapp.com/${variableInput.url}`} style={{width:'125px',borderRadius:'100px'}} alt="User"/></a>}
+                    {variableInput.url===""?<a href={design.imageLink}><img style={{borderRadius: design.imageShape==='rect'?'':design.imageShape==='round'?'10px':'100px'}} src={defsign} alt="User"/></a>:<a href={design.imageLink}><img src={`${variableInput.url}`} style={{width:'80px',borderRadius:'100px'}} alt="User"/></a>}
                     </div>
                     <p style={{color:'#212121',width:'fit-content',maxWidth:'420px',lineHeight:'20px',display:'grid',gridAutoFlow:design.direction,fontSize:(design.fontSize*11)+'px',whiteSpace:'pre-line'}}>
                         {

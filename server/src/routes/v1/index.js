@@ -12,6 +12,7 @@ const scheduleRoute = require('./schedule.route')
 const config = require('../../config/config');
 const addTeamMemberRoute = require('./addTeamMember.route')
 const getUploadUrlRoute = require('./getUploadUrl.route')
+const wisestampSignatureRoute = require('./wisestamp.route')
 
 const router = express.Router();
 
@@ -60,6 +61,10 @@ const defaultRoutes = [
   {
     path: '/uploadurl',
     route: getUploadUrlRoute
+  },
+  {
+    path: '/wisestamp',
+    route: wisestampSignatureRoute
   }
 ];
 

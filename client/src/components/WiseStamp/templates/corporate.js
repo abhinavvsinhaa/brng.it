@@ -16,7 +16,7 @@ export default function CorporateTemplate({variableInput,design,setDesign}){
         <div style={{display:'grid',gridTemplateRows:'auto 1fr',gap:design.lineSpacing*15+'px',width:'fit-content'}}>
                     <div>
                     <div style={{display:'grid',alignContent:'center',paddingRight:'10px'}}>
-                    {variableInput.url===""?<img style={{borderRadius:'100px'}} src={defsign} alt="User"/>:<a href={design.imageLink}><img src={`https://wisestamp-api.herokuapp.com/${variableInput.url}`} style={{width:'125px',borderRadius:'100px'}} alt="User"/></a>}
+                    {variableInput.url===""?<img style={{borderRadius:'100px'}} src={defsign} alt="User"/>:<a href={design.imageLink}><img src={`${variableInput.url}`} style={{width:'80px',borderRadius:'100px'}} alt="User"/></a>}
                     </div>
                     </div>
                     <div style={{width:'fit-content'}}>

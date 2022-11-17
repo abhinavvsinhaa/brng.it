@@ -12,7 +12,7 @@ export default function StackedTemplate({variableInput,design,setDesign}){
     return(
         <div style={{padding: "30px",display:'grid',gridTemplateRows:'auto auto',width:'635px'}}>
                     <div style={{display:'grid',gap:'10px'}}>
-                    {variableInput.url===""?<img style={{borderRadius:'15px'}} src={defsign} alt="User"/>:<img src={`https://wisestamp-api.herokuapp.com/${variableInput.url}`} style={{width:'125px',borderRadius:'15px'}} alt="User"/>}
+                    {variableInput.url===""?<img style={{borderRadius:'15px'}} src={defsign} alt="User"/>:<img src={`${variableInput.url}`} style={{width:'80px',borderRadius:'15px'}} alt="User"/>}
                     <div>
                             <div style={{color:'#646464',fontSize:'16px',lineHeight:'1.2',fontWeight:'bold',textTransform:'initial',letterSpacing:'0px'}}>{variableInput.name}</div>
                             <p style={{marginBottom:'10px',color:'#45668E',fontSize:'14px',lineHeight:'1.2',fontWeight:'bold',textTransform:'initial',display:'grid'}}>{variableInput.titleSign}{ (variableInput.company === "") ? <></> : <>, &nbsp;</>}<div>{variableInput.company}</div></p>

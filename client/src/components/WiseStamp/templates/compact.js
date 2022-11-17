@@ -14,7 +14,7 @@ export default function CompactTemplate({variableInput,design,setDesign}){
                 <tr>
                     <td style={{display:'grid',width:'65px',marginRight:'20px'}}>
                     <div style={{display:'grid',gap:design.lineSpacing*10+'px'}}>
-                    {variableInput.url===""?<a href={design.imageLink}><img style={{borderRadius: design.imageShape==='rect'?'':design.imageShape==='round'?'10px':'100px'}} src={defsign} alt="User"/></a>:<img src={`https://wisestamp-api.herokuapp.com/${variableInput.url}`} style={{width:'125px',borderRadius:'100%'}} alt="User"/>}
+                    {variableInput.url===""?<a href={design.imageLink}><img style={{borderRadius: design.imageShape==='rect'?'':design.imageShape==='round'?'10px':'100px'}} src={defsign} alt="User"/></a>:<img src={`${variableInput.url}`} style={{width:'80px',borderRadius:'100%'}} alt="User"/>}
                     </div>
                     </td>
                     <td>

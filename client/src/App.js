@@ -22,12 +22,12 @@ import Share from "./components/Share/Share";
 import WithNav from "./components/WithNav";
 import Team from "./components/Team/Team";
 import PrivacyPolicy from "./components/PrivacyPolicy/PrivacyPolicy";
-import {initGapi} from './util/gapi'
+import {initGapi} from "./util/gapi";
 function App() {
-  useEffect(() => {
-    initGapi();
-  }, []);
-
+  // const {getAliases,putAliases} = useGapi();
+  useEffect(()=>{
+    initGapi()
+  },[])
   return (
     <CalenderProvider>
       <div className="app">
