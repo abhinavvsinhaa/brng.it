@@ -9,6 +9,7 @@ import bringIt from "../../assets/images/brngit logo.png";
 import userIcon from "../../assets/icons/user.png";
 import { Cookies } from "react-cookie";
 import { axiosPrivate } from "../../api/axios";
+import { GoogleLogout } from "react-google-login";
 
 const navigation = [
   { name: "About", href: "#", current: false },
@@ -152,18 +153,24 @@ export default function Navbar() {
                         className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
                         style={{ zIndex: 10 }}
                       >
-                        <Menu.Item onClick={signOut}>
+                        {/* <Menu.Item onClick={signOut}>
                           {({ active }) => (
-                            <span
+                            
+                          )}
+                        </Menu.Item> */}
+                        <GoogleLogout
+                        clientId="222485917665-4ma4th0jf3188rs0kr590va1a0395qtb.apps.googleusercontent.com"
+                        render={(renderProps) =>{
+                          <button onClick={()=>{renderProps.onClick();signOut();}} disabled={renderProps.disabled}
                               className={classNames(
                                 active ? "bg-gray-100" : "",
                                 "block px-4 py-2 text-sm text-gray-700"
                               )}
                             >
                               Sign out
-                            </span>
-                          )}
-                        </Menu.Item>
+                            </button>
+                        }}
+                        />
                       </Menu.Items>
                     </Transition>
                   </Menu>

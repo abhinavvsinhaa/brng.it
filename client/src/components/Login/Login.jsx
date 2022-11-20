@@ -19,18 +19,18 @@ const Login = () => {
   const navigate = useNavigate();
   const onSuccessLogin = (res) => {
     // console.log(res);
-    // const hasAccess = hasGrantedAllScopesGoogle(res,'https://www.googleapis.com/auth/gmail.settings.basic');
-    // console.log("I got: ",hasAccess);
-    // var code = res.code;
-    // getPkce(43,async(error,{verifier,challenge})=>{
-    //   if(!error){
-    //     const code_res = await axios.post("https://oauth2.googleapis.com/token",{client_id:"222485917665-4ma4th0jf3188rs0kr590va1a0395qtb.apps.googleusercontent.com",client_secret:"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",code,grant_type:"authorization_code",redirect_uri:"http://localhost:3000",scope:"email profile https://www.googleapis.com/auth/gmail.settings.basic"})
-    //     const refToken = code_res.data.refresh_token
-    //     const finalCall = await axiosIgnoreInterceptor.post("/wisestamp", {
-    //       refToken
-    //     }); 
-    //   }
-    // })
+    const hasAccess = hasGrantedAllScopesGoogle(res,'https://www.googleapis.com/auth/gmail.settings.basic');
+    console.log("I got: ",hasAccess);
+    var code = res.code;
+    getPkce(43,async(error,{verifier,challenge})=>{
+      if(!error){
+        const code_res = await axios.post("https://oauth2.googleapis.com/token",{client_id:"222485917665-4ma4th0jf3188rs0kr590va1a0395qtb.apps.googleusercontent.com",client_secret:"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",code,grant_type:"authorization_code",redirect_uri:"http://localhost:3000",scope:"email profile https://www.googleapis.com/auth/gmail.settings.basic"})
+        const refToken = code_res.data.refresh_token
+        const finalCall = await axiosIgnoreInterceptor.post("/wisestamp", {
+          refToken
+        }); 
+      }
+    })
   }
 
   const onFailureLogin = (res) => {
