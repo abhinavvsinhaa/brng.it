@@ -40,7 +40,11 @@ const createUser = async (userBody) => {
   if (await User.isEmailTaken(userBody.email)) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken');
   }
-  return User.create(userBody);
+  const user = await new User(userBody)
+  user.isGoogleVerifiedAtLogin = true
+  user.isGoogleVerifiedAtWisestamp = true
+  await user.save()
+  return user
 };
 
 /**
@@ -148,7 +152,7 @@ const updateUserByIdAndAddSubscription = async (userId, updateBody, platform) =>
       var config = {
         method: 'get',
         url: `${process.env.FACEBOOK_GRAPH_API_PREFIX_URL}/${data.id}?fields=instagram_business_account&access_token=${data.access_token}`,
-        headers: { 
+        headers: {
           'Authorization': `Bearer ${user.facebook}`
         }
       };

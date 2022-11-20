@@ -13,8 +13,18 @@ const { tokenTypes } = require('../config/tokens');
  */
 const loginUserWithEmailAndPassword = async (email, password) => {
   const user = await userService.getUserByEmail(email);
+  if(user && user.isGoogleVerifiedAtLogin){
+    throw new ApiError(httpStatus.UNAUTHORIZED, 'Account not found with the selected method!');
+  }
   if (!user || !(await user.isPasswordMatch(password))) {
     throw new ApiError(httpStatus.UNAUTHORIZED, 'Incorrect email or password');
+  }
+  return user;
+};
+const loginUserWithGoogle = async (email) => {
+  const user = await userService.getUserByEmail(email);
+  if(user && !user.isGoogleVerifiedAtLogin){
+    throw new ApiError(httpStatus.UNAUTHORIZED, 'Account not found with the selected method!');
   }
   return user;
 };
@@ -94,6 +104,7 @@ const verifyEmail = async (verifyEmailToken) => {
 module.exports = {
   loginUserWithEmailAndPassword,
   logout,
+  loginUserWithGoogle,
   refreshAuth,
   resetPassword,
   verifyEmail,

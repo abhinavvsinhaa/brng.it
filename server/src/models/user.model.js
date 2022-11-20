@@ -23,6 +23,18 @@ const userSchema = mongoose.Schema(
         }
       },
     },
+    isGoogleVerifiedAtWisestamp:{
+      type: Boolean,
+      required: true,
+      unique: false,
+      default: false
+    },
+    isGoogleVerifiedAtLogin:{
+      type: Boolean,
+      required: true,
+      unique: false,
+      default: false
+    },
     facebook: {
       type: Object,
       default: {}
@@ -73,7 +85,7 @@ const userSchema = mongoose.Schema(
       type: [mongoose.Schema.Types.ObjectId],
       ref: 'User',
       default: [],
-    }, 
+    },
     history: {
       type: [mongoose.Schema.Types.ObjectId],
       ref: 'History',

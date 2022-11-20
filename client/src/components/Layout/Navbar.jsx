@@ -5,10 +5,10 @@ import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
 import useAuth from "../../hooks/useAuth";
 import React, { useState } from "react";
 import ResponsiveDrawer from "../Navigation/ResponsiveDrawer";
-import bringIt from "../../assets/images/brngit logo.png";
-import userIcon from "../../assets/icons/user.png";
-import { Cookies } from "react-cookie";
-import { axiosPrivate } from "../../api/axios";
+import bringIt from '../../assets/images/brngit logo.png';
+import userIcon from '../../assets/icons/user.png'
+import { Cookies } from 'react-cookie';
+import {GoogleLogout} from 'react-google-login';
 
 const navigation = [
   { name: "About", href: "#", current: false },
@@ -44,6 +44,12 @@ export default function Navbar() {
       setUserMenuDisplay("block");
     }
   }, [auth]);
+  const logoutLogin = () => {
+    console.log("Success!");
+  }
+  const logoutFail = (e) => {
+    console.log(e);
+  }
 
   const signOut = async () => {
     await axiosPrivate.post('/auth/logout', {
@@ -52,7 +58,6 @@ export default function Navbar() {
 
     window.location.replace('/app/login')
   }
-
   return (
     <>
       {auth.user && <ResponsiveDrawer />}
