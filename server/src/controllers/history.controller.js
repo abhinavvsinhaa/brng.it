@@ -3,7 +3,7 @@ const History = require('../models/history.model')
 const User = require('../models/user.model');
 
 const createHistory = catchAsync(async (req, res) => {
-    const { accountId, postId, type, date, platform, userId } = req.body;
+    const { accountId, postId, type, date, platform, userId, caption, images, videos, links } = req.body;
     const user = await User.findById(userId)
     if (!user)
         return res.send('Cant find user with the user id given')
@@ -12,9 +12,14 @@ const createHistory = catchAsync(async (req, res) => {
         const history = new History({
             accountId,
             postId,
+            userId,
             type,
             date,
-            platform
+            platform,
+            caption,
+            images,
+            videos,
+            links
         })
         await history.save()
         
@@ -44,4 +49,10 @@ const deleteHistory = catchAsync(async (req, res) => {
     return res.send(`History deleted with id: ${req.params.historyId}`)
 })
 
-module.exports = { createHistory, getHistory, deleteHistory }
+const getAllHistoryFromAccount = catchAsync(async (req, res) => {
+    const history = await History.find({ accountId: req.params.historyId })
+    console.log(history);
+    return history;
+})
+
+module.exports = { createHistory, getHistory, deleteHistory, getAllHistoryFromAccount }

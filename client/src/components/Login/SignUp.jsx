@@ -8,6 +8,7 @@ import { Button, message, Space } from "antd";
 
 // Assets
 import bannerBg from "../../assets/images/sp-login-image.png";
+import openNotificationWithIcon from "../../util/openNotificationWithIcon";
 
 const SignUp = () => {
   const { setAuth } = useAuth();
@@ -36,13 +37,14 @@ const SignUp = () => {
         axiosPrivate.defaults.headers.common[
           "Authorization"
         ] = `Bearer ${res?.data?.tokens?.access?.token}`;
-        navigate("/");
+        navigate("/share");
       } else {
-        return alert("Please accept Tomaque's terms and service.");
+        return openNotificationWithIcon("error", "Please accept terms and service.");
       }
     } catch (err) {
       setLoading(false);
       console.log(err?.response);
+      openNotificationWithIcon("error", err?.response?.data?.message)
       setError(err?.response?.data?.message);
     }
   };
@@ -54,7 +56,7 @@ const SignUp = () => {
           <div className="col-xl-5 col-lg-5 col-md-12 col-sm-12 col-12 form-col signup-col order-md-2 order-sm-2 order-2 order-xl-first order-lg-2">
             <div className="form">
               <p className="form-heading">Let's get your account set up</p>
-              <br />
+              {/* <br /> */}
               <form action="">
                 <label htmlFor="email">Name</label>
                 <br />
@@ -88,7 +90,7 @@ const SignUp = () => {
                   onChange={(e) => setPassword(e.target.value)}
                 />
                 <br />
-                <p className="password-requirements">{error}</p>
+                {/* <p className="password-requirements">{error}</p> */}
                 <br />
                 <div
                   style={{
@@ -104,15 +106,15 @@ const SignUp = () => {
                     onChange={() => setTermsAndService(!termsAndService)}
                   />
                   &nbsp;&nbsp;
-                  <p>
+                  <p style={{ margin: 0 }}>
                     I agree to
                     <a
                       style={{ color: "blue", fontWeight: "500" }}
-                      href="https://www.tomaque.com/privacy-policy/"
+                      href="https://brng.it/app/termsofservice"
                       target="__blank"
                     >
                       {" "}
-                      Tomaque's Terms of Service
+                      Brng.it's Terms of Service
                     </a>
                   </p>
                 </div>
@@ -135,7 +137,7 @@ const SignUp = () => {
                 }}
               >
                 <div>
-                  <a href="/">Already have an account?</a>
+                  <a href="/app/login">Already have an account?</a>
                 </div>
               </div>
             </div>

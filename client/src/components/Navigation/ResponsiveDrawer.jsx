@@ -39,7 +39,7 @@ function ResponsiveDrawer(props) {
     <div>
       <Divider />
       <List>
-        <Link to="/" style={{ color: "inherit" }}>
+        {/* <Link to="/" style={{ color: "inherit" }}>
           <ListItem disablePadding>
             <ListItemButton>
               <ListItemIcon>
@@ -48,8 +48,8 @@ function ResponsiveDrawer(props) {
               <ListItemText primary="Dashboard" />
             </ListItemButton>
           </ListItem>
-        </Link>
-        <Link to="/share" style={{ color: "inherit" }}>
+        </Link> */}
+        <Link to="/" style={{ color: "inherit" }}>
           <ListItem disablePadding>
             <ListItemButton>
               <ListItemIcon>

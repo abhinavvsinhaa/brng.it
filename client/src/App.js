@@ -40,7 +40,7 @@ function App() {
           <Route path="/tree/:uid" element={<TreeUrlRedirect />} />
           <Route path="url/:uid" element={<UrlRedirect />} />
           <Route element={<PersistLogin />}>
-            <Route path="/" element={<Private Component={Calender} />} />
+            {/* <Route path="/" element={<Private Component={Calender} />} /> */}
             <Route path="/channels" element={<Private Component={Channel} />} />
             <Route path="/profile" element={<Private Component={Profile} />} />
             <Route
@@ -49,7 +49,7 @@ function App() {
             />
             <Route path="/linktree" element={<TreeTabs />} />
             <Route path="/url" element={<UrlTabs />} />
-            <Route path="/share" element={<Share />} />
+            <Route path="/" element={<Private Component={Share} />} />
             <Route path="/wisestamp" element={<WiseStamp />} />
             <Route path="/team" element={<Team />} />
             <Route path="*" element={<Error />} />

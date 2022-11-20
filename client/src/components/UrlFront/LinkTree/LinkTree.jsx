@@ -11,6 +11,7 @@ import { storage } from "../../../util/Firebase";
 import defaultThemes from "./defaultThemes";
 import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
 import uploadImageToS3 from "../../../util/uploadImageToS3";
+import openNotificationWithIcon from "../../../util/openNotificationWithIcon";
 
 // TODO: create individual folder for each new user, otherwise image name can match, which will replace the previous image with same name or add UUID
 
@@ -75,12 +76,14 @@ export default function LinkTree() {
   };
 
   const addMainUrl = () => {
+    if (link == "" || linkName == "") 
+      return openNotificationWithIcon("error", "Both link and link name must be present.")
     setColMainUrlArr((colMainUrlArr) => [
       ...colMainUrlArr,
       { link, title: linkName },
     ]);
     console.log(colMainUrlArr);
-    openNotificationWithIcon("success");
+    openNotificationWithIcon("success", "Link added to linktree");
     setLink("");
     setLinkName("");
     setColMainUrl("");
@@ -115,6 +118,8 @@ export default function LinkTree() {
               that houses all the important links that you want to share with
               your audience.
             </p>
+            <span>Linktree URL: </span>
+            <SingleTreeUrl treeArr={treeUrl} />
             <input
               type="text"
               name="colMainUrl"
@@ -123,7 +128,7 @@ export default function LinkTree() {
               onChange={(e) => {
                 setColMainUserName(e.target.value);
               }}
-              className="form-control mb-3"
+              className="form-control mb-3 mt-3"
               id="urlCol"
             />
             <textarea
@@ -139,7 +144,7 @@ export default function LinkTree() {
             />
             <br />
 
-            <div className="flex items-end my-3">
+            <div className="flex items-end">
               <div>
                 <label
                   for="formFile"
@@ -159,7 +164,7 @@ export default function LinkTree() {
               </div>
               <button
                 onClick={handleLinkTreeProfilePictureImageUpload}
-                className="btn url-submit-btn h-[38px] mx-3"
+                className="btn url-submit-btn mx-3"
               >
                 Upload
               </button>
@@ -185,7 +190,7 @@ export default function LinkTree() {
               </div>
               <button
                 onClick={handleLinkTreeBackground}
-                className="btn url-submit-btn h-[38px] mx-3"
+                className="btn url-submit-btn mx-3"
               >
                 Upload
               </button>
@@ -209,18 +214,7 @@ export default function LinkTree() {
               })}
             </div>
             <br />
-
-            <button onClick={addMainUrl} className="btn url-submit-btn">
-              Add Link
-            </button>
-            <button
-              onClick={convertLinkUrl}
-              className="btn url-success-btn mx-2"
-            >
-              Generate
-            </button>
-            <br />
-            <br />
+            <p>Enter link name and URL</p>
             <div>
               <input
                 type="text"
@@ -247,8 +241,16 @@ export default function LinkTree() {
                 aria-describedby="emailHelp"
               />
               <br />
-              <span style={{ fontWeight: 500 }}>My Linktree: </span>
-              <SingleTreeUrl treeArr={treeUrl} />
+              <button onClick={addMainUrl} className="btn url-submit-btn">
+              Add Link
+            </button>
+            <button
+              onClick={convertLinkUrl}
+              className="btn url-success-btn mx-2"
+            >
+              Generate
+            </button>
+              
               <Divider />
               {colMainUrlArr &&
                 colMainUrlArr.map((url, i) => {

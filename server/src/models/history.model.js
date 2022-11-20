@@ -5,26 +5,37 @@ const { toJSON, paginate } = require('./plugins');
 const historySchema = mongoose.Schema(
   {
     accountId: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
     postId: {
-        type: String,
+      type: String,
     },
     type: {
-        type: String,
-        required: true,
-        default: 'normal' // other option 'scheduled'
+      type: String,
+      required: true,
+      default: 'normal', // other option 'scheduled'
+    },
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: true
     },
     date: {
-        type: String,
-        required: true,
-        default: ''
+      type: String,
+      required: true,
+      default: '',
     },
     platform: {
-        type: String,
-        required: true,
-    }
+      type: String,
+      required: true,
+    },
+    caption: {
+      type: String,
+    },
+    images: [String],
+    videos: [String],
+    links: [String]
   },
   {
     timestamps: true,

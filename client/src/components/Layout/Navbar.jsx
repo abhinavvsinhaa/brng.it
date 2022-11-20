@@ -10,7 +10,6 @@ import userIcon from '../../assets/icons/user.png'
 import { Cookies } from 'react-cookie';
 import {GoogleLogout} from 'react-google-login';
 
-
 const navigation = [
   { name: "About", href: "#", current: false },
   { name: "Pricing", href: "#", current: false },
@@ -22,13 +21,17 @@ function classNames(...classes) {
 }
 
 function deleteAllCookies() {
+  // const response = await
+  var cookies = document.cookie.split(";");
+  console.log(document.cookie);
 
-  // for (var i = 0; i < cookies.length; i++) {
-  //     var cookie = cookies[i];
-  //     var eqPos = cookie.indexOf("=");
-  //     var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
-  //     document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
-  // }
+    for (var i = 0; i < cookies.length; i++) {
+        var cookie = cookies[i];
+        console.log(cookie);
+        var eqPos = cookie.indexOf("=");
+        var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+        document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    }
 }
 
 export default function Navbar() {
@@ -47,6 +50,14 @@ export default function Navbar() {
   const logoutFail = (e) => {
     console.log(e);
   }
+
+  const signOut = async () => {
+    await axiosPrivate.post('/auth/logout', {
+      refreshToken: auth.tokens.refresh.token
+    })
+
+    window.location.replace('/app/login')
+  }
   return (
     <>
       {auth.user && <ResponsiveDrawer />}
@@ -58,6 +69,7 @@ export default function Navbar() {
           position: "sticky",
           top: 0,
           zIndex: 100,
+          backgroundColor: "#211522",
         }}
       >
         {({ open }) => (
@@ -129,11 +141,7 @@ export default function Navbar() {
                     <div>
                       <Menu.Button className="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
                         <span className="sr-only">Open user menu</span>
-                        <img
-                          className="h-8 w-8"
-                          src={userIcon}
-                          alt=""
-                        />
+                        <img className="h-8 w-8" src={userIcon} alt="" />
                       </Menu.Button>
                     </div>
                     <Transition
@@ -149,12 +157,18 @@ export default function Navbar() {
                         className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
                         style={{ zIndex: 10 }}
                       >
-                        <GoogleLogout
-                        clientId="222485917665-4ma4th0jf3188rs0kr590va1a0395qtb.apps.googleusercontent.com"
-                        buttonText="Sign out"
-                        onLogoutSuccess={deleteAllCookies}
-                        onFailure={logoutFail}
-                        />
+                        <Menu.Item onClick={signOut}>
+                          {({ active }) => (
+                            <span
+                              className={classNames(
+                                active ? "bg-gray-100" : "",
+                                "block px-4 py-2 text-sm text-gray-700"
+                              )}
+                            >
+                              Sign out
+                            </span>
+                          )}
+                        </Menu.Item>
                       </Menu.Items>
                     </Transition>
                   </Menu>

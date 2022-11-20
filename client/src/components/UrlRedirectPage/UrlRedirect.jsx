@@ -8,9 +8,9 @@ export default function UrlRedirect() {
   const [timer, setTimer] = useState(5);
   const deviceDetector = new DeviceDetector();
 
-  setInterval(() => {
-    setTimer(timer - 1);
-  }, 500);
+  // setInterval(() => {
+  //   setTimer(timer - 1);
+  // }, 500);
 
   useEffect(() => {
     const fetchMainUrl = async () => {
@@ -49,7 +49,7 @@ export default function UrlRedirect() {
 
   return (
     <>
-      <h1>Redirecting in {timer}...</h1>
+      <h1>Redirecting...</h1>
     </>
   );
 }

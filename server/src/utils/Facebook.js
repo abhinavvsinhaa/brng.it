@@ -19,7 +19,7 @@ class Facebook {
     } else {
       this.url = `${this.url}feed/?`;
 
-      if (request.body.caption) this.url = `${this.url}message=${request.body.caption}&link=https://google.com`;
+      if (request.body.caption) this.url = `${this.url}message=${request.body.caption}`;
     }
   }
 
@@ -47,9 +47,10 @@ class Facebook {
   // PUBLISH FACEBOOK POSTS
   async publish() {
     try {
+      this.url = encodeURI(`${this.url}&access_token=${this.req.body.pageAccessToken}`)
       let config = {
         method: 'post',
-        url: `${this.url}&access_token=${this.req.body.pageAccessToken}`,
+        url: this.url,
         headers: {
           Authorization: `Bearer ${this.req.body.userAccessToken}`,
         },
@@ -72,7 +73,7 @@ class Facebook {
         try {
           var config = {
             method: 'post',
-            url: `https://graph.facebook.com/me/photos?published=false&access_token=${this.req.body.pageAccessToken}&url=${url}`,
+            url: encodeURI(`https://graph.facebook.com/me/photos?published=false&access_token=${this.req.body.pageAccessToken}&url=${url}`),
             headers: { 
               'Authorization': `Bearer ${this.req.body.userAccessToken}`, 
               'Content-Type': 'text/plain'
@@ -123,7 +124,7 @@ class Facebook {
 
         let config = {
           method: 'post',
-          url,
+          url: encodeURI(url),
           headers: {
             'Authorization': `Bearer ${this.req.body.userAccessToken}`,
             'Content-Type': 'text/plain'

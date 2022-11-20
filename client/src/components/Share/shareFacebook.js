@@ -28,7 +28,7 @@ class shareFacebook {
     console.log(res);
 
     if (res.data.id) {
-      storeDetails(this.pageId, res.data.id, "normal", dateToStoreInDb(null), "facebook", userId);
+      storeDetails(this.pageId, res.data.id, "normal", dateToStoreInDb(null), "facebook", userId, caption, fileURL, [], []);
       openNotificationWithIcon("Post shared")
     }
 
@@ -50,7 +50,7 @@ class shareFacebook {
 
     console.log(res);
     if (res.data.id) {
-      storeDetails(this.pageId, res.data.id, "schedule", dateToStoreInDb(unixTimeStamp), "facebook", userId);
+      storeDetails(this.pageId, res.data.id, "schedule", dateToStoreInDb(unixTimeStamp), "facebook", userId, caption, fileURL, [], []);
     }
   }
 }

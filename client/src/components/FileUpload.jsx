@@ -3,7 +3,7 @@ import { ref, uploadBytes, getDownloadURL, listAll } from "firebase/storage";
 import { Spin } from "antd";
 import { storage } from "../util/Firebase";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { v4 } from "uuid";
+import uploadImageToS3 from "../util/uploadImageToS3";
 
 /*
       USAGE:
@@ -17,38 +17,26 @@ function FileUpload({ setFileUrl, inputLabel, inputLabelColor, remove }) {
   const [uploadedFile, setUploadedFile] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const id = v4();
 
-  const handleClick = () => {
+  const handleClick = async () => {
     if (!uploadedFile) {
       setError("Please provide a file!");
       return;
     }
     setLoading(true);
-    setError("");
-    const storageRef = ref(storage, `/image/${uploadedFile.name}-${id}`);
-
-    uploadBytes(storageRef, uploadedFile)
-      .then((snapshot) => {
-        console.log("Uploaded a blob or file!", snapshot.ref.toString());
-        getDownloadURL(ref(storage, `image/${uploadedFile.name}-${id}`))
-          .then((url) => {
-            setFileUrl(url);
-            setLoading(false);
-          })
-          .catch((error) => {
-            console.log(error);
-            setLoading(false);
-          });
-      })
-      .catch((error) => {
-        console.log(error);
-        setLoading(false);
-      });
+    try {
+      const fileUrl = await uploadImageToS3(uploadedFile);
+      setFileUrl(fileUrl);
+      setLoading(false);
+    } catch (e) {
+      setLoading(false);
+      setError("Something went wrong while uploading");
+    }
   };
 
   const handleRemove = () => {
     setFileUrl("");
+    setLoading(false);
     document.getElementById("imageUpload").value = null;
   };
 

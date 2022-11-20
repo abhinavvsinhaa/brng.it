@@ -1,9 +1,10 @@
 .url-container {
     height: calc(100vh - 64px);
 }
+
 .url-container-inner
 {
-    background-color:#1359dc;
+    background-color: var(--index);
     border-radius: 30px;
     color: white;
     margin: 50px;
@@ -55,7 +56,7 @@
 }
 
 .url-success-btn {
-    background-color: #4C8854;
+    background-color: var(--root);
 }
 
 .linktreeurl-description {

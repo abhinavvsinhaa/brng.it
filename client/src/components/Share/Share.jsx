@@ -11,20 +11,17 @@ import useAuth from "../../hooks/useAuth";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
-import { notification, TimePicker, Modal as ModalAntD, DatePicker } from "antd";
+import { TimePicker, Modal as ModalAntD, DatePicker } from "antd";
 import moment from "moment";
-import { v4 } from "uuid";
-import { storage } from "../../util/Firebase";
-import { ref, getDownloadURL, uploadBytes, getStorage, uploadBytesResumable } from "firebase/storage";
-import shareFacebook from "./shareFacebook"
+import shareFacebook from "./shareFacebook";
 import shareInstagram from "./shareInstagram";
 import shareLinkedIn from "./shareLinkedin";
-
 import fb1 from "../../assets/images/fb1.png";
 import fb2 from "../../assets/images/fb2.png";
 import Facebook from "@mui/icons-material/Facebook";
-import CircularProgress from '@mui/material/CircularProgress';
-import uploadImageToS3 from "../../util/uploadImageToS3"
+import uploadImageToS3 from "../../util/uploadImageToS3";
+import openNotificationWithIcon from "../../util/openNotificationWithIcon";
+import History from "../History/History";
 
 const { TabPane } = Tabs;
 const { Search } = Input;
@@ -51,34 +48,6 @@ const columnsShare = [
     dataIndex: "platform",
   },
 ];
-
-// notification
-const openNotificationWithIcon = (type, title, content) => {
-  notification[type]({
-    message: title,
-    description: content,
-  });
-};
-
-const shareNowLinkedIn = async (author, caption, access_token, file) => {
-  // console.log('access_token', access_token);
-  // console.log('author', author);
-  // console.log('caption', caption);
-
-  // if (file) {
-  //   const reader = new FileReader();
-  //   const binaryImage = reader.readAsBinaryString(file);
-  //   console.log("binary", binaryImage);
-  // }
-
-  const res = await axios.post("/share?linkedin=true", {
-    access_token,
-    caption,
-    author,
-    file,
-  });
-  console.log(res);
-};
 
 const Share = () => {
   const { auth, setAuth } = useAuth();
@@ -109,109 +78,24 @@ const Share = () => {
 
   const [checkboxOptions, setCheckboxOptions] = useState([]);
 
+  // upload files uploaded by user to S3 bucket
   const uploadFiles = async (f) => {
-    // if (filesUpload == []) return null;
-
-    // .map(async (file) => {
-    // let uid = v4();
-
-    // const metadata = {
-    //   contentType: "image/*",
-    // };
-    // const storage = getStorage();
-    // const storageRef = ref(storage, `/image/${uid}-${f.name}`);
-    // const uploadTask = uploadBytesResumable(storageRef, file, metadata);
-
-    // // Listen for state changes, errors, and completion of the upload.
-    // uploadTask.on(
-    //   "state_changed",
-    //   (snapshot) => {
-    //     // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-    //     const progress =
-    //       (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-    //     console.log("Upload is " + progress + "% done");
-    //     switch (snapshot.state) {
-    //       case "paused":
-    //         console.log("Upload is paused");
-    //         break;
-    //       case "running":
-    //         console.log("Upload is running");
-    //         break;
-    //     }
-    //   },
-    //   (error) => {
-    //     // A full list of error codes is available at
-    //     // https://firebase.google.com/docs/storage/web/handle-errors
-    //     switch (error.code) {
-    //       case "storage/unauthorized":
-    //         // User doesn't have permission to access the object
-    //         break;
-    //       case "storage/canceled":
-    //         // User canceled the upload
-    //         break;
-
-    //       // ...
-
-    //       case "storage/unknown":
-    //         // Unknown error occurred, inspect error.serverResponse
-    //         break;
-    //     }
-    //   },
-    //   () => {
-    //     // Upload completed successfully, now we can get the download URL
-    //     getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-    //       console.log("File available at", downloadURL);
-    //       setDownloadableURLs([...downloadableURLs, downloadURL]);
-    //     });
-    //   }
-    // );
-
-    // // uploading file
-    // const snapshot = await uploadBytes(storageRef, file);
-    // console.log("Uploaded a blob or file!", snapshot.ref.toString());
-    // const url = await getDownloadURL(
-    //   ref(storage, `image/${uid}-${f.name}`)
-    // );
-    // console.log(url);
-    // setDownloadableURLs([...downloadableURLs, url]);
-    // });
-
-    // var formdata = new FormData();
-    // formdata.append("image", f, "file");
-
-    // var requestOptions = {
-    //   method: 'POST',
-    //   body: formdata,
-    //   redirect: 'follow'
-    // };
-
-    // fetch("https://api.imgbb.com/1/upload?expiration=600&key=43a9a1e2f210ad2d192a2249474a92cf", requestOptions)
-    //   .then(response => response.json())
-    //   .then(result => {
-    //     console.log(result)
-    //     setDownloadableURLs([...downloadableURLs, result.data.url])
-    //   })
-    //   .catch(error => console.log('error', error));
-
     const url = await uploadImageToS3(f);
     setDownloadableURLs([...downloadableURLs, url]);
   };
 
+  // handle button Share Now
   const handleShareNowButton = async () => {
+    // if no account is selected, throw an alert
     if (!selectedCustomer)
       return openNotificationWithIcon("error", "No account choosen");
-
-    if (selectedPlatformsToPostOn === [])
-      return openNotificationWithIcon(
-        "error",
-        "Please select platform to post on."
-      );
 
     if (!caption && !file)
       return openNotificationWithIcon(
         "error",
         "No caption entered or file choosen"
       );
+
     else if (!caption)
       openNotificationWithIcon("warning", "No caption entered");
 
@@ -222,10 +106,14 @@ const Share = () => {
       const searchTarget = res.data.facebookSub;
       searchTarget.map((found) => {
         if (found.id == selectedCustomerDetails.key) {
-          const fb = new shareFacebook(selectedCustomerDetails.key, res.data.facebook, found.access_token);
-          // let fileURL;
+          const fb = new shareFacebook(
+            selectedCustomerDetails.key,
+            res.data.facebook,
+            found.access_token
+          );
+
           let link;
-          fb.shareNow(caption, downloadableURLs, link, auth.user.id)
+          fb.shareNow(caption, downloadableURLs, link, auth.user.id);
         }
       });
     } else if (instagram != null) {
@@ -234,42 +122,58 @@ const Share = () => {
       const searchTarget = res.data.facebookSub;
       searchTarget.map((found) => {
         if (found.instagram.id == selectedCustomerDetails.key) {
-          const ig = new shareInstagram(selectedCustomerDetails.key, res.data.facebook)
+          const ig = new shareInstagram(
+            selectedCustomerDetails.key,
+            res.data.facebook
+          );
           ig.shareNow(caption, filesUpload, downloadableURLs, auth.user.id);
         }
       });
     } else if (linkedin != null) {
+      const res = await axiosPrivate.get(`/users/${auth.user.id}`);
+      const searchTarget = res.data.linkedinSub;
 
-      const res = await axiosPrivate.get(`/users/${auth.user.id}`)
-      const searchTarget = res.data.linkedinSub
-
-      searchTarget.map(async found => {
+      searchTarget.map(async (found) => {
         if (found.id == selectedCustomerDetails.key) {
-          const promises = filesUpload.map(async f => {
-            const binaries = new Promise((resolve, reject) => {
-              let reader = new FileReader();
+          // if it's an image post
+          if (filesUpload.length != 0) {
+            const promises = filesUpload.map(async (f) => {
+              const binaries = new Promise((resolve, reject) => {
+                let reader = new FileReader();
 
-              reader.onload = function (e) {
-                resolve(e.target.result);
-              }
+                reader.onload = function (e) {
+                  resolve(e.target.result);
+                };
 
-              reader.onerror = function (e) {
-                console.log('error in reading file: ', e.type);
-              }
+                reader.onerror = function (e) {
+                  console.log("error in reading file: ", e.type);
+                };
 
-              reader.readAsBinaryString(f);
-            })
+                reader.readAsBinaryString(f);
+              });
 
-            return binaries;
-          })
+              return binaries;
+            });
 
-          const binaryFiles = await Promise.all(promises);
-
-          const linkedin = new shareLinkedIn(selectedCustomerDetails.key, caption, found.access_token, binaryFiles);
-
-          linkedin.shareNowLinkedIn(auth.user.id);
+            const binaryFiles = await Promise.all(promises);
+            const linkedin = new shareLinkedIn(
+              selectedCustomerDetails.key,
+              caption,
+              found.access_token,
+              downloadableURLs[0]
+            );
+            linkedin.shareNowLinkedIn(auth.user.id);
+          } else {
+            const linkedin = new shareLinkedIn(
+              selectedCustomerDetails.key,
+              caption,
+              found.access_token,
+              null
+            );
+            linkedin.shareNowLinkedIn(auth.user.id);
+            }
         }
-      })
+      });
     }
   };
 
@@ -349,11 +253,11 @@ const Share = () => {
         let details = {
           key: sub.id,
           name: sub.localizedFirstName + " " + sub.localizedLastName,
-          platform: "LinkedIn"
-        }
+          platform: "LinkedIn",
+        };
 
-        array.push(details)
-      })
+        array.push(details);
+      });
 
       setLoading(false);
       setCustomers(array);
@@ -379,9 +283,7 @@ const Share = () => {
     const date = new Date(+year, month - 1, +day, +hours, +minutes, +seconds);
     console.log(date); // 👉️ Sat Sep 24 2022 09:25:32
 
-    // ✅ Get Unix timestamp
     const unixTimeStamp = Math.floor(date.getTime() / 1000);
-    // console.log(unixTimeStamp);
 
     if (facebook != null) {
       // find details about the selected subscription
@@ -389,33 +291,50 @@ const Share = () => {
       const searchTarget = res.data.facebookSub;
       searchTarget.map((found) => {
         if (found.id == selectedCustomerDetails.key) {
-          const fb = new shareFacebook(selectedCustomerDetails.key, res.data.facebook, found.access_token);
+          const fb = new shareFacebook(
+            selectedCustomerDetails.key,
+            res.data.facebook,
+            found.access_token
+          );
           let fileURL;
           let link;
-          fb.scheduleForLater(caption, fileURL, link, unixTimeStamp, auth.user.id)
+          fb.scheduleForLater(
+            caption,
+            fileURL,
+            link,
+            unixTimeStamp,
+            auth.user.id
+          );
         }
       });
-    }
-
-    else if (instagram != null) {
+    } else if (instagram != null) {
       // find details about the selected subscription
       const res = await axios.get(`/users/${auth.user.id}`);
       const searchTarget = res.data.facebookSub;
       searchTarget.map((found) => {
         if (found.instagram.id == selectedCustomerDetails.key) {
-          const ig = new shareInstagram(selectedCustomerDetails.key, res.data.facebook)
+          const ig = new shareInstagram(
+            selectedCustomerDetails.key,
+            res.data.facebook
+          );
 
-          ig.schedule(caption, filesUpload, downloadableURLs, auth.user.id, unixTimeStamp);
+          ig.schedule(
+            caption,
+            filesUpload,
+            downloadableURLs,
+            auth.user.id,
+            unixTimeStamp
+          );
         }
       });
     }
   };
 
-  const onSearchSub = () => { };
+  const onSearchSub = () => {};
 
   useEffect(() => {
     fetchCustomers();
-    console.log(auth)
+    console.log(auth);
     setScheduledDate(moment().format("MM/DD/YYYY"));
   }, []);
 
@@ -640,17 +559,16 @@ const Share = () => {
                             };
 
                             reader.readAsDataURL(e.target.files[0]);
-                            uploadFiles(e.target.files[0])
+                            uploadFiles(e.target.files[0]);
                           }}
                           className="custom-file-input"
                           style={{ display: "none" }}
                         />
-                        {
-                          selectedCustomerDetails &&
+                        {selectedCustomerDetails && (
                           <label htmlFor="image" className="url-submit-btn">
                             Upload
                           </label>
-                        }
+                        )}
                       </div>
                       {/* <div> */}
                       {/* </div> */}
@@ -687,7 +605,8 @@ const Share = () => {
                       Schedule
                     </button>
                   </div>
-                  <div className="preview">
+                  {/* Facebook preview */}
+                  {/* <div className="preview">
                     {facebook && (
                       <>
                         <span>
@@ -702,7 +621,7 @@ const Share = () => {
                         </div>
                       </>
                     )}
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>
@@ -761,14 +680,14 @@ const Share = () => {
         </div>
       </TabPane>
       <TabPane tab="History" key="2">
-        Content of Tab Pane 2
+        <History/>
       </TabPane>
-      <TabPane tab="Analytics" key="3">
+      {/* <TabPane tab="Analytics" key="3">
         Content of Tab Pane 3
       </TabPane>
       <TabPane tab="Settings" key="3">
         Settings
-      </TabPane>
+      </TabPane> */}
     </Tabs>
   );
 };
