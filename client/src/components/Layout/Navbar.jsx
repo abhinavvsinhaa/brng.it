@@ -7,7 +7,9 @@ import React, { useState } from "react";
 import ResponsiveDrawer from "../Navigation/ResponsiveDrawer";
 import bringIt from '../../assets/images/brngit logo.png';
 import userIcon from '../../assets/icons/user.png'
-import { Cookies } from 'react-cookie'
+import { Cookies } from 'react-cookie';
+import {GoogleLogout} from 'react-google-login';
+
 
 const navigation = [
   { name: "About", href: "#", current: false },
@@ -39,7 +41,12 @@ export default function Navbar() {
       setUserMenuDisplay("block");
     }
   }, [auth]);
-
+  const logoutLogin = () => {
+    console.log("Success!");
+  }
+  const logoutFail = (e) => {
+    console.log(e);
+  }
   return (
     <>
       {auth.user && <ResponsiveDrawer />}
@@ -142,19 +149,12 @@ export default function Navbar() {
                         className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
                         style={{ zIndex: 10 }}
                       >
-                        <Menu.Item onClick={deleteAllCookies}>
-                          {({ active }) => (
-                            <a
-                              href="#"
-                              className={classNames(
-                                active ? "bg-gray-100" : "",
-                                "block px-4 py-2 text-sm text-gray-700"
-                              )}
-                            >
-                              Sign out
-                            </a>
-                          )}
-                        </Menu.Item>
+                        <GoogleLogout
+                        clientId="222485917665-4ma4th0jf3188rs0kr590va1a0395qtb.apps.googleusercontent.com"
+                        buttonText="Sign out"
+                        onLogoutSuccess={deleteAllCookies}
+                        onFailure={logoutFail}
+                        />
                       </Menu.Items>
                     </Transition>
                   </Menu>

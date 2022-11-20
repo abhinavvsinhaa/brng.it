@@ -20,10 +20,14 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import EmailIcon from '@mui/icons-material/Email';
 
 import { Link } from "react-router-dom";
+import AuthContext from "../../context/AuthContext";
+import { ListItemSecondaryAction } from "@mui/material";
+import { ExclamationCircleIcon } from "@heroicons/react/outline";
 
 const drawerWidth = 240;
 
 function ResponsiveDrawer(props) {
+  const { auth } = React.useContext(AuthContext);
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
@@ -61,7 +65,7 @@ function ResponsiveDrawer(props) {
               <ListItemIcon>
                 <FaceIcon />
               </ListItemIcon>
-              <ListItemText primary="Team Members"/>
+              <ListItemText primary="Team Members" />
             </ListItemButton>
           </ListItem>
         </Link>
@@ -85,16 +89,21 @@ function ResponsiveDrawer(props) {
             </ListItemButton>
           </ListItem>
         </Link>
-        <Link to="/wisestamp" style={{ color: "inherit" }}>
-          <ListItem disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                <EmailIcon />
-              </ListItemIcon>
-              <ListItemText primary="Wisestamp" />
-            </ListItemButton>
-          </ListItem>
-        </Link>
+        {
+          auth.user.isGoogleVerifiedAtWisestamp ?
+            <Link to="/wisestamp" style={{ color: "inherit" }}>
+              <ListItem disablePadding>
+                <ListItemSecondaryAction>
+                  <ListItemIcon>
+                    <ExclamationCircleIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Wisestamp not verified" />
+                </ListItemSecondaryAction>
+              </ListItem>
+            </Link>
+            :
+            <div></div> 
+        }
         <Link to="/url" style={{ color: "inherit" }}>
           <ListItem disablePadding>
             <ListItemButton>
