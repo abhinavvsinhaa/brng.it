@@ -13,7 +13,7 @@ export default function HorizontalTemplate({variableInput,design,setDesign}){
                 <tr>
                     <td style={{width:'85px',display:'grid'}}>
                     <div style={{display:'grid',placeContent:'center',paddingRight:'10px'}}>
-                    {variableInput.url===""?<img src={defsign} alt="User"/>:<img src={`https://wisestamp-api.herokuapp.com/${variableInput.url}`} style={{width:'125px'}} alt="User"/>}
+                    {variableInput.url===""?<img src={defsign} alt="User"/>:<img src={`${variableInput.url}`} style={{width:'80px'}} alt="User"/>}
                     </div>
                     </td>
                     <td style={{width:'fit-content'}}>

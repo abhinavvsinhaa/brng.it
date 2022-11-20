@@ -17,14 +17,17 @@ import TreeTabs from "./components/UrlFront/TreeTabs";
 import UrlRedirect from "./components/UrlRedirectPage/UrlRedirect";
 import TreeUrlRedirect from "./components/TreeUrlRedirect/TreeUrlRedirect";
 import WiseStamp from "./components/WiseStamp/WiseStamp";
-
 import "./App.css";
 import Share from "./components/Share/Share";
 import WithNav from "./components/WithNav";
 import Team from "./components/Team/Team";
 import PrivacyPolicy from "./components/PrivacyPolicy/PrivacyPolicy";
-
+import {initGapi} from "./util/gapi";
 function App() {
+  // const {getAliases,putAliases} = useGapi();
+  useEffect(()=>{
+    initGapi()
+  },[])
   return (
     <CalenderProvider>
       <div className="app">

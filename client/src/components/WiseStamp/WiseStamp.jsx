@@ -1,7 +1,7 @@
 import App from "./components/App";
 
-export default function WiseStamp(){
+export default function WiseStamp(getAliases,putAliases){
     return(
-        <App/>
+        <App getAliases={getAliases} putAliases={putAliases}/>
     )
 }

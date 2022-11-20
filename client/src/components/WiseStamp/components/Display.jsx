@@ -1,9 +1,18 @@
 import { Clipboard } from "@styled-icons/feather";
 import { message } from "antd";
-import React, { useEffect } from "react";
-import VariousTemplates from '../templates/index'
+import React, { useContext, useEffect } from "react";
+import VariousTemplates from '../templates/index';
+import { axiosIgnoreInterceptor } from "../../../api/axios";
 import CreateAndServeHTML from "../utils/createHTML";
+import {  putAliases } from "../../../util/gapi";
+import AuthContext from "../../../context/AuthContext";
+import { SyncOutline } from "@styled-icons/evaicons-outline";
 function Display ({variableInput,selectedTemplate,setisLoading,design, setDesign,extraFields}) {
+    const {auth,setAuth} = useContext(AuthContext);
+    const setSignature = () => {
+        putAliases(document.getElementById('main-editor').innerHTML,auth);
+    }
+    
     useEffect(()=>{
         var value = "";
         for(var i=0 ; i<extraFields.length;i++){
@@ -28,7 +37,7 @@ function Display ({variableInput,selectedTemplate,setisLoading,design, setDesign
                     <p className="py-[6px]">Subject :&nbsp; <span className="font-[700]">Check out my new email signature</span></p>
                     <hr />
                 </div>
-                <div id="main-editor">
+                <div id="main-editor" className="p-[30px]">
                 <VariousTemplates design={design} setDesign={setDesign} selectedTemplate={selectedTemplate} variableInput={variableInput}/>
                 <div id="extra-field-div" style={{'margin-left': '30px','margin-right':'10px'}}></div>
                 </div>
@@ -41,10 +50,8 @@ function Display ({variableInput,selectedTemplate,setisLoading,design, setDesign
 </button>
                 <div className="grid justify-items-end">
                 <button onClick={()=> {
-                    navigator.clipboard.writeText
-                    (document.getElementById('main-editor').innerHTML);
-                    message.success({content:"Great Choice! Copied content to clipboard",style:{bottom:'10px'}})
-                }} className="w-fit inline-block px-6 py-2.5 bg-blue-400 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-500 hover:shadow-lg focus:bg-blue-500 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-600 active:shadow-lg transition duration-150 ease-in-out self-end"> <Clipboard className="w-[25px] pr-[5px]"/> Copy to clipboard</button>
+                  setSignature();  
+                }} className="w-fit inline-block px-6 py-2.5 bg-blue-400 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-500 hover:shadow-lg focus:bg-blue-500 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-600 active:shadow-lg transition duration-150 ease-in-out self-end"> <SyncOutline className="w-[25px] pr-[5px]"/> Sync your signature</button>
                 </div>
             </div>
         </div>

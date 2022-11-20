@@ -17,7 +17,7 @@ export default function StripTemplate({variableInput,design,setDesign}){
         <div style={{display:'grid',gridTemplateColumns:'1fr 4fr',gap:'15px',width:'635px'}}>
                     <div>
                     <div style={{display:'grid',placeContent:'center',paddingRight:'10px'}}>
-                    {variableInput.url===""?<img src={defsign} alt="User"/>:<img src={`https://wisestamp-api.herokuapp.com/${variableInput.url}`} style={{width:'125px'}} alt="User"/>}
+                    {variableInput.url===""?<img src={defsign} alt="User"/>:<img src={`${variableInput.url}`} style={{width:'80px'}} alt="User"/>}
                     </div>
                     </div>
                     <div style={{width:'fit-content'}}>
