@@ -5,11 +5,11 @@ import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
 import useAuth from "../../hooks/useAuth";
 import React, { useState } from "react";
 import ResponsiveDrawer from "../Navigation/ResponsiveDrawer";
-import bringIt from "../../assets/images/brngit logo.png";
-import userIcon from "../../assets/icons/user.png";
-import { Cookies } from "react-cookie";
+import bringIt from '../../assets/images/brngit logo.png';
+import userIcon from '../../assets/icons/user.png'
+import { Cookies } from 'react-cookie';
+import {GoogleLogout} from 'react-google-login';
 import { axiosPrivate } from "../../api/axios";
-import { GoogleLogout } from "react-google-login";
 
 const navigation = [
   { name: "About", href: "#", current: false },
@@ -19,20 +19,6 @@ const navigation = [
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
-}
-
-function deleteAllCookies() {
-  // const response = await
-  var cookies = document.cookie.split(";");
-  console.log(document.cookie);
-
-    for (var i = 0; i < cookies.length; i++) {
-        var cookie = cookies[i];
-        console.log(cookie);
-        var eqPos = cookie.indexOf("=");
-        var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
-        document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
-    }
 }
 
 export default function Navbar() {
@@ -45,6 +31,12 @@ export default function Navbar() {
       setUserMenuDisplay("block");
     }
   }, [auth]);
+  const logoutSuccess = () => {
+    console.log("Success!");
+  }
+  const logoutFail = (e) => {
+    console.log(e);
+  }
 
   const signOut = async () => {
     await axiosPrivate.post('/auth/logout', {
@@ -53,7 +45,6 @@ export default function Navbar() {
 
     window.location.replace('/app/login')
   }
-
   return (
     <>
       {auth.user && <ResponsiveDrawer />}
@@ -153,24 +144,20 @@ export default function Navbar() {
                         className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
                         style={{ zIndex: 10 }}
                       >
-                        {/* <Menu.Item onClick={signOut}>
-                          {({ active }) => (
-                            
-                          )}
-                        </Menu.Item> */}
+                        <div onClick={signOut} className="grid">
                         <GoogleLogout
                         clientId="222485917665-4ma4th0jf3188rs0kr590va1a0395qtb.apps.googleusercontent.com"
-                        render={(renderProps) =>{
-                          <button onClick={()=>{renderProps.onClick();signOut();}} disabled={renderProps.disabled}
-                              className={classNames(
-                                active ? "bg-gray-100" : "",
-                                "block px-4 py-2 text-sm text-gray-700"
-                              )}
-                            >
-                              Sign out
-                            </button>
-                        }}
+                        buttonText="Logout"
+                        
+                        render={renderProps => (
+                          <button className="grid place-content-center w-full" onClick={renderProps.onClick} disabled={renderProps.disabled}>
+                            Signout
+                          </button>
+                        )}
+                        onLogoutSuccess={logoutSuccess}
+                        onFailure={logoutFail}
                         />
+                        </div>
                       </Menu.Items>
                     </Transition>
                   </Menu>

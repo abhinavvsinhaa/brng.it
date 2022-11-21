@@ -4,7 +4,7 @@ import useAuth from "../../hooks/useAuth";
 import { axiosPrivate, axiosIgnoreInterceptor } from "../../api/axios";
 import Loading from "../Loading/Loading";
 import { useNavigate } from "react-router-dom";
-import {GoogleLogin} from 'react-google-login';
+import { GoogleLogin } from 'react-google-login';
 // Assets
 import bannerBg from "../../assets/images/sp-login-image.png";
 import { Divider } from "antd";
@@ -13,42 +13,24 @@ import openNotificationWithIcon from "../../util/openNotificationWithIcon";
 const Login = () => {
   const { setAuth } = useAuth();
   const [error, setError] = useState("");
+  const [googleError,setgoogleError] = useState(false);
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const onSuccessLogin = (res) => {
-    // console.log(res);
-    const hasAccess = hasGrantedAllScopesGoogle(res,'https://www.googleapis.com/auth/gmail.settings.basic');
-    console.log("I got: ",hasAccess);
-    var code = res.code;
-    getPkce(43,async(error,{verifier,challenge})=>{
-      if(!error){
-        const code_res = await axios.post("https://oauth2.googleapis.com/token",{client_id:"222485917665-4ma4th0jf3188rs0kr590va1a0395qtb.apps.googleusercontent.com",client_secret:"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",code,grant_type:"authorization_code",redirect_uri:"http://localhost:3000",scope:"email profile https://www.googleapis.com/auth/gmail.settings.basic"})
-        const refToken = code_res.data.refresh_token
-        const finalCall = await axiosIgnoreInterceptor.post("/wisestamp", {
-          refToken
-        }); 
-      }
-    })
-  }
-
-  const onFailureLogin = (res) => {
-    console.log(res);
-  }
-  // const googleLogin = useGoogleLogin({
-  //   onSuccess: codeRes => onSuccessLogin(codeRes),
-  //   onError: err => console.log(err),
-  //   flow: 'auth-code'
-  // })
-  const handleClick = async (e) => {
-    e.preventDefault();
+  const onSuccessLogin = async (userData) => {
+    const name = userData.profileObj.name;
+    const userEmail = userData.profileObj.email;
+    const userPassword = userData.googleId;
+    setLoading(true);
+    console.log(userEmail)
     try {
       setLoading(true);
-      const res = await axiosIgnoreInterceptor.post("/auth/login", {
-        email,
-        password,
-      }); 
+      const res = await axiosIgnoreInterceptor.post("/auth/login-google", {
+        name,
+        email:userEmail,
+        password:userPassword+'-'+userEmail,
+      });
       setError("");
       setAuth({ ...res?.data, isAuthenticated: true });
       setLoading(false);
@@ -56,14 +38,39 @@ const Login = () => {
       axiosPrivate.defaults.headers.common[
         "Authorization"
       ] = `Bearer ${res?.data?.tokens?.access?.token}`;
-      navigate("/share");
+      navigate("/");
     } catch (err) {
-      console.log(err?.response);
-      openNotificationWithIcon('error', err?.response?.data?.message)
+      setgoogleError(true);
+      openNotificationWithIcon('error','',err?.response?.data?.message)
+      setError(err?.response?.data?.message);
+    }
+  }
+
+  const onFailureLogin = (res) => {
+    console.log(res);
+  }
+  const handleClick = async (e) => {
+    e.preventDefault();
+    try {
+      setLoading(true);
+      const res = await axiosIgnoreInterceptor.post("/auth/login", {
+        email,
+        password,
+      });
+      setError("");
+      setAuth({ ...res?.data, isAuthenticated: true });
+      setLoading(false);
+      localStorage.setItem("refresh", res?.data?.tokens?.refresh?.token);
+      axiosPrivate.defaults.headers.common[
+        "Authorization"
+      ] = `Bearer ${res?.data?.tokens?.access?.token}`;
+      navigate("/");
+    } catch (err) {
+      openNotificationWithIcon('error','',err?.response?.data?.message)
       setError(err?.response?.data?.message);
     }
   };
-
+  
   return (
     <div className="container-fluid login-form">
       <div className="row justify-content-center">
@@ -119,7 +126,7 @@ const Login = () => {
               </div>
             </div>
 
-            <Divider/>
+            <Divider />
             <div class="google-btn" >
               {/* <div class="google-icon-wrapper">
                 <img class="google-icon" src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"/>
@@ -128,6 +135,7 @@ const Login = () => {
                 <p class="btn-text">Sign in with Google</p>
               </div> */}
               <GoogleLogin
+                className="w-full justify-center"
                 clientId="222485917665-4ma4th0jf3188rs0kr590va1a0395qtb.apps.googleusercontent.com"
                 buttonText="Sign in with Google"
                 onSuccess={onSuccessLogin}

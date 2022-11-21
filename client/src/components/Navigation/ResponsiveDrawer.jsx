@@ -19,14 +19,63 @@ import FaceIcon from '@mui/icons-material/Face';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import EmailIcon from '@mui/icons-material/Email';
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import AuthContext from "../../context/AuthContext";
+import { ListItemSecondaryAction } from "@mui/material";
+import { ExclamationCircleIcon } from "@heroicons/react/outline";
+import GoogleLogin from "react-google-login";
+import { axiosIgnoreInterceptor, axiosPrivate } from "../../api/axios";
+import openNotificationWithIcon from "../../util/openNotificationWithIcon";
 
 const drawerWidth = 240;
 
 function ResponsiveDrawer(props) {
+  const { auth,setAuth } = React.useContext(AuthContext);
   const { window } = props;
+  const navigate = useNavigate();
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
+  const onSuccessLogin = async (userData) => {
+    const name = userData.profileObj.name;
+    const userEmail = userData.profileObj.email;
+    const userPassword = userData.googleId;
+
+    // if google email matches with user email, which he logged in with
+    if (userEmail == auth.user.email) {
+      try {
+        
+        // if matches then put google verified at wisestamp as true
+        await axiosIgnoreInterceptor.post('/users', {
+          isGoogleVerifiedAtWisestamp: true
+        })
+        
+        const res = await axiosIgnoreInterceptor.patch("/auth/login-google", {
+          name,
+          email:userEmail,
+          password:userPassword+'-'+userEmail,
+        });
+        setAuth({ ...res?.data, isAuthenticated: true });
+        localStorage.setItem("refresh", res?.data?.tokens?.refresh?.token);
+        axiosPrivate.defaults.headers.common[
+          "Authorization"
+        ] = `Bearer ${res?.data?.tokens?.access?.token}`;
+        navigate("/");
+      } catch (err) {
+        setgoogleError(true);
+        openNotificationWithIcon('error','',err?.response?.data?.message)
+        setError(err?.response?.data?.message);
+      }
+    }
+
+    else {
+      openNotificationWithIcon("error", "Email doesn't matches with the email user logged in with. Please login with the same email")
+    }
+    
+  }
+
+  const onFailureLogin = (res) => {
+    console.log(res);
+  }
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
@@ -61,7 +110,7 @@ function ResponsiveDrawer(props) {
               <ListItemIcon>
                 <FaceIcon />
               </ListItemIcon>
-              <ListItemText primary="Team Members"/>
+              <ListItemText primary="Team Members" />
             </ListItemButton>
           </ListItem>
         </Link>
@@ -85,16 +134,43 @@ function ResponsiveDrawer(props) {
             </ListItemButton>
           </ListItem>
         </Link>
-        <Link to="/wisestamp" style={{ color: "inherit" }}>
-          <ListItem disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                <EmailIcon />
-              </ListItemIcon>
-              <ListItemText primary="Wisestamp" />
-            </ListItemButton>
-          </ListItem>
-        </Link>
+        {
+          !auth.user.isGoogleVerifiedAtWisestamp ?
+            <Link style={{ color: "inherit" }}>
+              <ListItem disablePadding>
+                <ListItemButton>
+                <GoogleLogin
+                clientId="222485917665-4ma4th0jf3188rs0kr590va1a0395qtb.apps.googleusercontent.com"
+                
+                buttonText="Sign in with Google"
+                render={renderProps=>(
+                  <div className="grid grid-cols-[auto_1fr]" onClick={renderProps.onClick} disabled={renderProps.disabled}>
+                  <ListItemIcon>
+                    <ExclamationCircleIcon color="red" width={'25px'} />
+                  </ListItemIcon>
+                  <ListItemText primary="Wisestamp" />
+                  </div>
+                )}
+                onSuccess={onSuccessLogin}
+                onFailure={onFailureLogin}
+                cookiePolicy={'single_host_origin'}
+                isSignedIn={true}
+              />
+                </ListItemButton>
+              </ListItem>
+            </Link>
+            :
+            <Link to="/wisestamp" style={{ color: "inherit" }}>
+              <ListItem disablePadding>
+                <ListItemButton>
+                  <ListItemIcon>
+                    <EmailIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Wisestamp" />
+                </ListItemButton>
+              </ListItem>
+            </Link>
+        }
         <Link to="/url" style={{ color: "inherit" }}>
           <ListItem disablePadding>
             <ListItemButton>
