@@ -21,7 +21,7 @@ const History = () => {
     });
 
     const historyy = await Promise.all(promises);
-    setHistory(historyy);
+    setHistory(historyy.reverse());
     setLoading(false);
     console.log(historyy);
   };

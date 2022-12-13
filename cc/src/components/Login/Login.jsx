@@ -57,6 +57,8 @@ const Login = () => {
         email,
         password,
       });
+
+      
       setError("");
       setAuth({ ...res?.data, isAuthenticated: true });
       setLoading(false);

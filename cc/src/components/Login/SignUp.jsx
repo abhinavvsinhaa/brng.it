@@ -37,7 +37,7 @@ const SignUp = () => {
         axiosPrivate.defaults.headers.common[
           "Authorization"
         ] = `Bearer ${res?.data?.tokens?.access?.token}`;
-        navigate("/share");
+        navigate("/");
       } else {
         return openNotificationWithIcon("error", "Please accept terms and service.");
       }

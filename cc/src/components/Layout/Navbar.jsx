@@ -43,6 +43,11 @@ export default function Navbar() {
       refreshToken: auth.tokens.refresh.token
     })
 
+    // every time user has to sign in with google for wisestamp to work
+    await axiosPrivate.patch(`/users/${auth.user.id}`, {
+      isGoogleVerifiedAtWisestamp: false
+    })
+
     window.location.replace('/app/login')
   }
   return (

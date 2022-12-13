@@ -41,8 +41,8 @@ const createUser = async (userBody) => {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken');
   }
   const user = await new User(userBody)
-  user.isGoogleVerifiedAtLogin = true
-  user.isGoogleVerifiedAtWisestamp = true
+  user.isGoogleVerifiedAtLogin = false
+  user.isGoogleVerifiedAtWisestamp = false
   await user.save()
   return user
 };

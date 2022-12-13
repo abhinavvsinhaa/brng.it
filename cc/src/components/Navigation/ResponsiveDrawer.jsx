@@ -23,7 +23,7 @@ import { Link, useNavigate } from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
 import { ListItemSecondaryAction } from "@mui/material";
 import { ExclamationCircleIcon } from "@heroicons/react/outline";
-import GoogleLogin from "react-google-login";
+import GoogleLogin, { useGoogleLogout } from "react-google-login";
 import { axiosIgnoreInterceptor, axiosPrivate } from "../../api/axios";
 import openNotificationWithIcon from "../../util/openNotificationWithIcon";
 
@@ -31,6 +31,7 @@ const drawerWidth = 240;
 
 function ResponsiveDrawer(props) {
   const { auth,setAuth } = React.useContext(AuthContext);
+  const {signOut} = useGoogleLogout({clientId:process.env.REACT_APP_GOOGLE_CLIENT_ID})
   const { window } = props;
   const navigate = useNavigate();
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -45,7 +46,7 @@ function ResponsiveDrawer(props) {
       try {
         
         // if matches then put google verified at wisestamp as true
-        await axiosIgnoreInterceptor.post('/users', {
+        await axiosIgnoreInterceptor.patch(`/users/${auth.user.id}`, {
           isGoogleVerifiedAtWisestamp: true
         })
         
@@ -69,6 +70,7 @@ function ResponsiveDrawer(props) {
 
     else {
       openNotificationWithIcon("error", "Email doesn't matches with the email user logged in with. Please login with the same email")
+      signOut();
     }
     
   }
@@ -140,8 +142,7 @@ function ResponsiveDrawer(props) {
               <ListItem disablePadding>
                 <ListItemButton>
                 <GoogleLogin
-                clientId="222485917665-4ma4th0jf3188rs0kr590va1a0395qtb.apps.googleusercontent.com"
-                
+                clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
                 buttonText="Sign in with Google"
                 render={renderProps=>(
                   <div className="grid grid-cols-[auto_1fr]" onClick={renderProps.onClick} disabled={renderProps.disabled}>
